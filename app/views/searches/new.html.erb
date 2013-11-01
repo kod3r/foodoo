@@ -1,0 +1,47 @@
+</br>
+</br>
+</br>
+
+<% if user_signed_in? && (current_user.restaurants.count > 0)%>
+  <div id="myCarousel" class="carousel span8 offset2 pop">
+    <!-- Carousel items -->
+    <div class="carousel-inner">
+      <% @shuffled = current_user.restaurants.shuffle %>
+      <% @shuffled.each do |restaurant| %>
+        <% if restaurant == @shuffled[0] %>
+          <div class="item active text-center well">
+            <p class="lead"><%=restaurant.name%></p>
+            <% if restaurant.image %>
+              <p><a href="<%=restaurant.yelp_url%>" target="_blank"><img src="http://s3-media1.ak.yelpcdn.com/assets/2/www/img/55e2efe681ed/developers/yelp_logo_50x25.png"></a></p>
+              <p class="text-center"><img src=<%=restaurant.image%>/></p>
+            <% end %>
+            </br>
+            </br>
+            <div class="text-center">
+              <%= button_to('Go', restaurant_path(restaurant), :class => 'btn btn-default btn-primary btn-large') %>
+            </div>
+          </div>
+        <% else %>
+          <div class="item text-center well">
+            <p class="lead"><%=restaurant.name%></p>
+            <% if restaurant.image %>
+              <p><a href="<%=restaurant.yelp_url%>" target="_blank"><img src="http://s3-media1.ak.yelpcdn.com/assets/2/www/img/55e2efe681ed/developers/yelp_logo_50x25.png"></a></p>
+              <div class="text-center">
+                <img src=<%=restaurant.image%>/>
+              </div>
+            <% end %>
+            </br>
+            </br>
+            <div class="text-center">
+              <%= button_to('Go', restaurant_path(restaurant), :class => 'btn btn-default btn-primary btn-large') %>
+            </div>
+          </div>
+        <% end %>
+      <% end %>
+    </div>
+    <!-- Carousel nav -->
+    <a class="carousel-control left" href="#myCarousel" data-slide="prev">&lsaquo;</a>
+    <a class="carousel-control right" href="#myCarousel" data-slide="next">&rsaquo;</a>
+
+  </div>
+<% end %>

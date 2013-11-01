@@ -1,0 +1,72 @@
+@import "bootstrap";
+body { padding-top: 60px; }
+@import "bootstrap-responsive";
+
+input[type="text"] { margin-bottom: 0px;}
+
+body {
+  background: url('http://farm1.staticflickr.com/147/439960932_9a1175e7d4_b.jpg') no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
+#map, #map-canvas {
+  width: 700px;
+  height: 400px;
+  margin-top: 25px;
+  border-radius: 25px;
+}
+
+.span12 {
+  margin-left: 0px;
+}
+
+.item {
+  /*background-image: url("/denim.png");*/
+  background-color: rgba(0,0,0,0.65);
+}
+
+td {
+  cursor: default;
+}
+
+.table tbody tr:hover td, .table tbody tr:hover th {
+  background-image: url("/blacklinen.png");
+}
+
+.pop {
+  color: white;
+}
+.well {
+  background-color: rgba(0,0,0,0.77);
+}
+
+tr {
+  background-color: rgba(0,0,0,0.77);
+}
+
+.gmap img{
+  max-width: none;
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+.blacked {
+  color: black;
+}
+
+input {
+  font-family: verdana, arial, helvetica, sans-serif;
+  font-size: 13px;
+}
+
+form {
+  margin: 0;
+}
+
+

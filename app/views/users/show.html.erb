@@ -1,0 +1,18 @@
+<table class="table table-hover pop">
+
+  <tbody>
+    <% @user.restaurants.each do |restaurant| %>
+      <tr>
+        <td style="padding-top:10px;"><strong><%= restaurant.name %></strong></td>
+        <td><a href="<%=restaurant.yelp_url%>" target="_blank"><img src="http://s3-media1.ak.yelpcdn.com/assets/2/www/img/55e2efe681ed/developers/yelp_logo_50x25.png"></a></td>
+        <% if current_user.restaurants.exists?(restaurant.id) %>
+          <td>On your list</td>
+        <% else %>
+          <td><%= button_to('Add to List', "/lists/create?id=#{restaurant.id}", :class => 'btn btn-primary btn-small') %></td>
+        <% end %>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>

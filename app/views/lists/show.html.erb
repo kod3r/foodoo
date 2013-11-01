@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Cuisine</th>
+      <th>Price</th>
+      <th>Label</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% current_user.lists.each do |list| %>
+      <tr>
+        <td><%= list.restaurant.name %></td>
+        <td><%= list.restaurant.cuisine %></td>
+        <td><%= list.restaurant.price %></td>
+        <td><%= list.restaurant.label %></td>
+        <td><%= link_to 'Show', list %></td>
+        <td><%= link_to 'Edit', edit_list_path(list) %></td>
+        <td><%= link_to 'Destroy', list, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<%= link_to 'Edit', edit_list_path(@list) %> |
+<%= link_to 'Back', lists_path %>

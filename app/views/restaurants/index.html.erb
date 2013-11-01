@@ -1,0 +1,20 @@
+<table class="table table-hover pop">
+
+  <tbody>
+    <% current_user.restaurants.each do |restaurant| %>
+      <tr>
+        <td style="padding-top:10px;"><strong><%= restaurant.name %></strong></td>
+        <% if restaurant.choices.last %>
+          <td style="padding-top:10px;">~ <%= restaurant.choices.last.created_at.to_date.strftime('%a %d %b %Y') %></td>
+        <% else %>
+          <td style="padding-top:10px; text-align: center;">New!</td>
+        <% end %>
+        <td><a href="<%=restaurant.yelp_url%>" target="_blank"><img src="http://s3-media1.ak.yelpcdn.com/assets/2/www/img/55e2efe681ed/developers/yelp_logo_50x25.png"></a></td>
+        <td><%= link_to 'Directions', restaurant, :class => "btn btn-small btn-primary btn-success" %></td>
+        <td><%= link_to 'Remove', restaurant, :class => "btn btn-small btn-danger", method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>

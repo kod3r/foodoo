@@ -1,0 +1,24 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>User:</strong>
+  <%= @choice.user_id %>
+</p>
+
+<p>
+  <strong>Search:</strong>
+  <%= @choice.search_id %>
+</p>
+
+<p>
+  <strong>Restaurant:</strong>
+  <%= @choice.restaurant_id %>
+</p>
+
+<p>
+  <strong>Action:</strong>
+  <%= @choice.action %>
+</p>
+
+<%= link_to 'Edit', edit_choice_path(@choice) %> |
+<%= link_to 'Back', choices_path %>

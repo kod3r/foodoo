@@ -1,0 +1,13 @@
+
+<table class="table table-hover pop">
+  <tbody>
+    <% @users.each do |user| %>
+      <tr>
+        <td><strong><%= user.username %></strong></td>
+        <td>Restaurants: <%= user.restaurants.count %></td>
+        <td><%= link_to 'Restaurant List', user, :class => "btn btn-small btn-primary"%></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+

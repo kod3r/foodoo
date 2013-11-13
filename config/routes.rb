@@ -25,6 +25,9 @@ V1foodoo::Application.routes.draw do
   get 'user/list' => 'user#list'
   get '/mylist' => 'lists#mylist'
   get 'lsearch' => 'users#index'
+  post 'users/getall' =>  'users#getall'
+  post 'favorite' => 'restaurants#favorite'
+  post 'unfavorite' => 'restaurants#unfavorite'
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'

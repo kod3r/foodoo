@@ -67,7 +67,7 @@ class ListsController < ApplicationController
   def destroy
     @list.destroy
     respond_to do |format|
-      format.html { redirect_to lists_url }
+      format.html { redirect_to :back, notice: Restaurant.find(@list.restaurant_id).name+" has been removed."}
       format.json { head :no_content }
     end
   end

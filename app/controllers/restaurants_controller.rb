@@ -22,6 +22,17 @@ class RestaurantsController < ApplicationController
   def edit
   end
 
+  def favorite
+    @restaurant = Restaurant.find(params[:id])
+    @restaurant.lists.find_by(user_id: current_user.id).update(label: "favorite")
+    redirect_to :back, notice: "Favorited "+@restaurant.name+"!"
+  end
+
+  def unfavorite
+    @restaurant = Restaurant.find(params[:id])
+    @restaurant.lists.find_by(user_id: current_user.id).update(label: "listed")
+    redirect_to :back, notice: "Un-favorited "+@restaurant.name
+  end
   # POST /restaurants
   # POST /restaurants.json
   def create

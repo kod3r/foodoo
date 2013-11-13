@@ -10,7 +10,7 @@
 </br>
 
 <% if params[:term] %>
-  <% response = HTTParty.get("http://api.yelp.com/business_review_search?term=#{params[:term].split(' ').join('+')}&lat=40.705961&long=-74.007953&radius=5&limit=10&ywsid=Q5mQ5eJFseNNaJx9xuXhjQ") %>
+  <% response = HTTParty.get("http://api.yelp.com/business_review_search?term=#{params[:term].split(' ').join('+')}&lat=#{request.location.latitude}&long=#{request.location.longitude}&radius=5&limit=10&ywsid=Q5mQ5eJFseNNaJx9xuXhjQ") %>
   <% @r = JSON.parse(response) %>
 <% end %>
 
@@ -19,12 +19,21 @@
     <% @r["businesses"].each do |place| %>
       <div class="row text-center">
       <div class="well text-center span6 offset3">
-        <% unless Restaurant.find_by_name(place["name"]) %>
-          <% @restaurant = Restaurant.create(name: place["name"], image: place["photo_url"], yelp_url: place["url"]) %>
-          <% @address = place["address1"]+' '+place["zip"] %>
-          <% Location.create(locator_id: @restaurant.id, locator_type: "Restaurant", address: @address) %>
-        <% else %>
+        <% if Restaurant.find_by_name(place["name"]) %>
           <% @restaurant = Restaurant.find_by_name(place["name"]) %>
+        <% else %>
+          <% @categories = [] %>
+          <% place["categories"].each do |category| %>
+            <% @categories << category["name"] %>
+          <% end %>
+          <% @categories = @categories.join(', ') %>
+          <% @restaurant = Restaurant.create(name: place["name"], image: place["photo_url"], yelp_url: place["url"], cuisine: @categories) %>
+          <% @address = place["address1"]+' '+place["zip"] %>
+          <% if place["neighborhoods"][0] %>
+            <% Location.create(locator_id: @restaurant.id, locator_type: "Restaurant", city: place["city"], state: place["state"], country: place["country"], phone: place["phone"], address: @address, hood: place["neighborhoods"][0]["name"]) %>
+          <% else %>
+            <% Location.create(locator_id: @restaurant.id, locator_type: "Restaurant", address: @address, city: place["city"], state: place["state"], country: place["country"], phone: place["phone"]) %>
+          <% end %>
         <% end %>
         <h4><%= place["name"] %></h4>
         <% if place["neighborhoods"][0] %>

@@ -25,6 +25,17 @@ class UsersController < ApplicationController
   def edit
   end
 
+  def getall
+    @user = User.find(params[:id])
+    @user.restaurants.each do |restaurant|
+      unless current_user.restaurants.exists?(restaurant.id)
+        List.create(user_id: current_user.id, restaurant_id: restaurant.id, label: "listed")
+      end
+    end
+
+    redirect_to :back, notice: "All of "+@user.username+"'s restaurants added to your list!"
+  end
+
   # POST /users
   # POST /users.json
   def create

@@ -1,5 +1,8 @@
+<div class="text-center" >
+  <%= button_to("Add all of "+@user.username+"'s restaurants!", "getall?id=#{@user.id}", :class => 'btn btn-primary btn-large') %>
+</div>
+</br>
 <table class="table table-hover pop">
-
   <tbody>
     <% @user.restaurants.each do |restaurant| %>
       <tr>

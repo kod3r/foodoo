@@ -14,26 +14,28 @@ class SearchesController < ApplicationController
 
   # GET /searches/new
   def new
-    @search = Search.new
-    @ranked_list = current_user.restaurants.sort_by do |restaurant|
-      if restaurant.choices.where(user_id: current_user.id).exists?
-        if ((Time.now - restaurant.choices.where(user_id: current_user.id).last.created_at)/(24*60*60)).to_i > 5
+    if user_signed_in? && (current_user.restaurants.count > 0)
+      @search = Search.new
+      @ranked_list = current_user.restaurants.sort_by do |restaurant|
+        if restaurant.choices.where(user_id: current_user.id).exists?
+          if ((Time.now - restaurant.choices.where(user_id: current_user.id).last.created_at)/(24*60*60)).to_i > 5
+            time_score = 25
+          else
+            time_score = 0
+          end
+        else
           time_score = 25
-        else
-          time_score = 0
         end
-      else
-        time_score = 25
+
+          if restaurant.lists.find_by(user_id: current_user.id).label=="favorite"
+            fav_score = 25
+          else
+            fav_score = 0
+          end
+
+          total_score = 50+time_score+fav_score
+          total_score
       end
-
-        if restaurant.lists.find_by(user_id: current_user.id).label=="favorite"
-          fav_score = 25
-        else
-          fav_score = 0
-        end
-
-        total_score = 50+time_score+fav_score
-        total_score
     end
   end
 

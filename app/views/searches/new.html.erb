@@ -43,7 +43,7 @@
               </div>
               <div class="blockery">
                 <p id="walk_<%= restaurant.id %>">
-                  <%= restaurant.locations.last.distance*20.to_i %> min walk
+                  <%= (restaurant.locations.last.distance*20).to_i %> min walk
                 </p>
                 <p id="cab_<%= restaurant.id %>"></p>
                 <p>Score: <strong style="color:orange;"><%=score%></strong></p>
@@ -70,7 +70,7 @@
               </div>
               <div class="blockery">
                 <p id="walk_<%= restaurant.id %>">
-                  <%= restaurant.locations.last.distance*20.to_i %> min walk
+                  <%= (restaurant.locations.last.distance*20).to_i %> min walk
                 </p>
                 <p id="cab_<%= restaurant.id %>"></p>
                 <p>Score: <strong style="color:orange;"><%=score%></strong></p>

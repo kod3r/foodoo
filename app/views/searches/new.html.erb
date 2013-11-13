@@ -45,7 +45,7 @@
                 <p id="walk_<%= restaurant.id %>">
                   <%= (restaurant.locations.last.distance_to(request.location.coordinates)*20).to_i %> min walk
                 </p>
-                <p id="cab_<%= restaurant.id %>"></p>
+                <p id="cab_<%= restaurant.id %>"><%= request.location.coordinates %></p>
                 <p>Score: <strong style="color:orange;"><%=score%></strong></p>
                 <p><a href="<%=restaurant.yelp_url%>" target="_blank"><img src="http://s3-media1.ak.yelpcdn.com/assets/2/www/img/55e2efe681ed/developers/yelp_logo_50x25.png"></a></p>
               </div>

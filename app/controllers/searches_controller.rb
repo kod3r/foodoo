@@ -12,6 +12,12 @@ class SearchesController < ApplicationController
   def show
   end
 
+  def set_user_location
+    if params[:lat] && params[:lon]
+      session[:user_location] = [params[:lat], params[:lon]]
+    end
+    render json: {}
+  end
   # GET /searches/new
   def new
     if user_signed_in? && (current_user.restaurants.count > 0)

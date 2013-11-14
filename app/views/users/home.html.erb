@@ -1,0 +1,32 @@
+<% if user_signed_in?%>
+  <h1 class="pop text-center well">Welcome</h1>
+<% end %>
+<script>
+  function getLocation(){
+    if (navigator.geolocation){
+      navigator.geolocation.getCurrentPosition(inserter);
+    }else{
+      $('#wtfff').html("Geolocation is not supported by this browser.");
+    }
+  }
+  function inserter(position){
+    $.ajax({
+      url: "/searches/set_user_location",
+      type: "post",
+      data: {lat: position.coords.latitude, lon: position.coords.longitude},
+      //contentType: "application/json; charset=utf-8",
+      dataType: "json",
+      success: function(data){
+        console.log(data);
+      },
+      error: function(jqXHR, textStatus, errorThrown){
+        console.log(jqXHR);
+        console.log(textStatus);
+        console.log(errorThrown);
+      }
+    });
+  }
+  $(document).ready(function() {
+    getLocation();
+  });
+</script>

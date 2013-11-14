@@ -1,3 +1,1 @@
-Geocoder.configure(
-  :timeout => 20
-)
+Geocoder.configure(units: :mi)

@@ -2,13 +2,13 @@
 <% if user_signed_in? %>
   <ul class="nav">
       <li>
-        <%= link_to('Pick a Place!', new_search_path, :method=>'get') %>
+        <%= link_to('Pick', new_search_path, :method=>'get') %>
       </li>
       <li>
-        <%= link_to('My List', restaurants_path, :method=>'get') %>
+        <%= link_to('List', restaurants_path, :method=>'get') %>
       </li>
       <li>
-        <%= link_to('Add Restaurants', new_list_path) %>
+        <%= link_to('Add', new_list_path) %>
       </li>
       <li>
         <%= link_to('Friends', '/lsearch') %>

@@ -1,0 +1,20 @@
+<div class="text-center">
+<button class="btn btn-primary btn-large" id="group_search_btn">Run Search</button>
+</div>
+<br>
+
+<table class="table table-hover pop" style="max-width: 400px; margin:auto;">
+  <tbody>
+    <!-- Change User.all to Friends after friend integration -->
+    <% User.all.each do |user| %>
+      <tr>
+        <td><strong><%= user.username %></strong></td>
+        <td>Restaurants: <%= user.restaurants.count %></td>
+        <td style="color:orange;">
+        <%= check_box_tag "user_ids[]", user.id, false, :class => "cbox", :id => "cbox_"+user.id.to_s %>
+        Add to group search
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

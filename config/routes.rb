@@ -1,7 +1,7 @@
 V1foodoo::Application.routes.draw do
   devise_for :users
 
-  resources :searches
+  resources :searches, only: [:new, :index]
 
   resources :follows
 
@@ -29,6 +29,7 @@ V1foodoo::Application.routes.draw do
   post 'favorite' => 'restaurants#favorite'
   post 'unfavorite' => 'restaurants#unfavorite'
   post 'searches/set_user_location' => 'searches#set_user_location'
+  get 'searches/group' => 'searches#group'
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'

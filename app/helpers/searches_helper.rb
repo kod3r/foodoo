@@ -8,7 +8,7 @@ module SearchesHelper
     if restaurant.lists.find_by(user_id: user_id)
       #check last visit
       if restaurant.choices.where(user_id: user_id).exists?
-        if ((Time.now - restaurant.choices.where(user_id: user_id).last.created_at)/(24*60*60)).to_i > 5
+        if ((Time.now - restaurant.choices.where(user_id: user_id).last.created_at)/(24*60*60)).to_i > User.find(user_id).restaurants.count/2
           time_score = 25
         else
           time_score = 0
@@ -47,7 +47,7 @@ module SearchesHelper
     user_id_array.each do |user_id|
       total_score+=solo_score(restaurant,user_id)
     end
-    total_score/user_id_array.length
+    total_score
   end
 
   def group_ranker(ppl)

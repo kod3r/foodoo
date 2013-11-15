@@ -12,7 +12,7 @@
         <% @ranked_list = solo_ranker(current_user.id) %>
       <% end %>
       <% @ranked_list.each do |restaurant| %>
-        <% if restaurant == @ranked_list[-1] %>
+        <% if restaurant == @ranked_list[0] %>
           <div class="item active text-center well" id="restaurant_<%= restaurant.id %>">
             <p class="lead"><%=restaurant.name%></p>
             <p><%=restaurant.cuisine%></p>

@@ -23,15 +23,15 @@ module SearchesHelper
         fav_score = 0
       end
       #distance
-      if distance(restaurant) < 10
+      if distance(restaurant) < 5
         distance_score = 50
-      elsif distance(restaurant) < 20
+      elsif distance(restaurant) < 10
         distance_score = 40
-      elsif distance(restaurant) < 30
+      elsif distance(restaurant) < 20
         distance_score = 30
-      elsif distance(restaurant) < 40
+      elsif distance(restaurant) < 30
         distance_score = 20
-      elsif distance(restaurant) < 50
+      elsif distance(restaurant) < 40
         distance_score = 10
       else
         distance_score = 0

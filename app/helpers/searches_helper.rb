@@ -39,7 +39,11 @@ module SearchesHelper
     ranked_list = User.find(user_id).restaurants.sort_by do |restaurant|
       solo_score(restaurant,user_id)
     end
-    return ranked_list.reverse[0..9]
+    if ranked_list.length > 10
+      return ranked_list.reverse[0..9]
+    else
+      return ranked_list.reverse
+    end
   end
 
   def group_score(user_id_array, restaurant)
@@ -60,7 +64,11 @@ module SearchesHelper
     ranked_group_list = restaurant_array.sort_by do |restaurant|
       group_score(user_id_array, restaurant)
     end
-    return ranked_group_list.reverse[0..9]
+    if ranked_group_list.length > 10
+      return ranked_group_list.reverse[0..9]
+    else
+      return ranked_group_list.reverse
+    end
   end
 
 end

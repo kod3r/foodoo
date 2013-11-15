@@ -24,11 +24,13 @@ module SearchesHelper
       end
       #distance
       if distance(restaurant) < 10
+        distance_score = 50
+      elsif distance(restaurant) < 60
         distance_score = 25
       else
         distance_score = 0
       end
-      total_score = 25+time_score+fav_score+distance_score
+      total_score = time_score+fav_score+distance_score
       total_score
     else
       return 0

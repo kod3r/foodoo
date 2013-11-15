@@ -11,7 +11,7 @@
       <% else %>
         <% @ranked_list = solo_ranker(current_user.id) %>
       <% end %>
-      <% @ranked_list.reverse_each do |restaurant| %>
+      <% @ranked_list.each do |restaurant| %>
         <% if restaurant == @ranked_list[-1] %>
           <div class="item active text-center well" id="restaurant_<%= restaurant.id %>">
             <p class="lead"><%=restaurant.name%></p>

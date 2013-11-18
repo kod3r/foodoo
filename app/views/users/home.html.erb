@@ -4,20 +4,24 @@
 <script>
   function getLocation(){
     if (navigator.geolocation){
-      navigator.geolocation.getCurrentPosition(inserter);
+      navigator.geolocation.getCurrentPosition(inserter, err, {timeout:5000, enableHighAccuracy:true});
     }else{
       $('#wtfff').html("Geolocation is not supported by this browser.");
     }
   }
+  function err(){
+    console.log("geolocation error");
+  }
   function inserter(position){
+    console.log(position.coords.accuracy);
     $.ajax({
       url: "/searches/set_user_location",
       type: "post",
-      data: {lat: position.coords.latitude, lon: position.coords.longitude},
+      data: {lat: position.coords.latitude, lon: position.coords.longitude, acc: position.coords.accuracy},
       //contentType: "application/json; charset=utf-8",
       dataType: "json",
       success: function(data){
-        console.log(data);
+        console.log("success");
       },
       error: function(jqXHR, textStatus, errorThrown){
         console.log(jqXHR);

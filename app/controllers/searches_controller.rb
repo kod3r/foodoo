@@ -22,6 +22,7 @@ class SearchesController < ApplicationController
   def set_user_location
     if params[:lat] && params[:lon]
       session[:user_location] = [params[:lat], params[:lon]]
+      session[:acc] = params[:acc].to_i
     end
     render json: {}
   end

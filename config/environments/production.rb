@@ -69,6 +69,7 @@ V1foodoo::Application.configure do
     address: "smtp.mandrillapp.com",
     port: 587,
     authentication: 'plain',
+    enable_starttls_auto: true,
     user_name: "MANDRILL_USERNAME",
     password: "MANDRILL_API_KEY"
   }

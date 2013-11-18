@@ -68,6 +68,7 @@ V1foodoo::Application.configure do
   config.action_mailer.smtp_settings = {
     address: "smtp.mandrillapp.com",
     port: 587,
+    authentication: 'plain',
     user_name: "MANDRILL_USERNAME",
     password: "MANDRILL_API_KEY"
   }

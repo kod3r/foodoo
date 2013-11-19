@@ -53,7 +53,7 @@
 <p id="error"></p>
 
 <% ordrin_api = Ordrin::APIs.new("hgdPJATkdYDnr7JFSLA0BllmiS4v55h_s46K2hwacQU", :test) %>
-<% args = {"datetime" => "ASAP", "addr" => request.location.address, "city" => request.location.city, "zip" => request.location.postal_code}%>
+<% args = {"datetime" => "ASAP", "addr" => request.location.address, "city" => request.location.city, "zip" => request.location.postal_code.to_i}%>
 <% list = ordrin_api.delivery_list(args) %>
 <% d_check = list.find_index{|restaurant| restaurant["na"]==@restaurant.name}%>
 <% if d_check.is_a? Integer %>

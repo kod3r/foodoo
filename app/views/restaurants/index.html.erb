@@ -13,13 +13,15 @@
           <p>New!</p>
         <% end %>
         <p><a href="<%=restaurant.yelp_url%>" target="_blank"><img src="http://s3-media1.ak.yelpcdn.com/assets/2/www/img/55e2efe681ed/developers/yelp_logo_50x25.png"></a></p>
-        <p><%= button_to 'Go', restaurant, :class => "btn btn-small btn-primary btn-success" %></p>
-        <% if restaurant.lists.find_by(user_id: current_user.id).label == "favorite" %>
-          <p><%= button_to 'Undo Favorite', "unfavorite?id=#{restaurant.id}", :class => "btn btn-small btn-primary btn-warning" %></p>
-        <% else %>
-          <p><%= button_to 'Make Favorite', "favorite?id=#{restaurant.id}", :class => "btn btn-small btn-primary btn-info" %></p>
-        <% end %>
-        <p><%= button_to 'Remove', restaurant.lists.find_by(user_id: current_user.id), :class => "btn btn-small btn-danger", method: :delete, data: { confirm: 'Are you sure?' } %></p>
+        <span>
+          <%= button_to 'Go', restaurant, :class => "btn btn-small btn-primary btn-success" %>
+          <% if restaurant.lists.find_by(user_id: current_user.id).label == "favorite" %>
+            <%= button_to 'Undo Favorite', "unfavorite?id=#{restaurant.id}", :class => "btn btn-small btn-warning" %>
+          <% else %>
+            <%= button_to 'Make Favorite', "favorite?id=#{restaurant.id}", :class => "btn btn-small btn-info" %>
+          <% end %>
+          <%= button_to 'Remove', restaurant.lists.find_by(user_id: current_user.id), :class => "btn btn-small btn-danger", method: :delete, data: { confirm: 'Are you sure?' } %>
+        </span>
     </div>
 <% end %>
 </div>

@@ -14,7 +14,7 @@
   <% @r = JSON.parse(response) %>
 <% end %>
 <p><%= request.location.latitude %><p>
-<div class = "container pop">
+<div class = "container pop" style="max-width: 360px;">
   <% if @r %>
     <% @r["businesses"].each do |place| %>
       <div class="row text-center">

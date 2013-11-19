@@ -1,9 +1,8 @@
 <div class="span8 offset2 text-center">
 <%= button_to('Group Search', 'group', method: :get,  :class => 'btn btn-primary btn-large') %>
 </div>
-<br>
 <% if user_signed_in? && (current_user.restaurants.count > 0)%>
-  <div id="myCarousel" class="carousel span8 offset2 pop">
+  <div id="myCarousel" class="carousel span8 offset2 pop" style="margin-top: 15px;">
     <!-- Carousel items -->
     <div class="carousel-inner">
       <% if params[:ppl] %>

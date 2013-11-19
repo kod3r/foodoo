@@ -68,11 +68,10 @@ V1foodoo::Application.configure do
   config.action_mailer.smtp_settings = {
     address: "smtp.mandrillapp.com",
     port: 587,
-    track_clicks: false,
     user_name: ENV["MANDRILL_USERNAME"],
     password: ENV["MANDRILL_API_KEY"]
   }
-  config.action_mailer.default_url_options = { :host => 'http://foodoo.io' }
+  config.action_mailer.default_url_options = { :host => 'http://www.foodoo.io' }
 
   # Enable locale fallbacks for I18n (makes lookups for any locale fall back to
   # the I18n.default_locale when a translation can not be found).

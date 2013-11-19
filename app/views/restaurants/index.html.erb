@@ -1,18 +1,31 @@
 <div class="container-fixed text-center pop container-fixed">
 <% current_user.restaurants.each do |restaurant| %>
     <div class="well text-center">
-        <p><strong><%= restaurant.name %></strong></p>
+        <p class="lead"><%= restaurant.name %></p>
+        <p><%=restaurant.cuisine%></p>
         <% if restaurant.locations.last.hood %>
           <p><%=restaurant.locations.last.hood%>, <%=restaurant.locations.last.city%></p>
         <% else %>
           <p><%=restaurant.locations.last.city%></p>
         <% end %>
-        <% if restaurant.choices.last %>
-          <p>~ <%= restaurant.choices.last.created_at.to_date.strftime('%a %d %b %Y') %></p>
-        <% else %>
-          <p>New!</p>
-        <% end %>
-        <p><a href="<%=restaurant.yelp_url%>" target="_blank"><img src="http://s3-media1.ak.yelpcdn.com/assets/2/www/img/55e2efe681ed/developers/yelp_logo_50x25.png"></a></p>
+        <div>
+          <div class="blockery">
+            <p class="text-center"><img src=<%=restaurant.image%>/></p>
+          </div>
+          <div class="blockery">
+            <% if restaurant.lists.count == 1  %>
+              <p>On <%= restaurant.lists.count %> list</p>
+            <% else %>
+              <p>On <%= restaurant.lists.count %> lists</p>
+            <% end %>
+            <% if restaurant.choices.last %>
+              <p>~ <%= restaurant.choices.last.created_at.to_date.strftime('%a %d %b %Y') %></p>
+            <% else %>
+              <p>New!</p>
+            <% end %>
+            <p><a href="<%=restaurant.yelp_url%>" target="_blank"><img src="http://s3-media1.ak.yelpcdn.com/assets/2/www/img/55e2efe681ed/developers/yelp_logo_50x25.png"></a></p>
+          </div>
+        </div>
         <span>
           <%= button_to 'Go', restaurant, :class => "btn btn-small btn-primary btn-success" %>
           <% if restaurant.lists.find_by(user_id: current_user.id).label == "favorite" %>

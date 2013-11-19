@@ -1,30 +1,25 @@
-<table class="table table-hover pop">
-
-  <tbody>
-    <% current_user.restaurants.each do |restaurant| %>
-      <tr>
-        <td style="padding-top:10px;"><strong><%= restaurant.name %></strong></td>
+<div class="container-fixed text-center pop container-fixed">
+<% current_user.restaurants.each do |restaurant| %>
+    <div class="well text-center">
+        <p><strong><%= restaurant.name %></strong></p>
         <% if restaurant.locations.last.hood %>
-          <td style="padding-top:10px;"><%=restaurant.locations.last.hood%>, <%=restaurant.locations.last.city%></td>
+          <p><%=restaurant.locations.last.hood%>, <%=restaurant.locations.last.city%></p>
         <% else %>
-          <td style="padding-top:10px;"><%=restaurant.locations.last.city%></td>
+          <p><%=restaurant.locations.last.city%></p>
         <% end %>
         <% if restaurant.choices.last %>
-          <td style="padding-top:10px;">~ <%= restaurant.choices.last.created_at.to_date.strftime('%a %d %b %Y') %></td>
+          <p>~ <%= restaurant.choices.last.created_at.to_date.strftime('%a %d %b %Y') %></p>
         <% else %>
-          <td style="padding-top:10px; text-align: center;">New!</td>
+          <p>New!</p>
         <% end %>
-        <td><a href="<%=restaurant.yelp_url%>" target="_blank"><img src="http://s3-media1.ak.yelpcdn.com/assets/2/www/img/55e2efe681ed/developers/yelp_logo_50x25.png"></a></td>
-        <td><%= button_to 'Go', restaurant, :class => "btn btn-small btn-primary btn-success" %></td>
+        <p><a href="<%=restaurant.yelp_url%>" target="_blank"><img src="http://s3-media1.ak.yelpcdn.com/assets/2/www/img/55e2efe681ed/developers/yelp_logo_50x25.png"></a></p>
+        <p><%= button_to 'Go', restaurant, :class => "btn btn-small btn-primary btn-success" %></p>
         <% if restaurant.lists.find_by(user_id: current_user.id).label == "favorite" %>
-          <td><%= button_to 'Undo Favorite', "unfavorite?id=#{restaurant.id}", :class => "btn btn-small btn-primary btn-warning" %></td>
+          <p><%= button_to 'Undo Favorite', "unfavorite?id=#{restaurant.id}", :class => "btn btn-small btn-primary btn-warning" %></p>
         <% else %>
-          <td><%= button_to 'Make Favorite', "favorite?id=#{restaurant.id}", :class => "btn btn-small btn-primary btn-info" %></td>
+          <p><%= button_to 'Make Favorite', "favorite?id=#{restaurant.id}", :class => "btn btn-small btn-primary btn-info" %></p>
         <% end %>
-        <td><%= button_to 'Remove', restaurant.lists.find_by(user_id: current_user.id), :class => "btn btn-small btn-danger", method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-
-<br>
+        <p><%= button_to 'Remove', restaurant.lists.find_by(user_id: current_user.id), :class => "btn btn-small btn-danger", method: :delete, data: { confirm: 'Are you sure?' } %></p>
+    </div>
+<% end %>
+</div>

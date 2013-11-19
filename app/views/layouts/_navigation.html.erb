@@ -1,6 +1,6 @@
-<%= link_to "Foodoo", new_search_path, :class => 'brand', :id => 'brand' %>
+<a class="brand" id="brand" data-toggle="collapse" data-target=".nav-collapse">Foodoo</a>
 <% if user_signed_in? %>
-  <ul class="nav">
+  <ul class="nav pull-right">
       <li>
         <%= link_to('Pick', new_search_path, :method=>'get') %>
       </li>
@@ -15,23 +15,25 @@
       </li>
   </ul>
 <% end %>
-<ul class='nav pull-right'>
-  <% if user_signed_in? %>
-    <li>
-    <%= link_to('Logout', destroy_user_session_path, :method=>'delete') %>
-    </li>
-  <% else %>
-    <li>
-    <%= link_to('Login', new_user_session_path)  %>
-    </li>
-  <% end %>
-  <% if user_signed_in? %>
-    <li>
-    <%= link_to('Edit account', edit_user_registration_path) %>
-    </li>
-  <% else %>
-    <li>
-    <%= link_to('Sign up', new_user_registration_path)  %>
-    </li>
-  <% end %>
-</ul>
+<div class="nav-collapse collapse">
+  <ul class='nav'>
+    <% if user_signed_in? %>
+      <li>
+      <%= link_to('Logout', destroy_user_session_path, :method=>'delete') %>
+      </li>
+    <% else %>
+      <li>
+      <%= link_to('Login', new_user_session_path)  %>
+      </li>
+    <% end %>
+    <% if user_signed_in? %>
+      <li>
+      <%= link_to('Edit account', edit_user_registration_path) %>
+      </li>
+    <% else %>
+      <li>
+      <%= link_to('Sign up', new_user_registration_path)  %>
+      </li>
+    <% end %>
+  </ul>
+</div>

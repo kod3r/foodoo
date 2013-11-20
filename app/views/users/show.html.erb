@@ -2,20 +2,46 @@
   <%= button_to("Add all of "+@user.username+"'s restaurants!", "getall?id=#{@user.id}", :class => 'btn btn-primary btn-large') %>
 </div>
 </br>
-<table class="table table-hover pop">
-  <tbody>
-    <% @user.restaurants.each do |restaurant| %>
-      <tr>
-        <td style="padding-top:10px;"><strong><%= restaurant.name %></strong></td>
-        <td><a href="<%=restaurant.yelp_url%>" target="_blank"><img src="http://s3-media1.ak.yelpcdn.com/assets/2/www/img/55e2efe681ed/developers/yelp_logo_50x25.png"></a></td>
-        <% if current_user.restaurants.exists?(restaurant.id) %>
-          <td>On your list</td>
-        <% else %>
-          <td><%= button_to('Add to List', "/lists/create?id=#{restaurant.id}", :class => 'btn btn-primary btn-small') %></td>
-        <% end %>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
 
-<br>
+<div class="container-fixed text-center pop container-fixed">
+<% @user.restaurants.each do |restaurant| %>
+    <div class="well text-center">
+        <p class="lead"><%= restaurant.name %></p>
+        <p><%=restaurant.cuisine%></p>
+        <% if restaurant.locations.last.hood %>
+          <p><%=restaurant.locations.last.hood%>, <%=restaurant.locations.last.city%></p>
+        <% else %>
+          <p><%=restaurant.locations.last.city%></p>
+        <% end %>
+        <div>
+          <div class="blockery">
+            <p class="text-center"><img src=<%=restaurant.image%>/></p>
+          </div>
+          <div class="blockery">
+            <% if restaurant.lists.count == 1  %>
+              <p>On <%= restaurant.lists.count %> list</p>
+            <% else %>
+              <p>On <%= restaurant.lists.count %> lists</p>
+            <% end %>
+            <% if current_user.restaurants.exists?(restaurant.id) %>
+              <p>On your list</p>
+            <% else %>
+              <%= button_to('Add to List', "/lists/create?id=#{restaurant.id}", :class => 'btn btn-primary btn-small') %>
+              <p></p>
+            <% end %>
+            <p><a href="<%=restaurant.yelp_url%>" target="_blank"><img src="http://s3-media1.ak.yelpcdn.com/assets/2/www/img/55e2efe681ed/developers/yelp_logo_50x25.png"></a></p>
+          </div>
+        </div>
+    </div>
+<% end %>
+</div>
+
+
+
+
+
+
+
+
+
+

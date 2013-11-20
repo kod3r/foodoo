@@ -19,9 +19,9 @@
           </div>
           <div class="blockery">
             <% if restaurant.lists.count == 1  %>
-              <p>On <%= restaurant.lists.count %> list</p>
+              <p>On <strong style="color:orange;"><%= restaurant.lists.count %></strong> list</p>
             <% else %>
-              <p>On <%= restaurant.lists.count %> lists</p>
+              <p>On <strong style="color:orange;"><%= restaurant.lists.count %></strong> lists</p>
             <% end %>
             <% if current_user.restaurants.exists?(restaurant.id) %>
               <p>On your list</p>

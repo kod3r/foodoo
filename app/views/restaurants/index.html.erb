@@ -14,9 +14,9 @@
           </div>
           <div class="blockery">
             <% if restaurant.lists.count == 1  %>
-              <p>On <%= restaurant.lists.count %> list</p>
+              <p>On <strong style="color:orange;"><%= restaurant.lists.count %></strong> list</p>
             <% else %>
-              <p>On <%= restaurant.lists.count %> lists</p>
+              <p>On <strong style="color:orange;"><%= restaurant.lists.count %></strong> lists</p>
             <% end %>
             <% if restaurant.choices.last %>
               <p>~ <%= restaurant.choices.last.created_at.to_date.strftime('%a %d %b %Y') %></p>

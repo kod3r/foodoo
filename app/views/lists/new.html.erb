@@ -13,7 +13,7 @@
   <% response = HTTParty.get("http://api.yelp.com/business_review_search?term=#{params[:term].split(' ').join('+')}&lat=#{request.location.latitude}&long=#{request.location.longitude}&radius=5&limit=10&ywsid=Q5mQ5eJFseNNaJx9xuXhjQ") %>
   <% @r = JSON.parse(response) %>
 <% end %>
-<div class = "container pop">
+<div class = "container pop">Us
   <% if @r %>
     <% @r["businesses"].each do |place| %>
       <div class="row text-center">

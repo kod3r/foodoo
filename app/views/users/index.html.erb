@@ -1,13 +1,11 @@
-
-<table class="table table-hover pop" style="max-width: 400px; margin:auto;">
-  <tbody>
-    <% @users.each do |user| %>
-      <tr>
-        <td><strong><%= user.username %></strong></td>
-        <td>Restaurants: <%= user.restaurants.count %></td>
-        <td><%= link_to 'Restaurant List', user, :class => "btn btn-small btn-primary"%></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-
+<div class="container-fixed text-center pop container-fixed" style="width:200px;">
+  <% @users.each do |user| %>
+    <div class="well text-center">
+      <p class="lead"><%= user.username %></p>
+      <br>
+      <p><strong style="color:orange;"><%= user.restaurants.count %> </strong> Restaurants</p>
+      <br>
+      <p><%= link_to 'Restaurant List', user, :class => "btn btn-medium btn-primary"%></p>
+    </div>
+  <% end %>
+</div>

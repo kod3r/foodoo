@@ -1,4 +1,3 @@
-
 $(function(){
   $('#group_search_btn').click(function(){
     var checked_people = [];

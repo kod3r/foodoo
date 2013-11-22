@@ -1,10 +1,11 @@
 class RestaurantsController < ApplicationController
   before_action :set_restaurant, only: [:show, :edit, :update, :destroy]
+  respond_to :html, :json
 
   # GET /restaurants
   # GET /restaurants.json
   def index
-    @restaurants = Restaurant.all
+    respond_with(@restaurants = current_user.restaurants)
   end
 
   # GET /restaurants/1

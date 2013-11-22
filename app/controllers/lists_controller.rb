@@ -47,7 +47,9 @@ class ListsController < ApplicationController
         end
       end
     else
-      format.html { redirect_to :back, notice: 'Already on your list!' }
+      respond_to do |format|
+        format.html { redirect_to :back, notice: 'Already on your list!' }
+      end
     end
   end
 

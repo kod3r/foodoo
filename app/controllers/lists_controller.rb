@@ -31,21 +31,24 @@ class ListsController < ApplicationController
   # POST /lists
   # POST /lists.json
   def create
-    @list = List.new
-    @list.user_id = current_user.id
-    @list.label = "listed"
-    @list.restaurant_id = params[:id]
+    if current_user.restaurants.where(id: params[:id]).empty?
+      @list = List.new
+      @list.user_id = current_user.id
+      @list.label = "listed"
+      @list.restaurant_id = params[:id]
 
-    respond_to do |format|
-      if @list.save
-        format.html { redirect_to :back, notice: 'Restaurant added to your list!' }
-        format.json { render action: 'new', status: :created, location: @list }
-      else
-        format.html { render action: 'new' }
-        format.json { render json: @list.errors, status: :unprocessable_entity }
+      respond_to do |format|
+        if @list.save
+          format.html { redirect_to :back, notice: 'Restaurant added to your list!' }
+          format.json { render action: 'new', status: :created, location: @list }
+        else
+          format.html { render action: 'new' }
+          format.json { render json: @list.errors, status: :unprocessable_entity }
+        end
       end
+    else
+      format.html { redirect_to :back, notice: 'Already on your list!' }
     end
-
   end
 
   # PATCH/PUT /lists/1

@@ -1,0 +1,35 @@
+<div class="container-fixed text-center pop container-fixed">
+  <div class="well text-center">
+    <p class="lead"> {{name}}</p>
+    <p>{{cuisine}}</p>
+    {{#if locations.last.hood}}
+      <p>{{locations.last.hood}}, {{locations.last.city}}</p>
+    {{else}}
+      <p>{{locations.last.city}}</p>
+    {{/if}}
+    <div>
+      <div class="blockery">
+        <p class="text-center"><img src="{{image}}"/></p>
+      </div>
+      <div class="blockery">
+        {{#if lists.count}}
+          <p>On <strong style="color:orange;">{{lists.count}}</strong> lists</p>
+        {{else}}
+          <p>On <strong style="color:orange;">{{lists.count}}</strong> lists</p>
+        {{/if}}
+        {{#if choices.last}}
+          <p>~ {{choices.last.created_at.to_date}}</p>
+          {{! fix append of .strftime('%a %d %b %Y') }}
+        {{else}}
+          <p>New!</p>
+        {{/if}}
+        <p><a href="{{yelp_url}}" target="_blank"><img src="http://s3-media1.ak.yelpcdn.com/assets/2/www/img/55e2efe681ed/developers/yelp_logo_50x25.png"></a></p>
+      </div>
+    </div>
+    <span>
+      <button class="btn btn-small btn-success" id="go_{{id}}"></button>
+      <button class="btn btn-small btn-success" id="favorite_{{id}}"></button>
+      <button class="btn btn-small btn-success" id="remove_{{id}}"></button>
+    </span>
+  </div>
+</div>

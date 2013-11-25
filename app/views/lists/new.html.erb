@@ -8,18 +8,21 @@
 </div>
 </br>
 </br>
-
-<% if params[:term] %>
+<% if params[:term] && session[:user_location] %>
+  <% response = HTTParty.get("http://api.yelp.com/business_review_search?term=#{params[:term].split(' ').join('+')}&lat=#{session[:user_location][0]}&long=#{session[:user_location][1]}&radius=5&limit=10&ywsid=Q5mQ5eJFseNNaJx9xuXhjQ") %>
+  <% @r = JSON.parse(response) %>
+<% elsif params[:term] %>
   <% response = HTTParty.get("http://api.yelp.com/business_review_search?term=#{params[:term].split(' ').join('+')}&lat=#{request.location.latitude}&long=#{request.location.longitude}&radius=5&limit=10&ywsid=Q5mQ5eJFseNNaJx9xuXhjQ") %>
   <% @r = JSON.parse(response) %>
 <% end %>
 <div class = "container pop">
   <% if @r %>
     <% @r["businesses"].each do |place| %>
+      <% @db_restaurant = Restaurant.joins(:locations).where('locations.address' => place["address1"]).first %>
       <div class="row text-center">
       <div class="well text-center span6 offset3">
-        <% if Restaurant.find_by_name(place["name"]) %>
-          <% @restaurant = Restaurant.find_by_name(place["name"]) %>
+        <% if @db_restaurant %>
+          <% @restaurant = @db_restaurant %>
         <% else %>
           <% @categories = [] %>
           <% place["categories"].each do |category| %>

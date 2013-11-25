@@ -22,12 +22,14 @@ gem 'rails-backbone'
 
 gem 'handlebars_assets'
 
+
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.0.0'
 
 # Use sqlite3 as the database for Active Record
 group :development do
   gem 'sqlite3'
+  gem 'quiet_assets'
 end
 group :production do
   gem 'pg'

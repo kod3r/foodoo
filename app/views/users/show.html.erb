@@ -32,6 +32,9 @@
             <p><a href="<%=restaurant.yelp_url%>" target="_blank"><img src="http://s3-media1.ak.yelpcdn.com/assets/2/www/img/55e2efe681ed/developers/yelp_logo_50x25.png"></a></p>
           </div>
         </div>
+        <% if restaurant.lists.find_by(user_id: @user.id).label == "favorite" %>
+          <p><strong style="color:orange;"><%= @user.username %> favorite</strong></p>
+        <% end %>
     </div>
 <% end %>
 </div>

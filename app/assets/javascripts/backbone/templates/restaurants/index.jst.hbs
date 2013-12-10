@@ -1,35 +1,161 @@
-<div class="container-fixed text-center pop container-fixed">
-  <div class="well text-center">
-    <p class="lead"> {{name}}</p>
-    <p>{{cuisine}}</p>
-    {{#if locations.last.hood}}
-      <p>{{locations.last.hood}}, {{locations.last.city}}</p>
+<div class="text-center" id="sort-by">
+  <a class="btn btn-large">SORT</a>
+  <a class="btn btn-large btn-info" href="#dist">Distance</a>
+  <a class="btn btn-large btn-info" href="#last">Last Visit</a>
+  <a class="btn btn-large btn-info" href="#name">Name</a>
+  <a class="btn btn-large btn-info" href="#hood">Neighborhood</a>
+  <a class="btn btn-large btn-warning" href="#score">Score</a>
+</div>
+<br>
+<div class="text-center" id="filters">
+  <a class="btn btn-large">FILTER</a>
+  <a class="btn btn-large btn-info" href="#" data-filter="*">All</a>
+  <a class="btn btn-large btn-info" href="#" data-filter=".favorite">Favorite</a>
+  <a class="btn btn-large btn-info" href="#" data-filter=".cuisine" id="cuisine-button">
+    <div class="cuisine-input" id="cuisine-show">Cuisine</div>
+    <div class="cuisine-input input-group" style="display: none" id="cuisine-filter">
+      <input type="text" class="form-control" style="max-width: 100px; text-align: center;" id="cuisine-input">
+      <span class="input-group-btn">
+        <button class="btn btn-default" type="button" id="cuisine-submit">Select</button>
+      </span>
+    </div>
+  </a>
+</div>
+<br>
+<div class="text-center" id="asc-desc">
+  <a class="btn btn-large">ORDER</a>
+  <a class="btn btn-large btn-info" href="#asc">Ascending</a>
+  <a class="btn btn-large btn-info" href="#desc">Descending</a>
+</div>
+<br>
+<div id="container" class="text-center">
+  {{#each this}}
+  <div class="card text-center item pop {{#each cuisines}}{{this}} {{/each}}{{label}}">
+    {{#if label}}
+    <p class="lead name" style="color:orange;">{{name}}</p>
     {{else}}
-      <p>{{locations.last.city}}</p>
+    <p class="lead name">{{name}}</p>
     {{/if}}
+    <p>{{#each cuisines}}{{this}}  {{/each}}</p>
+  {{#if locations.hood}}
+    <p class="hood">{{locations.hood}}</p>
+  {{else}}
+    <p class="city">{{locations.city}}</p>
+  {{/if}}
     <div>
       <div class="blockery">
-        <p class="text-center"><img src="{{image}}"/></p>
+        <a class="text-center" href="{{yelp_url}}" target="_blank"><img src="{{image}}"/></a>
       </div>
       <div class="blockery">
-        {{#if lists.count}}
-          <p>On <strong style="color:orange;">{{lists.count}}</strong> lists</p>
-        {{else}}
-          <p>On <strong style="color:orange;">{{lists.count}}</strong> lists</p>
-        {{/if}}
-        {{#if choices.last}}
-          <p>~ {{choices.last.created_at.to_date}}</p>
-          {{! fix append of .strftime('%a %d %b %Y') }}
-        {{else}}
-          <p>New!</p>
-        {{/if}}
-        <p><a href="{{yelp_url}}" target="_blank"><img src="http://s3-media1.ak.yelpcdn.com/assets/2/www/img/55e2efe681ed/developers/yelp_logo_50x25.png"></a></p>
+        <p>Score: <strong style="color:orange;" class="score">{{score}}</strong></p>
+        <p class="dist">{{distance}} min walk</p>
+        <p class="last">{{last_choice}}</p>
+      {{#if lists.count}}
+        <p>On <strong style="color:orange;">{{lists}}</strong> lists</p>
+      {{else}}
+        <p>On <strong style="color:orange;">{{lists}}</strong> lists</p>
+      {{/if}}
+{{!--         <p><a href="{{yelp_url}}" target="_blank"><img src="http://s3-media1.ak.yelpcdn.com/assets/2/www/img/55e2efe681ed/developers/yelp_logo_50x25.png"></a></p> --}}
       </div>
     </div>
     <span>
-      <button class="btn btn-small btn-success" id="go_{{id}}"></button>
-      <button class="btn btn-small btn-success" id="favorite_{{id}}"></button>
-      <button class="btn btn-small btn-success" id="remove_{{id}}"></button>
+      <a class="btn btn-small btn-success go-button" href="/restaurants/{{id}}">Go</a>
+      {{#if label}}
+      <a class="btn btn-small btn-info fav-button" href="/unfavorite?id={{id}}" data-method="post">Favorite</a>
+      {{else}}
+      <a class="btn btn-small btn-info fav-button" href="/favorite?id={{id}}" data-method="post">Favorite</a>
+      {{/if}}
+      <a class="btn btn-small btn-danger del-button" href="/restaurants/{{id}}" data-confirm="Are you sure?" data-method="delete">Delete</a>
     </span>
   </div>
+  {{/each}}
 </div>
+<script>
+$(function(){
+  var $container = $('#container');
+  $('#container').isotope({
+    // options
+    itemSelector : '.item',
+    layoutMode : 'fitRows',
+    getSortData : {
+      name : function ( $elem ) {
+        return $elem.find('.name').text();
+      },
+      hood : function ( $elem ) {
+        return $elem.find('.hood').text();
+      },
+      last : function ( $elem ) {
+        return $elem.find('.last').text();
+      },
+      dist : function ( $elem ) {
+        return parseInt($elem.find('.dist').text());
+      },
+      score : function ( $elem ) {
+        return parseInt($elem.find('.score').text());
+      }
+    }
+  });
+
+  $('#sort-by a').click(function(){
+    // get href attribute, minus the '#'
+    var sortName = $(this).attr('href').slice(1);
+    if(sortName == "last" || sortName == "score"){
+      $('#container').isotope({ sortBy : sortName, sortAscending: false });
+    } else{
+      $('#container').isotope({ sortBy : sortName });
+    }
+    return false;
+  });
+
+  $('#filters #cuisine-button').click(function(){
+    var selector = $(this).attr('data-filter');
+    if($("#cuisine-show").is(":visible")){
+      $(".cuisine-input").toggle();
+    }
+    return false;
+  });
+
+  $('#cuisine-filter input').keypress(function(e) {
+    if(e.which == 13) {
+      jQuery(this).blur();
+      jQuery('#cuisine-submit').focus().click();
+      return false;
+    }
+  });
+
+  // $('#cuisine-filter input').autocomplete({
+
+  // });
+
+  $('#cuisine-submit').click(function(){
+    $('#cuisine-filter input').submit();
+    return false;
+  });
+
+  $('#cuisine-filter input').submit(function(event){
+    event.preventDefault();
+    var selector = $("#cuisine-input").val();
+    $("#cuisine-show").html(selector);
+    $container.isotope({ filter: "."+selector });
+    $(".cuisine-input").toggle();
+    return false;
+  });
+
+  $('#filters a').click(function(){
+    var selector = $(this).attr('data-filter');
+    $container.isotope({ filter: selector });
+    return false;
+  });
+
+  $('#asc-desc a').click(function(){
+    var order = $(this).attr('href').slice(1);
+    if(order == "asc"){
+      $('#container').isotope({ sortAscending: true });
+    }else if(order == "desc"){
+      $('#container').isotope({ sortAscending: false });
+    }
+    return false;
+  });
+
+});
+</script>

@@ -1,7 +1,12 @@
 module SearchesHelper
 
   def distance(restaurant)
-    ((restaurant.locations.last.distance_to(session[:user_location])+0.1)*25).to_i
+    if session[:user_location]
+      ((restaurant.locations.last.distance_to(session[:user_location])+0.1)*25).to_i
+    else
+      result = request.location
+      ((restaurant.locations.last.distance_to([result.latitude, result.longitude])+0.1)*25).to_i
+    end
   end
 
   def solo_score(restaurant, user_id)

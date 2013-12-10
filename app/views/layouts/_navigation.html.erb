@@ -14,26 +14,24 @@
         <%= link_to('Friends', '/lsearch') %>
       </li>
   </ul>
-<% end %>
-<div class="nav-collapse collapse">
-  <ul class='nav'>
-    <% if user_signed_in? %>
+  <div class="nav-collapse collapse">
+    <ul class="nav">
       <li>
-      <%= link_to('Logout', destroy_user_session_path, :method=>'delete') %>
+        <%= link_to('Edit account', edit_user_registration_path) %>
       </li>
-    <% else %>
       <li>
+        <%= link_to('Logout', destroy_user_session_path, :method=>'delete') %>
+      </li>
+    </ul>
+  </div>
+<% else %>
+  <ul class='nav pull-right'>
+    <li>
       <%= link_to('Login', new_user_session_path)  %>
-      </li>
-    <% end %>
-    <% if user_signed_in? %>
-      <li>
-      <%= link_to('Edit account', edit_user_registration_path) %>
-      </li>
-    <% else %>
-      <li>
+    </li>
+    <li>
       <%= link_to('Sign up', new_user_registration_path)  %>
-      </li>
-    <% end %>
+    </li>
   </ul>
-</div>
+<% end %>
+

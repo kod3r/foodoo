@@ -3,9 +3,9 @@
 </div>
 </br>
 
-<div class="container-fixed text-center pop container-fixed">
+<div id="container">
 <% @user.restaurants.each do |restaurant| %>
-    <div class="well text-center">
+    <div class="card text-center item pop">
         <p class="lead"><%= restaurant.name %></p>
         <p><%=restaurant.cuisine%></p>
         <% if restaurant.locations.last.hood %>
@@ -15,7 +15,7 @@
         <% end %>
         <div>
           <div class="blockery">
-            <p class="text-center"><img src=<%=restaurant.image%>/></p>
+            <a class="text-center"><img src=<%=restaurant.image%>/></p>
           </div>
           <div class="blockery">
             <% if restaurant.lists.count == 1  %>
@@ -38,7 +38,16 @@
     </div>
 <% end %>
 </div>
-
+<script>
+$(function(){
+  var $container = $('#container');
+  $('#container').isotope({
+    // options
+    itemSelector : '.item',
+    layoutMode : 'fitRows'
+  });
+});
+</script>
 
 
 

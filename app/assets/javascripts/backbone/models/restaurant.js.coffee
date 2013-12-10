@@ -1,5 +1,5 @@
 class V1foodoo.Models.Restaurant extends Backbone.Model
-  paramRoot: 'restaurant'
+  urlRoot: '/restaurants'
 
   defaults:
     name: null

@@ -1,3 +1,4 @@
+
 <div class="span8 offset2 text-center">
 <%= button_to('Group Search', 'group', method: :get,  :class => 'btn btn-primary btn-large') %>
 </div>
@@ -29,6 +30,8 @@
                     <%= ((restaurant.locations.last.distance_to(session[:user_location])+0.1)*25).to_i %> min walk
                   <% elsif request.location %>
                     <%= distance(restaurant) %> min walk
+                  <% else %>
+                    <p>Enable gps for distance</p>
                   <% end %>
                 </p>
                 <p id="cab_<%= restaurant.id %>"></p>
@@ -60,13 +63,13 @@
               </div>
               <div class="blockery">
                 <% if session[:user_location] %>
-                    <%= ((restaurant.locations.last.distance_to(request.location.coordinates)+0.1)*25).to_i %> min walk
+                  <%= ((restaurant.locations.last.distance_to(session[:user_location])+0.1)*25).to_i %> min walk
                 <% elsif request.location %>
-                  <p id="walk_<%= restaurant.id %>">
                   <%= distance(restaurant) %> min walk
+                <% else %>
+                    <p>Enable gps for distance</p>
                 <% end  %>
                 </p>
-                <p id="cab_<%= restaurant.id %>"></p>
                 <% if params[:ppl] %>
                   Score: <strong style="color:orange;"><%=group_score(params[:ppl].split(','), restaurant)%></strong>
                 <% else %>

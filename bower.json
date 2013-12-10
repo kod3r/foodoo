@@ -1,0 +1,13 @@
+{
+  "name": "foodoo",
+  "version": "0.0.0",
+  "authors": [
+    "Julian Pittleman <jnpn87@gmail.com>"
+  ],
+  "description": "food app",
+  "license": "MIT",
+  "private": true,
+  "dependencies": {
+    "momentjs": "~2.4.0"
+  }
+}

@@ -1,7 +1,7 @@
 V1foodoo.Views.Restaurants ||= {}
 
 class V1foodoo.Views.Restaurants.NewView extends Backbone.View
-  template: JST["backbone/templates/restaurants/new"]
+  template: JST["restaurants/new"]
 
   events:
     "submit #new-restaurant": "save"

@@ -32,5 +32,9 @@
   }
   $(document).ready(function() {
     getLocation();
+    var BV = new $.BigVideo();
+    BV.init();
+    BV.show('foodvideo.mp4',{ambient:true});
   });
 </script>
+

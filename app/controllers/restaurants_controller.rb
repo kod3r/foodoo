@@ -5,7 +5,7 @@ class RestaurantsController < ApplicationController
   # GET /restaurants
   # GET /restaurants.json
   def index
-    respond_with(@restaurants = current_user.restaurants)
+    @restaurants = current_user.restaurants
   end
 
   # GET /restaurants/1
@@ -69,7 +69,7 @@ class RestaurantsController < ApplicationController
   def destroy
     @restaurant.destroy
     respond_to do |format|
-      format.html { redirect_to restaurants_url }
+      format.html { redirect_to restaurants_url, notice: "Restaurant successfully deleted" }
       format.json { head :no_content }
     end
   end

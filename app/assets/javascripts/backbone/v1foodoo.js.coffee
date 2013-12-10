@@ -10,6 +10,11 @@ window.V1foodoo =
   Routers: {}
   Views: {}
   initialize: (data) ->
-    restaurants = new V1foodoo.Collections.RestaurantsCollection(data.restaurants)
-    new V1foodoo.Routers.RestaurantsRouter(restaurants: restaurants)
-    Backbone.history.start()
+    restaurants = new V1foodoo.Collections.RestaurantsCollection()
+    restaurants.fetch
+      success: (collection) ->
+        V1foodoo.router = new V1foodoo.Routers.RestaurantsRouter(restaurants: collection)
+        Backbone.history.start(pushState: true)
+
+$(document).ready ->
+  V1foodoo.initialize()

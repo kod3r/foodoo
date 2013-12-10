@@ -12,11 +12,25 @@
 //
 //= require jquery
 //= require jquery_ujs
+//= require jquery-ui/ui/minified/jquery-ui.min.js
+//= require masonry/masonry.pkgd.min.js
+//= require Isotope/isotope-site/js/jquery.infinitescroll.min.js
+//= require Isotope/isotope-site/js/jquery.ba-bbq.min.js
+//= require Isotope/isotope-site/js/fake-element.js
+//= require Isotope/isotope-site/js/make-big-graph-projects.js
+//= require Isotope/isotope-site/jquery.isotope.min.js
+//= require handlebars.runtime
+//= require_tree ./backbone/templates
+//= require eventEmitter/EventEmitter.js
+//= require imagesloaded/imagesloaded.js
 //= require bootstrap
 //= require underscore
 //= require backbone
 //= require backbone_rails_sync
 //= require backbone_datalink
 //= require backbone/v1foodoo
+//= require momentjs/moment.js
+//= require video.js/video.js
+//= require BigVideo.js/lib/bigvideo.js
 //= require_tree .
 

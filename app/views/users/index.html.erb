@@ -1,6 +1,6 @@
-<div class="container-fixed text-center pop container-fixed" style="width:240px;">
+<div id="container">
   <% @users.each do |user| %>
-    <div class="well text-center">
+    <div class="item pop card text-center">
       <p class="lead"><%= user.username %></p>
       <br>
       <p><strong style="color:orange;"><%= user.restaurants.count %> </strong> Restaurants</p>
@@ -9,3 +9,14 @@
     </div>
   <% end %>
 </div>
+
+<script>
+$(function(){
+  var $container = $('#container');
+  $('#container').isotope({
+    // options
+    itemSelector : '.item',
+    layoutMode : 'fitRows'
+  });
+});
+</script>

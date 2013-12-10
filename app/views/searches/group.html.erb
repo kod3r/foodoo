@@ -12,7 +12,7 @@
         <td>Restaurants: <%= user.restaurants.count %></td>
         <td style="color:orange;">
         <%= check_box_tag "user_ids[]", user.id, false, :class => "cbox", :id => "cbox_"+user.id.to_s %>
-        Add to group search
+        Add to group
         </td>
       </tr>
     <% end %>

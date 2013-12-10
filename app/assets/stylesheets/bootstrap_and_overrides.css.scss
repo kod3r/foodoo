@@ -5,7 +5,10 @@ body { padding-top: 60px; }
 input[type="text"] { margin-bottom: 0px;}
 
 body {
-  background: image-url('noodles.jpg') no-repeat center fixed;
+  background-image: ('/noodles.jpg')
+  background-repeat: no-repeat;
+  background-position: center;
+  background-attachment: fixed;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;

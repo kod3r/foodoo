@@ -5,7 +5,7 @@ body { padding-top: 60px; }
 input[type="text"] { margin-bottom: 0px;}
 
 body {
-  background: asset-url('images/noodles.jpg') no-repeat center fixed;
+  background: asset-url("images/noodles.jpg", images) no-repeat center fixed;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;

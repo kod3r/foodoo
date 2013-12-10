@@ -1,24 +1,27 @@
 <div class="text-center" id="sort-by">
   <a class="btn btn-large" style="margin-top: 5px;">SORT</a>
-  <a class="btn btn-large btn-info" href="#dist" style="margin-top: 5px;">Distance</a>
-  <a class="btn btn-large btn-info" href="#last" style="margin-top: 5px;">Last Visit</a>
+  <a class="btn btn-large btn-info" href="#lists" style="margin-top: 5px;">Lists</a>
   <a class="btn btn-large btn-info" href="#name" style="margin-top: 5px;">Name</a>
   <a class="btn btn-large btn-info" href="#hood" style="margin-top: 5px;">Neighborhood</a>
-  <a class="btn btn-large btn-warning" href="#score" style="margin-top: 5px;">Score</a>
 </div>
-
+<br>
+<div class="text-center" id="asc-desc">
+  <a class="btn btn-large">ORDER</a>
+  <a class="btn btn-large btn-info" href="#asc">Ascending</a>
+  <a class="btn btn-large btn-info" href="#desc">Descending</a>
+</div>
+<br>
 <div class="text-center" >
   <%= button_to("Add all of "+@user.username+"'s restaurants!", "getall?id=#{@user.id}", :class => 'btn btn-primary btn-large') %>
 </div>
-</br>
-
+<br>
 <div id="container">
 <% @user.restaurants.each do |restaurant| %>
     <div class="card text-center item pop">
-        <p class="lead"><%= restaurant.name %></p>
+        <p class="lead name"><%= restaurant.name %></p>
         <p><%=restaurant.cuisine%></p>
         <% if restaurant.locations.last.hood %>
-          <p><%=restaurant.locations.last.hood%>, <%=restaurant.locations.last.city%></p>
+          <p class="hood"><%=restaurant.locations.last.hood%>, <%=restaurant.locations.last.city%></p>
         <% else %>
           <p><%=restaurant.locations.last.city%></p>
         <% end %>
@@ -28,9 +31,9 @@
           </div>
           <div class="blockery">
             <% if restaurant.lists.count == 1  %>
-              <p>On <strong style="color:orange;"><%= restaurant.lists.count %></strong> list</p>
+              <p>On <strong style="color:orange;" class="lists"><%= restaurant.lists.count %></strong> list</p>
             <% else %>
-              <p>On <strong style="color:orange;"><%= restaurant.lists.count %></strong> lists</p>
+              <p>On <strong style="color:orange;" class="lists"><%= restaurant.lists.count %></strong> lists</p>
             <% end %>
             <% if current_user.restaurants.exists?(restaurant.id) %>
               <p>On your list</p>
@@ -58,11 +61,11 @@
         name : function ( $elem ) {
           return $elem.find('.name').text();
         },
+        lists : function ( $elem ) {
+          return parseInt($elem.find('.lists').text());
+        },
         hood : function ( $elem ) {
           return $elem.find('.hood').text();
-        },
-        dist : function ( $elem ) {
-          return parseInt($elem.find('.dist').text());
         }
       }
     });
@@ -70,7 +73,7 @@
     $('#sort-by a').click(function(){
       // get href attribute, minus the '#'
       var sortName = $(this).attr('href').slice(1);
-      if(sortName == "last" || sortName == "score"){
+      if(sortName == "lists"){
         $('#container').isotope({ sortBy : sortName, sortAscending: false });
       } else{
         $('#container').isotope({ sortBy : sortName });

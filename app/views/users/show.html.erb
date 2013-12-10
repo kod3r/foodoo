@@ -1,3 +1,12 @@
+<div class="text-center" id="sort-by">
+  <a class="btn btn-large" style="margin-top: 5px;">SORT</a>
+  <a class="btn btn-large btn-info" href="#dist" style="margin-top: 5px;">Distance</a>
+  <a class="btn btn-large btn-info" href="#last" style="margin-top: 5px;">Last Visit</a>
+  <a class="btn btn-large btn-info" href="#name" style="margin-top: 5px;">Name</a>
+  <a class="btn btn-large btn-info" href="#hood" style="margin-top: 5px;">Neighborhood</a>
+  <a class="btn btn-large btn-warning" href="#score" style="margin-top: 5px;">Score</a>
+</div>
+
 <div class="text-center" >
   <%= button_to("Add all of "+@user.username+"'s restaurants!", "getall?id=#{@user.id}", :class => 'btn btn-primary btn-large') %>
 </div>
@@ -39,14 +48,52 @@
 <% end %>
 </div>
 <script>
-$(function(){
-  var $container = $('#container');
-  $('#container').isotope({
-    // options
-    itemSelector : '.item',
-    layoutMode : 'fitRows'
+  $(function(){
+    var $container = $('#container');
+    $('#container').isotope({
+      // options
+      itemSelector : '.item',
+      layoutMode : 'fitRows',
+      getSortData : {
+        name : function ( $elem ) {
+          return $elem.find('.name').text();
+        },
+        hood : function ( $elem ) {
+          return $elem.find('.hood').text();
+        },
+        dist : function ( $elem ) {
+          return parseInt($elem.find('.dist').text());
+        }
+      }
+    });
+
+    $('#sort-by a').click(function(){
+      // get href attribute, minus the '#'
+      var sortName = $(this).attr('href').slice(1);
+      if(sortName == "last" || sortName == "score"){
+        $('#container').isotope({ sortBy : sortName, sortAscending: false });
+      } else{
+        $('#container').isotope({ sortBy : sortName });
+      }
+      return false;
+    });
+
+    $('#filters a').click(function(){
+      var selector = $(this).attr('data-filter');
+      $container.isotope({ filter: selector });
+      return false;
+    });
+
+    $('#asc-desc a').click(function(){
+      var order = $(this).attr('href').slice(1);
+      if(order == "asc"){
+        $('#container').isotope({ sortAscending: true });
+      }else if(order == "desc"){
+        $('#container').isotope({ sortAscending: false });
+      }
+      return false;
+    });
   });
-});
 </script>
 
 

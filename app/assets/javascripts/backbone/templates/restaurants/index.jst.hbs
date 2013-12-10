@@ -70,92 +70,92 @@
   </div>
   {{/each}}
 </div>
+
 <script>
-$(function(){
-  var $container = $('#container');
-  $('#container').isotope({
-    // options
-    itemSelector : '.item',
-    layoutMode : 'fitRows',
-    getSortData : {
-      name : function ( $elem ) {
-        return $elem.find('.name').text();
-      },
-      hood : function ( $elem ) {
-        return $elem.find('.hood').text();
-      },
-      last : function ( $elem ) {
-        return $elem.find('.last').text();
-      },
-      dist : function ( $elem ) {
-        return parseInt($elem.find('.dist').text());
-      },
-      score : function ( $elem ) {
-        return parseInt($elem.find('.score').text());
+  $(function(){
+    var $container = $('#container');
+    $('#container').isotope({
+      // options
+      itemSelector : '.item',
+      layoutMode : 'fitRows',
+      getSortData : {
+        name : function ( $elem ) {
+          return $elem.find('.name').text();
+        },
+        hood : function ( $elem ) {
+          return $elem.find('.hood').text();
+        },
+        last : function ( $elem ) {
+          return $elem.find('.last').text();
+        },
+        dist : function ( $elem ) {
+          return parseInt($elem.find('.dist').text());
+        },
+        score : function ( $elem ) {
+          return parseInt($elem.find('.score').text());
+        }
       }
-    }
-  });
+    });
 
-  $('#sort-by a').click(function(){
-    // get href attribute, minus the '#'
-    var sortName = $(this).attr('href').slice(1);
-    if(sortName == "last" || sortName == "score"){
-      $('#container').isotope({ sortBy : sortName, sortAscending: false });
-    } else{
-      $('#container').isotope({ sortBy : sortName });
-    }
-    return false;
-  });
-
-  $('#filters #cuisine-button').click(function(){
-    var selector = $(this).attr('data-filter');
-    if($("#cuisine-show").is(":visible")){
-      $(".cuisine-input").toggle();
-    }
-    return false;
-  });
-
-  $('#cuisine-filter input').keypress(function(e) {
-    if(e.which == 13) {
-      jQuery(this).blur();
-      jQuery('#cuisine-submit').focus().click();
+    $('#sort-by a').click(function(){
+      // get href attribute, minus the '#'
+      var sortName = $(this).attr('href').slice(1);
+      if(sortName == "last" || sortName == "score"){
+        $('#container').isotope({ sortBy : sortName, sortAscending: false });
+      } else{
+        $('#container').isotope({ sortBy : sortName });
+      }
       return false;
-    }
+    });
+
+    $('#filters #cuisine-button').click(function(){
+      var selector = $(this).attr('data-filter');
+      if($("#cuisine-show").is(":visible")){
+        $(".cuisine-input").toggle();
+      }
+      return false;
+    });
+
+    $('#cuisine-filter input').keypress(function(e) {
+      if(e.which == 13) {
+        jQuery(this).blur();
+        jQuery('#cuisine-submit').focus().click();
+        return false;
+      }
+    });
+
+    // $('#cuisine-filter input').autocomplete({
+
+    // });
+
+    $('#cuisine-submit').click(function(){
+      $('#cuisine-filter input').submit();
+      return false;
+    });
+
+    $('#cuisine-filter input').submit(function(event){
+      event.preventDefault();
+      var selector = $("#cuisine-input").val();
+      $("#cuisine-show").html(selector);
+      $container.isotope({ filter: "."+selector });
+      $(".cuisine-input").toggle();
+      return false;
+    });
+
+    $('#filters a').click(function(){
+      var selector = $(this).attr('data-filter');
+      $container.isotope({ filter: selector });
+      return false;
+    });
+
+    $('#asc-desc a').click(function(){
+      var order = $(this).attr('href').slice(1);
+      if(order == "asc"){
+        $('#container').isotope({ sortAscending: true });
+      }else if(order == "desc"){
+        $('#container').isotope({ sortAscending: false });
+      }
+      return false;
+    });
   });
-
-  // $('#cuisine-filter input').autocomplete({
-
-  // });
-
-  $('#cuisine-submit').click(function(){
-    $('#cuisine-filter input').submit();
-    return false;
-  });
-
-  $('#cuisine-filter input').submit(function(event){
-    event.preventDefault();
-    var selector = $("#cuisine-input").val();
-    $("#cuisine-show").html(selector);
-    $container.isotope({ filter: "."+selector });
-    $(".cuisine-input").toggle();
-    return false;
-  });
-
-  $('#filters a').click(function(){
-    var selector = $(this).attr('data-filter');
-    $container.isotope({ filter: selector });
-    return false;
-  });
-
-  $('#asc-desc a').click(function(){
-    var order = $(this).attr('href').slice(1);
-    if(order == "asc"){
-      $('#container').isotope({ sortAscending: true });
-    }else if(order == "desc"){
-      $('#container').isotope({ sortAscending: false });
-    }
-    return false;
-  });
-
-});
 </script>

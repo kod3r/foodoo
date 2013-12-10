@@ -1,9 +1,21 @@
+<div class="text-center" id="sort-by">
+  <a class="btn btn-large" style="margin-top: 5px;">SORT</a>
+  <a class="btn btn-large btn-info" href="#name" style="margin-top: 5px;">Name</a>
+  <a class="btn btn-large btn-info" href="#rest" style="margin-top: 5px;">Restaurants</a>
+</div>
+<br>
+<div class="text-center" id="asc-desc">
+  <a class="btn btn-large">ORDER</a>
+  <a class="btn btn-large btn-info" href="#asc">Ascending</a>
+  <a class="btn btn-large btn-info" href="#desc">Descending</a>
+</div>
+<br>
 <div id="container">
   <% @users.each do |user| %>
     <div class="item pop card text-center">
-      <p class="lead"><%= user.username %></p>
+      <p class="lead name"><%= user.username %></p>
       <br>
-      <p><strong style="color:orange;"><%= user.restaurants.count %> </strong> Restaurants</p>
+      <p><strong style="color:orange;" class="rest"><%= user.restaurants.count %> </strong> Restaurants</p>
       <br>
       <p><%= link_to 'Restaurant List', user, :class => "btn btn-medium btn-primary"%></p>
     </div>
@@ -19,4 +31,43 @@ $(function(){
     layoutMode : 'fitRows'
   });
 });
+</script>
+<script>
+  $(function(){
+    var $container = $('#container');
+    $('#container').isotope({
+      // options
+      itemSelector : '.item',
+      layoutMode : 'fitRows',
+      getSortData : {
+        name : function ( $elem ) {
+          return $elem.find('.name').text();
+        },
+        rest : function ( $elem ) {
+          return $elem.find('.hood').text();
+        }
+      }
+    });
+
+    $('#sort-by a').click(function(){
+      // get href attribute, minus the '#'
+      var sortName = $(this).attr('href').slice(1);
+      if(sortName == "last" || sortName == "score"){
+        $('#container').isotope({ sortBy : sortName, sortAscending: false });
+      } else{
+        $('#container').isotope({ sortBy : sortName });
+      }
+      return false;
+    });
+
+    $('#asc-desc a').click(function(){
+      var order = $(this).attr('href').slice(1);
+      if(order == "asc"){
+        $('#container').isotope({ sortAscending: true });
+      }else if(order == "desc"){
+        $('#container').isotope({ sortAscending: false });
+      }
+      return false;
+    });
+  });
 </script>

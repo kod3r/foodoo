@@ -9,14 +9,14 @@
 <br>
 <div class="text-center" id="filters">
   <a class="btn btn-large">FILTER</a>
-  <a class="btn btn-large btn-info" href="#" data-filter="*">All</a>
-  <a class="btn btn-large btn-info" href="#" data-filter=".favorite">Favorite</a>
+  <a class="btn btn-large btn-info filter-click" href="#" data-filter="*">All</a>
+  <a class="btn btn-large btn-info filter-click" href="#" data-filter=".favorite">Favorite</a>
   <a class="btn btn-large btn-info" href="#" data-filter=".cuisine" id="cuisine-button">
     <div class="cuisine-input" id="cuisine-show">Cuisine</div>
     <div class="cuisine-input input-group" style="display: none" id="cuisine-filter">
       <input type="text" class="form-control" style="max-width: 100px; text-align: center;" id="cuisine-input">
       <span class="input-group-btn">
-        <button class="btn btn-default" type="button" id="cuisine-submit">Select</button>
+        <button class="btn btn-default filter-click" type="button" id="cuisine-submit">Select</button>
       </span>
     </div>
   </a>
@@ -109,8 +109,10 @@
     });
 
     $('#filters #cuisine-button').click(function(){
-      var selector = $(this).attr('data-filter');
       if($("#cuisine-show").is(":visible")){
+        $(".cuisine-input").toggle();
+        $("#cuisine-input").focus();
+      }else{
         $(".cuisine-input").toggle();
       }
       return false;
@@ -154,7 +156,7 @@
       return false;
     });
 
-    $('#filters a').click(function(){
+    $('#filters filter-click').click(function(){
       var selector = $(this).attr('data-filter');
       $container.isotope({ filter: selector });
       return false;

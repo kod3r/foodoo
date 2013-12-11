@@ -33,7 +33,7 @@
 <br>
 <div id="container">
 <% @user.restaurants.each do |restaurant| %>
-    <div class="card text-center item pop <%= restaurant.lists.find_by(user_id: @user.id).label %> <%= restaurant.cuisine.split(", ") %>">
+    <div class="card text-center item pop <%= restaurant.lists.find_by(user_id: @user.id).label %> <%= restaurant.cuisine.split(", ").join(' ') %>">
         <p class="lead name"><%= restaurant.name %></p>
         <p><%=restaurant.cuisine%></p>
         <% if restaurant.locations.last.hood %>

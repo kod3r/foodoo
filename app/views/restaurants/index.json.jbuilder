@@ -17,5 +17,9 @@ json.array!(@restaurants) do |restaurant|
   else
     json.last_choice "New!"
   end
-  json.distance ((restaurant.locations.last.distance_to(session[:user_location])+0.1)*25).to_i
+  if restaurant.locations.last.distance_to(session[:user_location])
+    json.distance ((restaurant.locations.last.distance_to(session[:user_location])+0.1)*25).to_i
+  else
+    json.distance 50
+  end
 end

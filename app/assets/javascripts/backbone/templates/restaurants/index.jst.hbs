@@ -156,7 +156,7 @@
       return false;
     });
 
-    $('#filters filter-click').click(function(){
+    $('#filters .filter-click').click(function(){
       var selector = $(this).attr('data-filter');
       $container.isotope({ filter: selector });
       return false;

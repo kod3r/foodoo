@@ -33,9 +33,9 @@
 <br>
 <div id="container">
 <% @user.restaurants.each do |restaurant| %>
-    <div class="card text-center item pop">
+    <div class="card text-center item pop <%= restaurant.lists.find_by(user_id: @user.id).label %> <%= restaurant.cuisine.split(", ") %>">
         <p class="lead name"><%= restaurant.name %></p>
-        <p class="<%= restaurant.cuisine.split(", ") %>"><%=restaurant.cuisine%></p>
+        <p><%=restaurant.cuisine%></p>
         <% if restaurant.locations.last.hood %>
           <p class="hood"><%=restaurant.locations.last.hood%>, <%=restaurant.locations.last.city%></p>
         <% else %>
@@ -61,7 +61,7 @@
           </div>
         </div>
         <% if restaurant.lists.find_by(user_id: @user.id).label == "favorite" %>
-          <p class="favorite"><strong style="color:orange;"><%= @user.username %> favorite</strong></p>
+          <p><strong style="color:orange;"><%= @user.username %> favorite</strong></p>
         <% end %>
     </div>
 <% end %>

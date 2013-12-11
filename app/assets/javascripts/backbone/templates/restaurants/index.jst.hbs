@@ -136,6 +136,14 @@
     $('#cuisine-filter input').submit(function(event){
       event.preventDefault();
       var selector = $("#cuisine-input").val();
+      selector = selector.charAt(0).toUpperCase() + selector.slice(1);
+      if(selector == "Burger"){
+        selector = "Burgers";
+      }else if(selector == "Sandwich"){
+        selector = "Sandwiches";
+      }else if(selector == "Steakhouse"){
+        selector = "Steakhouses";
+      }
       $("#cuisine-show").html(selector);
       $container.isotope({ filter: "."+selector });
       $(".cuisine-input").toggle();

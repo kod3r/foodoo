@@ -20,7 +20,7 @@
     <% @r["businesses"].each do |place| %>
       <% refactored_address = place["address1"]+" "+place["zip"] %>
       <% @db_restaurant = Restaurant.joins(:locations).where('locations.address' => refactored_address).first %>
-      <div class="card text-center item pop">
+      <div class="card text-center item pop" style="margin-bottom: 20px;">
         <% if @db_restaurant %>
           <% @restaurant = @db_restaurant %>
         <% else %>

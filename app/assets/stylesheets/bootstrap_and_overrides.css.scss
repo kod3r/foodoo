@@ -1,7 +1,6 @@
 @import "bootstrap";
 body { padding-top: 60px; }
 @import "bootstrap-responsive";
-
 input[type="text"] { margin-bottom: 0px;}
 
 body {
@@ -21,6 +20,14 @@ body {
 
 .span12 {
   margin-left: 0px;
+}
+
+.lead{
+  font-size: 21px;
+}
+
+.nav{
+  font-size: 18px;
 }
 
 .item {
@@ -62,7 +69,6 @@ table {
 
 input {
   font-family: verdana, arial, helvetica, sans-serif;
-  font-size: 13px;
 }
 
 form {
@@ -78,6 +84,7 @@ form {
 #brand {
   color: orange;
   margin-bottom: 0px;
+  font-size: 21px;
 }
 
 strong {

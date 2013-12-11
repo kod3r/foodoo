@@ -1,14 +1,13 @@
+@import url(http://fonts.googleapis.com/css?family=Open+Sans);
 body {
   background-color: #fff;
   color: #333;
-  font-family: Tahoma, Geneva, sans-serif;
+  font-family: 'Open Sans', sans-serif;
   font-size: 13px;
   line-height: 18px;
 }
 
 p, ol, ul, td {
-  font-family: Tahoma, Geneva, sans-serif;
-  font-size: 13px;
   line-height: 18px;
   cursor: default;
 }
@@ -16,7 +15,6 @@ p, ol, ul, td {
 pre {
   background-color: #eee;
   padding: 10px;
-  font-size: 11px;
 }
 
 a {
@@ -62,14 +60,12 @@ div {
     text-align: left;
     font-weight: bold;
     padding: 5px 5px 5px 15px;
-    font-size: 12px;
     margin: -7px;
     margin-bottom: 0px;
     background-color: #c00;
     color: #fff;
   }
   ul li {
-    font-size: 12px;
     list-style: square;
   }
 }

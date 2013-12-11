@@ -14,8 +14,8 @@
         <%= link_to('Friends', '/lsearch') %>
       </li>
   </ul>
-  <div class="nav-collapse collapse">
-    <ul class="nav">
+  <div class="nav">
+    <ul class="nav nav-settings" style="display: none;">
       <li>
         <%= link_to('Edit account', edit_user_registration_path) %>
       </li>
@@ -34,4 +34,12 @@
     </li>
   </ul>
 <% end %>
-
+<script>
+  $("#brand").click(function(){
+    if($(".nav-settings").is(":visible")){
+      $(".nav-settings").fadeOut();
+    }else{
+      $(".nav-settings").fadeIn();
+    }
+  })
+</script>

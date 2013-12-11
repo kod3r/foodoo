@@ -138,5 +138,22 @@ form {
 }
 
 .card-bl{
-  margin: auto;
+  position: fixed;
+  bottom: 25px;
+  left: 50px;
+}
+.card-tl{
+  position: fixed;
+  top: 75px;
+  left: 50px;
+}
+.card-br{
+  position: fixed;
+  bottom: 25px;
+  right: 50px;
+}
+.card-tr{
+  position: fixed;
+  top: 75px;
+  right: 50px;
 }

@@ -1,5 +1,19 @@
 <% if user_signed_in?%>
-  <h1 class="pop text-center well">Welcome</h1>
+<style>body{padding-top: 0;}</style>
+
+<div class="card text-center pop card-tl">
+  <p class="lead">Pick</p>
+</div>
+<div class="card text-center pop card-tr">
+  <p class="lead">List</p>
+</div>
+<div class="card text-center pop card-br">
+  <p class="lead">Add</p>
+</div>
+<div class="card text-center pop card-bl">
+  <p class="lead">Friends</p>
+</div>
+
 <% end %>
 <script>
   function getLocation(){

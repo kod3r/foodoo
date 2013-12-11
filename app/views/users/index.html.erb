@@ -15,9 +15,12 @@
     <div class="item pop card text-center">
       <p class="lead name"><%= user.username %></p>
       <br>
-      <p><strong style="color:orange;" class="rest"><%= user.restaurants.count %> </strong> Restaurants</p>
+      <span>
+        <strong style="color:orange;" class="rest"><%= user.restaurants.count %></strong>
+        <p>   Restaurants</p>
+      </span>
       <br>
-      <p><%= link_to 'Restaurant List', user, :class => "btn btn-medium btn-primary"%></p>
+      <p><%= link_to "#{user.username}'s List", user, :class => "btn btn-medium btn-primary"%></p>
     </div>
   <% end %>
 </div>

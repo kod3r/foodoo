@@ -8,11 +8,11 @@
     <!-- Change User.all to Friends after friend integration -->
     <% User.all.each do |user| %>
       <tr>
-        <td><strong><%= user.username %></strong></td>
+        <td class="lead"><%= user.username %></td>
         <td>Restaurants: <%= user.restaurants.count %></td>
         <td style="color:orange;">
-        <%= check_box_tag "user_ids[]", user.id, false, :class => "cbox", :id => "cbox_"+user.id.to_s %>
-        Add to group
+        <%= check_box_tag "user_ids[]", user.id, false, :class => "cbox lead", :id => "cbox_"+user.id.to_s %>
+        Add
         </td>
       </tr>
     <% end %>

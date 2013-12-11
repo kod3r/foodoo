@@ -10,6 +10,7 @@ json.array!(@restaurants) do |restaurant|
   json.url restaurant_url(restaurant, format: :json)
   json.locations restaurant.locations.last, :hood, :city
   json.lists restaurant.lists.count
+  json.list_check true if restaurant.lists.count > 1
   json.top_cuisines
   if restaurant.choices.where(user_id: current_user.id).last
     json.last_choice restaurant.choices.where(user_id: current_user.id).last.created_at.to_date.strftime('%d %b %Y')

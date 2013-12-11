@@ -6,6 +6,7 @@ module SearchesHelper
         ((restaurant.locations.last.distance_to(session[:user_location])+0.1)*25).to_i
       else
         50
+      end
     else
       result = request.location
       ((restaurant.locations.last.distance_to([result.latitude, result.longitude])+0.1)*25).to_i

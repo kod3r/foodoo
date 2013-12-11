@@ -2,7 +2,10 @@ module SearchesHelper
 
   def distance(restaurant)
     if session[:user_location]
-      ((restaurant.locations.last.distance_to(session[:user_location])+0.1)*25).to_i
+      if restaurant.locations.last
+        ((restaurant.locations.last.distance_to(session[:user_location])+0.1)*25).to_i
+      else
+        50
     else
       result = request.location
       ((restaurant.locations.last.distance_to([result.latitude, result.longitude])+0.1)*25).to_i

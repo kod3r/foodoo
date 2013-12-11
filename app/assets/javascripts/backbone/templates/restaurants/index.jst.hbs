@@ -143,6 +143,8 @@
         selector = "Sandwiches";
       }else if(selector == "Steakhouse"){
         selector = "Steakhouses";
+      }else if(selector == "Hotdogs" || selector =="Hot dogs"){
+        selector = "Dogs";
       }
       $("#cuisine-show").html(selector);
       $container.isotope({ filter: "."+selector });

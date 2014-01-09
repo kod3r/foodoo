@@ -14,8 +14,10 @@ json.array!(@restaurants) do |restaurant|
   json.top_cuisines
   if restaurant.choices.where(user_id: current_user.id).last
     json.last_choice restaurant.choices.where(user_id: current_user.id).last.created_at.to_date.strftime('%d %b %Y')
+    json.last_unix restaurant.choices.where(user_id: current_user.id).last.created_at
   else
     json.last_choice "New!"
+    json.last_unix "New!"
   end
   if restaurant.locations.last.distance_to(session[:user_location])
     json.distance ((restaurant.locations.last.distance_to(session[:user_location])+0.1)*25).to_i

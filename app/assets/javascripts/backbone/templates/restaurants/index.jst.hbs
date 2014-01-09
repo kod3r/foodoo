@@ -49,7 +49,8 @@
       <div class="blockery">
         <p>Score: <strong style="color:orange;" class="score">{{score}}</strong></p>
         <p class="dist">{{distance}} min walk</p>
-        <p class="last">{{last_choice}}</p>
+        <p>{{last_choice}}</p>
+        <p class="last" style="display: none;">{{last_unix}}</p>
       {{#if list_check}}
         <p>On <strong style="color:orange;">{{lists}}</strong> lists</p>
       {{else}}

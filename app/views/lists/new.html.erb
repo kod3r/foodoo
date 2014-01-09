@@ -1,3 +1,12 @@
+<script>
+  var $container = $('#container');
+  $('#container').isotope({
+    // options
+    itemSelector : '.item',
+    layoutMode : 'fitRows'
+  });
+</script>
+
 <div class="text-center">
   <form accept-charset="UTF-8" action="/lists/new" method="get">
     <label for="term"></label>
@@ -52,13 +61,4 @@
   <% end %>
 </div>
 
-<script>
-$(function(){
-  var $container = $('#container');
-  $('#container').isotope({
-    // options
-    itemSelector : '.item',
-    layoutMode : 'fitRows'
-  });
-});
-</script>
+

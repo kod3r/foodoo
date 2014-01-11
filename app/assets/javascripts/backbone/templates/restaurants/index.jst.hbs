@@ -101,7 +101,7 @@
     $('#sort-by a').click(function(){
       // get href attribute, minus the '#'
       var sortName = $(this).attr('href').slice(1);
-      if(sortName == "last" || sortName == "score"){
+      if(sortName == "score"){
         $('#container').isotope({ sortBy : sortName, sortAscending: false });
       } else{
         $('#container').isotope({ sortBy : sortName });

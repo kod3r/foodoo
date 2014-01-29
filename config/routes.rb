@@ -2,10 +2,8 @@ V1foodoo::Application.routes.draw do
   devise_for :users
 
   resources :searches, only: [:new, :index]
-
-  resources :follows
-
   resources :restaurants
+  resources :follows
 
   resources :choices
 
@@ -20,7 +18,7 @@ V1foodoo::Application.routes.draw do
   root 'users#home'
   post 'restaurants/:id' => 'restaurants#show'
   match 'searches/new' => 'searches#new', via: [:get, :post]
-  get 'restaurant' => 'restaurants#index'
+  get 'restaurant' => 'restaurants#show'
   post 'lists/create' => 'lists#create'
   get 'user/list' => 'user#list'
   get '/mylist' => 'lists#mylist'
@@ -30,7 +28,9 @@ V1foodoo::Application.routes.draw do
   post 'unfavorite' => 'restaurants#unfavorite'
   post 'searches/set_user_location' => 'searches#set_user_location'
   get 'searches/group' => 'searches#group'
-
+  post 'users/address_input' => 'users#address_input'
+  get 'restaurants' => 'restaurants#index'
+  post '/address_input' => 'restaurants#address_input'
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
 

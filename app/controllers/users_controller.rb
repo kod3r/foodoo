@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy]
-
+  skip_before_action :require_login, only: [:new, :create]
   # GET /users
   # GET /users.json
   def index
@@ -17,6 +17,15 @@ class UsersController < ApplicationController
   end
 
   def home
+  end
+
+  def address_input
+    if params[:address] && params[:city] && params[:state]
+      unless current_user.locations.where(address: params[:address], city: params[:city], state: params[:state]).exists?
+        Location.create(locator_id: current_user.id, locator_type: "User", address: params[:address], city: params[:city], state: params[:state])
+      end
+    end
+    render json: {}
   end
 
   # GET /users/new

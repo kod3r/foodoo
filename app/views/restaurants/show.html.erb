@@ -20,8 +20,8 @@
     };
     // Draw the map
     var mapObject = new google.maps.Map(document.getElementById("map"), myOptions);
-    var ulat = <%= defined?(session[:user_location]) ? session[:user_location][0] : request.location.latitude %>;
-    var ulon = <%= defined?(session[:user_location]) ? session[:user_location][1] : request.location.longitude %>;
+    var ulat = <%= defined?(session[:location_ll]) ? session[:location_ll][0] : request.location.latitude %>;
+    var ulon = <%= defined?(session[:location_ll]) ? session[:location_ll][1] : request.location.longitude %>;
 
     var directionsService = new google.maps.DirectionsService();
     var directionsRequest = {

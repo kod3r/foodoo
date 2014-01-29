@@ -1,6 +1,6 @@
 module RestaurantsHelper
   def distance(restaurant)
-    ((restaurant.locations.last.distance_to(session[:user_location])+0.1)*25).to_i
+    ((restaurant.locations.last.distance_to(session[:location_ll])+0.1)*25).to_i
   end
 
   def solo_score(restaurant, user_id)

@@ -7,7 +7,7 @@ json.array!(@restaurants) do |restaurant|
   else
     json.label nil
   end
-  json.url restaurant_url(restaurant, format: :json)
+  json.ll session[:location_ll]
   json.locations restaurant.locations.last, :hood, :city
   json.lists restaurant.lists.count
   json.list_check true if restaurant.lists.count > 1
@@ -19,8 +19,8 @@ json.array!(@restaurants) do |restaurant|
     json.last_choice "New!"
     json.last_unix "New!"
   end
-  if restaurant.locations.last.distance_to(session[:user_location])
-    json.distance ((restaurant.locations.last.distance_to(session[:user_location])+0.1)*25).to_i
+  if restaurant.locations.last.distance_to(session[:location_ll])
+    json.distance ((restaurant.locations.last.distance_to(session[:location_ll])+0.1)*25).to_i
   else
     json.distance 50
   end

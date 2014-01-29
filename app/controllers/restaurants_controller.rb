@@ -1,11 +1,28 @@
 class RestaurantsController < ApplicationController
   before_action :set_restaurant, only: [:show, :edit, :update, :destroy]
+
   respond_to :html, :json
+  # before_action :set_location
+
 
   # GET /restaurants
   # GET /restaurants.json
   def index
     @restaurants = current_user.restaurants
+    unless current_user.restaurants.count == 0
+      if current_user.locations.last.created_at > (Time.now - 10)
+        session[:location_id] = current_user.locations.last.id
+      else
+        session[:location_id] = session[:location_id] || current_user.locations.last.id
+      end
+      location = Location.find(session[:location_id])
+      session[:location_ll] = [location.latitude, location.longitude]
+    end
+  end
+
+  def address_input
+    session[:location_id] = params[:location_id]
+    redirect_to :back
   end
 
   # GET /restaurants/1

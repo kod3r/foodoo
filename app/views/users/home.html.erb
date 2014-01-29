@@ -1,48 +1,80 @@
 <style>body{padding-top: 0;}</style>
-<% if user_signed_in?%>
-<!-- <div class="card text-center pop card-tl">
-  <p class="lead">Pick</p>
-</div>
-<div class="card text-center pop card-tr">
-  <p class="lead">List</p>
-</div>
-<div class="card text-center pop card-br">
-  <p class="lead">Add</p>
-</div>
-<div class="card text-center pop card-bl">
-  <p class="lead">Friends</p>
-</div>
- -->
+<% unless current_user.locations.count > 0 %>
+  <div class="well text-center pop" style="margin-top: 100px; width: 360px; margin-left: auto; margin-right: auto;">
+    <form role="form">
+      <br>
+      <div class="form-group">
+        <input type="text" class="form-control text-center" id="address_input" placeholder="Street Address">
+      </div>
+      <br>
+      <div class="form-group">
+        <input type="text" class="form-control text-center" id="city_input" placeholder="City">
+      </div>
+      </br>
+      <div class="form-group">
+        <input type="text" class="form-control text-center" id="state_input" placeholder="State">
+      </div>
+      <br>
+      <br>
+      <button type="submit" class="btn btn-default" id="address_submit">Submit</button>
+      <br>
+      <br>
+    </form>
+  </div>
 <% end %>
 <script>
-  function getLocation(){
-    if (navigator.geolocation){
-      navigator.geolocation.getCurrentPosition(inserter, err, {timeout:5000, enableHighAccuracy:true});
+  $('#address_submit').click(function(){
+    if($('#address_input').val() && $('#city_input').val() && $('#state_input').val()){
+      $.ajax({
+        url: "/users/address_input",
+        type: "post",
+        data: {address: $('#address_input').val(), city: $('#city_input').val(), state: $('#state_input').val()},
+        //contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        success: function(data){
+          console.log("success");
+        },
+        error: function(jqXHR, textStatus, errorThrown){
+          console.log("fail");
+          console.log(jqXHR);
+          console.log(textStatus);
+          console.log(errorThrown);
+        }
+      });
     }else{
-      $('#wtfff').html("Geolocation is not supported by this browser.");
+      alert("invalid address");
     }
-  }
-  function err(){
-    console.log("geolocation error");
-  }
-  function inserter(position){
-    console.log(position.coords.accuracy);
-    $.ajax({
-      url: "/searches/set_user_location",
-      type: "post",
-      data: {lat: position.coords.latitude, lon: position.coords.longitude, acc: position.coords.accuracy},
-      //contentType: "application/json; charset=utf-8",
-      dataType: "json",
-      success: function(data){
-        console.log("success");
-      },
-      error: function(jqXHR, textStatus, errorThrown){
-        console.log(jqXHR);
-        console.log(textStatus);
-        console.log(errorThrown);
-      }
-    });
-  }
+  });
+</script>
+<script>
+  // function getLocation(){
+  //   if (navigator.geolocation){
+  //     navigator.geolocation.getCurrentPosition(inserter, err, {timeout:5000, enableHighAccuracy:true});
+  //   }else{
+  //     $('#wtfff').html("Geolocation is not supported by this browser.");
+  //   }
+  // }
+  // function err(){
+  //   console.log("geolocation error");
+  // }
+  // function inserter(position){
+  //   console.log(position.coords.accuracy);
+  //   $.ajax({
+  //     url: "/searches/set_user_location",
+  //     type: "post",
+  //     data: {lat: position.coords.latitude, lon: position.coords.longitude, acc: position.coords.accuracy},
+  //     //contentType: "application/json; charset=utf-8",
+  //     dataType: "json",
+  //     success: function(data){
+  //       console.log("success");
+  //     },
+  //     error: function(jqXHR, textStatus, errorThrown){
+  //       console.log(jqXHR);
+  //       console.log(textStatus);
+  //       console.log(errorThrown);
+  //     }
+  //   });
+  // }
   $(document).ready(function() {
     getLocation();
     var BV = new $.BigVideo();

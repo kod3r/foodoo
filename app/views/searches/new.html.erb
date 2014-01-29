@@ -1,8 +1,7 @@
-
-<div class="span8 offset2 text-center">
-<%= button_to('Group Search', 'group', method: :get,  :class => 'btn btn-primary btn-large') %>
-</div>
-<% if user_signed_in? && (current_user.restaurants.count > 0)%>
+<% if current_user.restaurants.count > 0%>
+  <div class="span8 offset2 text-center">
+  <%= button_to('Group Search', 'group', method: :get,  :class => 'btn btn-primary btn-large') %>
+  </div>
   <div id="myCarousel" class="carousel span8 offset2 pop" style="margin-top: 15px;">
     <!-- Carousel items -->
     <div class="carousel-inner">
@@ -92,4 +91,6 @@
     <a class="carousel-control right" href="#myCarousel" data-slide="next">&rsaquo;</a>
 
   </div>
+<% else %>
+  <h3 class="well text-center"style="color:orange;">Add some restaurants to access this feature</h3>
 <% end %>

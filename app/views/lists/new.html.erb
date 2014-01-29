@@ -66,7 +66,7 @@
 </br>
 <% if params[:term] %>
   <% response = HTTParty.get("http://api.yelp.com/business_review_search?term=#{params[:term].split(' ').join('+')}&location=#{params[:location].split(' ').join('+')}&category=restaurants&radius=20&limit=6&ywsid=Q5mQ5eJFseNNaJx9xuXhjQ") %>
-  <% @r = JSON.parse(response) %>
+  <% @r = response %>
 
 <div class="well text-center pop lead" style="width: 360px; margin-left: auto; margin-right: auto;">
   <p style="color: orange;"><%= params[:term].split.map(&:capitalize).join(' ') %><span style="color: white;"> in </span><%= params[:location] %>

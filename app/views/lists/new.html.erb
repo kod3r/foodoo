@@ -3,7 +3,7 @@
   $('#container').isotope({
     // options
     itemSelector : '.item',
-    layoutMode : 'fitRows'
+    layoutMode : 'fitColumns'
   });
 </script>
 
@@ -83,7 +83,7 @@
       <% refactored_address = place["address1"]+" "+place["zip"] %>
       <% @address = place["address1"] %>
       <% @db_restaurant = Restaurant.joins(:locations).where('locations.address' => refactored_address).first || Restaurant.joins(:locations).where('locations.address' => @address).first %>
-      <div class="card text-center item pop" style="margin-bottom: 20px;">
+      <div class="card text-center item pop" style="margin-bottom: 20px; height: 300px;">
         <% if @db_restaurant %>
           <% @restaurant = @db_restaurant %>
         <% else %>

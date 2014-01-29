@@ -4,7 +4,7 @@
   <a class="btn btn-large btn-info" href="#last" style="margin-top: 5px;">Last Visit</a>
   <a class="btn btn-large btn-info" href="#name" style="margin-top: 5px;">Name</a>
   <a class="btn btn-large btn-info" href="#hood" style="margin-top: 5px;">Neighborhood</a>
-  <a class="btn btn-large btn-warning" href="#score" style="margin-top: 5px;">Score</a>
+  <a class="btn btn-large btn-warning" id="score_button" href="#score" style="margin-top: 5px;">Score</a>
 </div>
 <br>
 <div class="text-center" id="filters">
@@ -47,9 +47,9 @@
         <a class="text-center" href="{{yelp_url}}" target="_blank"><img src="{{image}}"/></a>
       </div>
       <div class="blockery">
-        <p>Score: <strong style="color:orange;" class="score">{{score}}</strong></p>
+        <p class="score_hover">Score: <strong style="color:orange;" class="score">{{score}}</strong></p>
         <p class="dist">{{distance}} min walk</p>
-        <p>{{last_choice}}</p>
+        <p class="last_visit">{{last_choice}}</p>
         <p class="last" style="display: none;">{{last_unix}}</p>
       {{#if list_check}}
         <p>On <strong style="color:orange;">{{lists}}</strong> lists</p>
@@ -178,6 +178,17 @@
     });
     $('.item').mouseleave(function(){
       $(this).find('.button-span').fadeOut();
+    });
+
+    $('.score_hover, #score_button').tooltip({
+      title: "based on distance, last visit, favorite",
+      placement: 'right',
+      container: 'body'
+    });
+    $('.last_visit').tooltip({
+      title: "last visit",
+      placement: 'right',
+      container: 'body'
     });
   });
 </script>

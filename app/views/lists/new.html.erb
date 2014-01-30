@@ -105,7 +105,7 @@
         <% end %>
         <p>
           <img src="<%=place["photo_url"]%>"/>
-          <%= button_to('Add to List', "create?id=#{@restaurant.id}", :class => 'btn btn-default btn-primary', method: :post) %>
+          <%= button_to('Add to List', "create?id=#{@restaurant.id}", :class => 'btn btn-default btn-primary add_button', method: :post) %>
         </p>
         <p><img src="<%=place["rating_img_url"]%>"/>
         (<%=place["review_count"]%> reviews)</p>
@@ -114,5 +114,21 @@
     <% end %>
   <% end %>
 </div>
-
+<script>
+  $('#location').tooltip({
+    title: "make sure to include city and state",
+    placement: 'right',
+    container: 'body'
+  });
+  $('#term').tooltip({
+    title: "look up restaurant by name",
+    placement: 'right',
+    container: 'body'
+  });
+  $('.add_button').tooltip({
+    title: "add this restaurant to your list",
+    placement: 'right',
+    container: 'body'
+  });
+</script>
 

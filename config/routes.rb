@@ -15,7 +15,7 @@ V1foodoo::Application.routes.draw do
   # See how all your routes lay out with "rake routes".
 
   # You can have the root of your site routed with "root"
-  root 'users#home'
+  root 'lists#new'
   post 'restaurants/:id' => 'restaurants#show'
   match 'searches/new' => 'searches#new', via: [:get, :post]
   get 'restaurant' => 'restaurants#show'

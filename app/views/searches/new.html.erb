@@ -53,7 +53,7 @@
                   Score: <strong style="color:orange;"><%=solo_score(restaurant, current_user.id)%></strong>
                 </p>
                 <% end %>
-                <p><a href="<%=restaurant.yelp_url%>" target="_blank"><img src="http://s3-media1.ak.yelpcdn.com/assets/2/www/img/55e2efe681ed/developers/yelp_logo_50x25.png"></a></p>
+                <p class="yelp_link"><a href="<%=restaurant.yelp_url%>" target="_blank"><img src="http://s3-media1.ak.yelpcdn.com/assets/2/www/img/55e2efe681ed/developers/yelp_logo_50x25.png"></a></p>
               </div>
             </div>
             <div class="text-center">
@@ -90,7 +90,7 @@
                     Score: <strong style="color:orange;"><%=solo_score(restaurant, current_user.id)%></strong>
                   </p>
                 <% end %>
-                <p><a href="<%=restaurant.yelp_url%>" target="_blank"><img src="http://s3-media1.ak.yelpcdn.com/assets/2/www/img/55e2efe681ed/developers/yelp_logo_50x25.png"></a></p>
+                <p class="yelp_link"><a href="<%=restaurant.yelp_url%>" target="_blank"><img src="http://s3-media1.ak.yelpcdn.com/assets/2/www/img/55e2efe681ed/developers/yelp_logo_50x25.png"></a></p>
               </div>
             </div>
             <div class="text-center">
@@ -175,6 +175,11 @@
     });
     $('.group_score').tooltip({
       title: "total score for the group, based on each person's individual preferences",
+      placement: 'right',
+      container: 'body'
+    });
+    $('.yelp_link').tooltip({
+      title: "click to visit yelp page",
       placement: 'right',
       container: 'body'
     });

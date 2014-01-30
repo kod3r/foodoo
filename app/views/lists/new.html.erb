@@ -7,13 +7,19 @@
   });
 </script>
 
+<% unless params[:term] || current_user.locations.count == 0 %>
+  <div class="well text-center">
+    <p class="lead" style="color:orange;">Add some restaurants to your list!</p>
+  </div>
+<% end %>
+
 <% if current_user.locations.count > 0 %>
   <div class="text-center">
     <form accept-charset="UTF-8" action="/lists/new" method="get" role="form">
       <label for="location"></label>
       <input id="location" class="form-control" name="location" type="text" value="<%= current_user.locations.last.city %> <%= current_user.locations.last.state %>" style="text-align: center;"/>
       <label for="term"></label>
-      <input id="term" class="form-control centered text-center" name="term" type="text" placeholder="restaurant name"/>
+      <input id="term" class="form-control centered text-center" name="term" type="text" placeholder="restaurant name" style="margin: 10px 0px;"/>
       <label for="search"></label>
       <input name="commit" class="form-control btn btn-primary" type="submit" value="Search"/>
     </form>
@@ -120,11 +126,11 @@
     placement: 'right',
     container: 'body'
   });
-  $('#term').tooltip({
-    title: "look up restaurant by name",
-    placement: 'right',
-    container: 'body'
-  });
+  // $('#term').tooltip({
+  //   title: "look up restaurant by name",
+  //   placement: 'right',
+  //   container: 'body'
+  // });
   $('.add_button').tooltip({
     title: "add this restaurant to your list",
     placement: 'right',

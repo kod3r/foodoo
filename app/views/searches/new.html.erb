@@ -1,6 +1,16 @@
 <% if current_user.restaurants.count > 0%>
   <div class="span8 offset2 text-center">
-  <%= button_to('Group Search', 'group', method: :get,  :class => 'btn btn-primary btn-large') %>
+    <div class="text-center">
+      <select id="address_selector">
+      <% current_user.locations.each do |location| %>
+        <option value=<%= location.id %>>
+          <%= location.address %>, <%= location.city %>
+        </option>
+      <% end %>
+        <option value="new">New Address</option>
+      </select>
+    </div>
+    <%= button_to('Group Search', 'group', method: :get,  :class => 'btn btn-primary btn-large group_search') %>
   </div>
   <div id="myCarousel" class="carousel span8 offset2 pop" style="margin-top: 15px;">
     <!-- Carousel items -->
@@ -35,11 +45,13 @@
                 </p>
                 <p id="cab_<%= restaurant.id %>"></p>
                 <% if params[:ppl] %>
+                <p class="group_score">
                   Score: <strong style="color:orange;"><%=group_score(params[:ppl].split(','), restaurant)%></strong>
+                </p>
                 <% else %>
-                  <p>
-                    Score: <strong style="color:orange;"><%=solo_score(restaurant, current_user.id)%></strong>
-                  </p>
+                <p class="solo_score">
+                  Score: <strong style="color:orange;"><%=solo_score(restaurant, current_user.id)%></strong>
+                </p>
                 <% end %>
                 <p><a href="<%=restaurant.yelp_url%>" target="_blank"><img src="http://s3-media1.ak.yelpcdn.com/assets/2/www/img/55e2efe681ed/developers/yelp_logo_50x25.png"></a></p>
               </div>
@@ -70,9 +82,11 @@
                 <% end  %>
                 </p>
                 <% if params[:ppl] %>
+                <p class="group_score">
                   Score: <strong style="color:orange;"><%=group_score(params[:ppl].split(','), restaurant)%></strong>
+                </p>
                 <% else %>
-                  <p>
+                  <p class="solo_score">
                     Score: <strong style="color:orange;"><%=solo_score(restaurant, current_user.id)%></strong>
                   </p>
                 <% end %>
@@ -94,3 +108,75 @@
 <% else %>
   <h3 class="well text-center"style="color:orange;">Add some restaurants to access this feature</h3>
 <% end %>
+
+<script>
+  $(function(){
+    console.log(<%= session[:location_id] %>)
+    $('#address_selector').val(<%= session[:location_id] %>);
+    $('#address_selector').change(function(){
+      var selected = $('#address_selector').val();
+      if(selected == "new"){
+        $('#index').hide();
+        $('#address_form').fadeIn('slow');
+      }else{
+        $.ajax({
+          url: "/address_input",
+          type: "post",
+          data: {location_id: selected},
+          //contentType: "application/json; charset=utf-8",
+          dataType: "json",
+          success: function(data){
+            window.location.reload();
+            console.log("success");
+          },
+          error: function(jqXHR, textStatus, errorThrown){
+            console.log("fail");
+            console.log(jqXHR);
+            console.log(textStatus);
+            console.log(errorThrown);
+          }
+        });
+      }
+    });
+    $('#address_submit').click(function(){
+      if($('#address_input').val() && $('#city_input').val() && $('#state_input').val()){
+        $.ajax({
+          url: "/users/address_input",
+          type: "post",
+          data: {address: $('#address_input').val(), city: $('#city_input').val(), state: $('#state_input').val()},
+          //contentType: "application/json; charset=utf-8",
+          dataType: "json",
+          success: function(data){
+            console.log("success");
+          },
+          error: function(jqXHR, textStatus, errorThrown){
+            console.log("fail");
+            console.log(jqXHR);
+            console.log(textStatus);
+            console.log(errorThrown);
+          }
+        });
+      }
+    });
+    $('#address_selector').tooltip({
+      title: "set your location",
+      placement: 'right',
+      container: 'body'
+    });
+    $('.group_search').tooltip({
+      title: "select who you are eating with, and see what's most likely to please everyone",
+      placement: 'right',
+      container: 'body'
+    });
+    $('.solo_score').tooltip({
+      title: "based on distance, last visit, favorite",
+      placement: 'right',
+      container: 'body'
+    });
+    $('.group_score').tooltip({
+      title: "total score for the group, based on each person's individual preferences",
+      placement: 'right',
+      container: 'body'
+    });
+  });
+</script>

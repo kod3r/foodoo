@@ -1,11 +1,6 @@
 module SearchesHelper
-
   def distance(restaurant)
-    if restaurant.locations.last.distance_to(session[:user_location]).is_a? Fixnum
-      ((restaurant.locations.last.distance_to(session[:user_location])+0.1)*25).to_i
-    else
-      50
-    end
+    ((restaurant.locations.last.distance_to(session[:location_ll])+0.1)*25).to_i
   end
 
   def solo_score(restaurant, user_id)
@@ -82,5 +77,4 @@ module SearchesHelper
       return ranked_group_list.reverse
     end
   end
-
 end

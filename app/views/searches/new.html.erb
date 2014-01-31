@@ -35,8 +35,8 @@
               </div>
               <div class="blockery">
                 <p id="walk_<%= restaurant.id %>">
-                  <% if session[:user_location] %>
-                    <%= ((restaurant.locations.last.distance_to(session[:user_location])+0.1)*25).to_i %> min walk
+                  <% if session[:location_ll] %>
+                    <%= ((restaurant.locations.last.distance_to(session[:location_ll])+0.1)*25).to_i %> min walk
                   <% elsif request.location %>
                     <%= distance(restaurant) %> min walk
                   <% else %>
@@ -73,8 +73,8 @@
                 <% end %>
               </div>
               <div class="blockery">
-                <% if session[:user_location] %>
-                  <%= ((restaurant.locations.last.distance_to(session[:user_location])+0.1)*25).to_i %> min walk
+                <% if session[:location_ll] %>
+                  <%= ((restaurant.locations.last.distance_to(session[:location_ll])+0.1)*25).to_i %> min walk
                 <% elsif request.location %>
                   <%= distance(restaurant) %> min walk
                 <% else %>

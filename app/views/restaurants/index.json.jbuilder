@@ -1,6 +1,6 @@
 json.array!(@restaurants) do |restaurant|
   json.extract! restaurant, :id, :name, :yelp_url, :image
-  json.score solo_score(restaurant, current_user.id)
+  json.score 5
   json.cuisines restaurant.cuisine.split(', ')
   if restaurant.lists.find_by(user_id: current_user.id).label == "favorite"
     json.label "favorite"
@@ -20,7 +20,7 @@ json.array!(@restaurants) do |restaurant|
     json.last_unix "New!"
   end
   if restaurant.locations.last.distance_to(session[:location_ll])
-    json.distance ((restaurant.locations.last.distance_to(session[:location_ll])+0.1)*25).to_i
+    json.distance distance(restaurant)
   else
     json.distance 50
   end

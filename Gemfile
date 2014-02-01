@@ -22,8 +22,6 @@ gem 'rails-backbone'
 
 gem 'handlebars_assets'
 
-gem 'unicorn'
-
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.0.0'

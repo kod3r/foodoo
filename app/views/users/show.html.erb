@@ -1,13 +1,13 @@
 <div class="text-center" id="sort-by">
   <a class="btn btn-large" style="margin-top: 5px;">SORT</a>
-  <a class="btn btn-large btn-info" href="#lists" style="margin-top: 5px;">Lists</a>
+  <a class="btn btn-large btn-info" href="#lists" style="margin-top: 5px;" id="start">Lists</a>
   <a class="btn btn-large btn-info" href="#name" style="margin-top: 5px;">Name</a>
   <a class="btn btn-large btn-info" href="#hood" style="margin-top: 5px;">Neighborhood</a>
 </div>
 <br>
 <div class="text-center" id="filters">
   <a class="btn btn-large">FILTER</a>
-  <a class="btn btn-large btn-info filter-click" href="#" data-filter="*">All</a>
+  <a class="btn btn-large btn-info filter-click" href="#" data-filter="*" id="all">All</a>
   <a class="btn btn-large btn-info filter-click" href="#" data-filter=".favorite">Favorite</a>
   <a class="btn btn-large btn-info" href="#" data-filter=".cuisine" id="cuisine-button">
     <div class="cuisine-input" id="cuisine-show">Cuisine</div>
@@ -85,6 +85,11 @@
           return $elem.find('.hood').text();
         }
       }
+    });
+
+    setTimeout(function(){$("#start").click()},300);
+    $('#all').click(function(){
+      $('#cuisine-show').html("Cuisine");
     });
 
     $('#filters #cuisine-button').click(function(){

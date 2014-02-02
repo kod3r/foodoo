@@ -20,7 +20,7 @@ json.array!(@restaurants) do |restaurant|
     json.last_unix "New!"
   end
   if restaurant.locations.last.distance_to(session[:location_ll])
-    json.distance ((restaurant.locations.last.distance_to(session[:location_ll])+0.1)*25).to_i
+    json.distance distance(restaurant)
   else
     json.distance 50
   end

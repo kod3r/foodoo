@@ -1,5 +1,4 @@
 module SearchesHelper
-
   def distance(restaurant)
     if restaurant.locations.last.distance_to(session[:location_ll])
       ((restaurant.locations.last.distance_to(session[:location_ll])+0.1)*25).to_i
@@ -82,5 +81,4 @@ module SearchesHelper
       return ranked_group_list.reverse
     end
   end
-
 end

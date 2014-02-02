@@ -1,8 +1,8 @@
 module SearchesHelper
 
   def distance(restaurant)
-    if restaurant.locations.last.distance_to(session[:user_location]).is_a? Fixnum
-      ((restaurant.locations.last.distance_to(session[:user_location])+0.1)*25).to_i
+    if restaurant.locations.last.distance_to(session[:location_ll])
+      ((restaurant.locations.last.distance_to(session[:location_ll])+0.1)*25).to_i
     else
       50
     end

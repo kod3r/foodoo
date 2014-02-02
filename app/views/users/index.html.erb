@@ -1,7 +1,7 @@
 <div class="text-center" id="sort-by">
   <a class="btn btn-large" style="margin-top: 5px;">SORT</a>
   <a class="btn btn-large btn-info" href="#name" style="margin-top: 5px;">Name</a>
-  <a class="btn btn-large btn-info" href="#rest" style="margin-top: 5px;">Restaurants</a>
+  <a class="btn btn-large btn-info" href="#rest" style="margin-top: 5px;" id="start">Restaurants</a>
 </div>
 <br>
 <div class="text-center" id="asc-desc">
@@ -31,6 +31,7 @@
     $('#container').isotope({
       // options
       itemSelector : '.item',
+      sortBy : 'name',
       layoutMode : 'fitRows',
       getSortData : {
         name : function ( $elem ) {
@@ -41,6 +42,8 @@
         }
       }
     });
+
+    setTimeout(function(){$("#start").click()},300);
 
     $('#sort-by a').click(function(){
       // get href attribute, minus the '#'
@@ -63,4 +66,5 @@
       return false;
     });
   });
+
 </script>

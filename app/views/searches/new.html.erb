@@ -57,7 +57,7 @@
               </div>
             </div>
             <div class="text-center">
-              <%= button_to('Go', restaurant_path(restaurant), :class => 'btn btn-success btn-large') %>
+              <%= button_to('Go', restaurant_path(restaurant), :class => 'btn btn-success btn-large go_btn') %>
             </div>
           </div>
 
@@ -94,7 +94,7 @@
               </div>
             </div>
             <div class="text-center">
-              <%= button_to('Go', restaurant_path(restaurant), :class => 'btn btn-success btn-large') %>
+              <%= button_to('Go', restaurant_path(restaurant), :class => 'btn btn-success btn-large go_btn') %>
             </div>
           </div>
         <% end %>
@@ -180,6 +180,11 @@
     });
     $('.yelp_link').tooltip({
       title: "click to visit yelp page",
+      placement: 'right',
+      container: 'body'
+    });
+    $('.go_btn').tooltip({
+      title: "click to get directions and check for delivery",
       placement: 'right',
       container: 'body'
     });

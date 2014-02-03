@@ -2,16 +2,16 @@
 <% if user_signed_in? %>
   <ul class="nav pull-right">
       <li>
-        <%= link_to('Pick', new_search_path, :method=>'get') %>
+        <%= link_to('Pick', new_search_path, :method=>'get',  :class => 'pick_nav') %>
       </li>
       <li>
-        <%= link_to('List', restaurants_path, :method=>'get') %>
+        <%= link_to('List', restaurants_path, :method=>'get',  :class => 'list_nav') %>
       </li>
       <li>
-        <%= link_to('Add', new_list_path) %>
+        <%= link_to('Add', new_list_path,  :class => 'add_nav') %>
       </li>
       <li>
-        <%= link_to('Friends', '/lsearch') %>
+        <%= link_to('Friends', '/lsearch',  :class => 'friend_nav') %>
       </li>
   </ul>
   <div class="nav">
@@ -42,4 +42,24 @@
       $(".nav-settings").fadeIn();
     }
   })
+  $('.pick_nav').tooltip({
+    title: "flip through ranked recommendations",
+    placement: 'bottom',
+    container: 'body'
+  });
+  $('.list_nav').tooltip({
+    title: "see your restaurants",
+    placement: 'bottom',
+    container: 'body'
+  });
+  $('.add_nav').tooltip({
+    title: "add new places",
+    placement: 'bottom',
+    container: 'body'
+  });
+  $('.friend_nav').tooltip({
+    title: "see what everyone else likes",
+    placement: 'bottom',
+    container: 'body'
+  });
 </script>

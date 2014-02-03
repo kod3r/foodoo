@@ -1,28 +1,22 @@
-== README
+== Foodoo
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
-
-Things you may want to cover:
-
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+A webapp for keeping track of the restaurants you like.
 
 
-Please feel free to use a different markup language if you do not plan to run
+Features:
+
+* Automatic upload of key data such as location, cuisine, and neighborhood for each restaurant you add
+
+* Powerful tools for sorting and filtering through your personal restaurant database
+
+* Discover what restaurant your friends like, and easily add their favorites to your list
+
+* Coordinate a group meal by finding the closests restaurants with the most overlap on everyone's lists
+
+* Navigate with directions and walking time estimates
+
+* Order delivery directly through the site
+
+* Track your choices, so you can follow the crumbs
+
 <tt>rake doc:app</tt>.

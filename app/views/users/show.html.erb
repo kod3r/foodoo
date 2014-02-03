@@ -58,10 +58,10 @@
             <% if current_user.restaurants.exists?(restaurant.id) %>
               <p>On your list</p>
             <% else %>
-              <%= button_to('Add to List', "/lists/create?id=#{restaurant.id}", :class => 'btn btn-primary btn-small') %>
+              <%= button_to('Add to List', "/lists/create?id=#{restaurant.id}", :class => 'btn btn-primary btn-small add_button') %>
               <p></p>
             <% end %>
-            <p><a href="<%=restaurant.yelp_url%>" target="_blank"><img src="http://s3-media1.ak.yelpcdn.com/assets/2/www/img/55e2efe681ed/developers/yelp_logo_50x25.png"></a></p>
+            <p><a href="<%=restaurant.yelp_url%>" target="_blank"><img class="yelp_link" src="http://s3-media1.ak.yelpcdn.com/assets/2/www/img/55e2efe681ed/developers/yelp_logo_50x25.png"></a></p>
           </div>
         </div>
     </div>
@@ -171,6 +171,18 @@
         $('#container').isotope({ sortAscending: false });
       }
       return false;
+    });
+
+    $('.yelp_link').tooltip({
+      title: "click to visit yelp page",
+      placement: 'bottom',
+      container: 'body'
+    });
+
+    $('.add_button').tooltip({
+      title: "add this restaurant to your list",
+      placement: 'right',
+      container: 'body'
     });
 
   });

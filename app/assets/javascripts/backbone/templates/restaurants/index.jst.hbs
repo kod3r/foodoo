@@ -62,7 +62,7 @@
     <span class="button-span" style="display: none;">
       <a class="btn btn-small btn-success go-button" href="/restaurants/{{id}}">Go</a>
       {{#if label}}
-      <a class="btn btn-small btn-info fav-button" href="/unfavorite?id={{id}}" data-method="post">Favorite</a>
+      <a class="btn btn-small btn-info unfav-button" href="/unfavorite?id={{id}}" data-method="post">Favorite</a>
       {{else}}
       <a class="btn btn-small btn-info fav-button" href="/favorite?id={{id}}" data-method="post">Favorite</a>
       {{/if}}
@@ -193,6 +193,26 @@
     $('.yelp_link').tooltip({
       title: "click to visit yelp page",
       placement: 'top',
+      container: 'body'
+    });
+    $('.fav-button').tooltip({
+      title: "click to make this restaurant a favorite",
+      placement: 'bottom',
+      container: 'body'
+    });
+    $('.unfav-button').tooltip({
+      title: "click to undo favorite status",
+      placement: 'bottom',
+      container: 'body'
+    });
+    $('.del-button').tooltip({
+      title: "click to remove this place from your list",
+      placement: 'bottom',
+      container: 'body'
+    });
+    $('.go-button').tooltip({
+      title: "click to get directions and check for delivery",
+      placement: 'bottom',
       container: 'body'
     });
   });

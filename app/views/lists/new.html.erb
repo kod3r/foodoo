@@ -90,7 +90,7 @@
       <% refactored_address = place["address1"]+" "+place["zip"] %>
       <% @address = place["address1"] %>
       <% @db_restaurant = Restaurant.joins(:locations).where('locations.address' => refactored_address).first || Restaurant.joins(:locations).where('locations.address' => @address).first %>
-      <div class="card text-center item pop" style="margin-bottom: 20px; height: 300px;">
+      <div class="card text-center item pop" style="margin-bottom: 20px; height: 255px;">
         <% if @db_restaurant %>
           <% @restaurant = @db_restaurant %>
         <% else %>
@@ -111,12 +111,15 @@
           <p><%=place["neighborhoods"][0]["name"]%>, <%=place["city"]%></p>
         <% end %>
         <p>
-          <img src="<%=place["photo_url"]%>"/>
-          <%= button_to('Add to List', "create?id=#{@restaurant.id}", :class => 'btn btn-default btn-primary add_button', method: :post) %>
+          <%= @restaurant.cuisine %>
         </p>
-        <p><img src="<%=place["rating_img_url"]%>"/>
-        (<%=place["review_count"]%> reviews)</p>
-        <p><img src="http://s3-media1.ak.yelpcdn.com/assets/2/www/img/dc8ff90d5d7d/developers/Powered_By_Yelp_Black.png"></p>
+        <p><a>
+          <img class="yelp_link" src="<%=place["photo_url"]%>"/>
+        </a></p>
+          <%= button_to('Add to List', "create?id=#{@restaurant.id}", :class => 'btn btn-default btn-primary add_button abtn', method: :post) %>
+<!--         <p><img src="<%=place["rating_img_url"]%>"/>
+        (<%=place["review_count"]%> reviews)</p> -->
+<!--         <p><img src="http://s3-media1.ak.yelpcdn.com/assets/2/www/img/dc8ff90d5d7d/developers/Powered_By_Yelp_Black.png"></p> -->
       </div>
     <% end %>
   <% end %>
@@ -134,6 +137,12 @@
   // });
   $('.add_button').tooltip({
     title: "add this restaurant to your list",
+    placement: 'right',
+    container: 'body'
+  });
+
+  $('.yelp_link').tooltip({
+    title: "click to visit yelp page",
     placement: 'right',
     container: 'body'
   });

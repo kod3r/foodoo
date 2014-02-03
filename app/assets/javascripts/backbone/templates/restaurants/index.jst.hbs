@@ -44,7 +44,7 @@
   {{/if}}
     <div>
       <div class="blockery">
-        <a class="text-center yelp_link" href="{{yelp_url}}" target="_blank"><img src="{{image}}"/></a>
+        <a class="text-center" href="{{yelp_url}}" target="_blank"><img class="yelp_link" src="{{image}}"/></a>
       </div>
       <div class="blockery">
         <p class="score_hover">Score: <strong style="color:orange;" class="score">{{score}}</strong></p>
@@ -192,7 +192,7 @@
     });
     $('.yelp_link').tooltip({
       title: "click to visit yelp page",
-      placement: 'top',
+      placement: 'right',
       container: 'body'
     });
     $('.fav-button').tooltip({

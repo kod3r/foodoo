@@ -113,7 +113,7 @@
         <p>
           <%= @restaurant.cuisine %>
         </p>
-        <p><a>
+        <p><a href="<%= place["url"] %>" target="_blank">
           <img class="yelp_link" src="<%=place["photo_url"]%>"/>
         </a></p>
           <%= button_to('Add to List', "create?id=#{@restaurant.id}", :class => 'btn btn-default btn-primary add_button abtn', method: :post) %>

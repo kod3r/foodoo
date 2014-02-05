@@ -17,11 +17,12 @@ class ListsController < ApplicationController
 
   # GET /lists/new
   def new
-    # @location = Location.new
-    # @location.ip_address = request.remote_ip
-    # @location.locator_type = "User"
-    # @location.locator_id = current_user.id
-    # @location.save
+    session[:search_location] = params[:location] if params[:location]
+    unless current_user.locations.count == 0 || session[:search_location]
+      session[:location_id] = session[:location_id] || current_user.locations.last.id
+      user_location = Location.find(session[:location_id])
+      session[:search_location] = user_location.city+' '+user_location.state
+    end
   end
 
   # GET /lists/1/edit

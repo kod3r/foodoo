@@ -17,7 +17,7 @@
   <div class="text-center">
     <form accept-charset="UTF-8" action="/lists/new" method="get" role="form">
       <label for="location"></label>
-      <input id="location" class="form-control" name="location" type="text" value="<%= current_user.locations.last.city %> <%= current_user.locations.last.state %>" style="text-align: center;"/>
+      <input id="location" class="form-control" name="location" type="text" value="<%= session[:search_location] %>" style="text-align: center;"/>
       <label for="term"></label>
       <input id="term" class="form-control centered text-center" name="term" type="text" placeholder="restaurant name" style="margin: 10px 0px;"/>
       <label for="search"></label>

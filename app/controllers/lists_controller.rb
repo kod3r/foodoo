@@ -41,7 +41,6 @@ class ListsController < ApplicationController
       respond_to do |format|
         if @list.save
           format.html { redirect_to :back}
-          # format.js { render js: "$.gritter.add({text: '#{@list.restaurant.name} added', time: 2000, position: 'bottom-right'});" }
           format.json { render action: 'new', status: :created, location: @list }
         else
           format.html { render action: 'new' }

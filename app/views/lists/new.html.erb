@@ -107,16 +107,16 @@
           <% end %>
         <% end %>
         <p class="lead"><%= place["name"] %></p>
+        <p><%= @restaurant.cuisine %></p>
         <% if place["neighborhoods"][0] %>
           <p><%=place["neighborhoods"][0]["name"]%>, <%=place["city"]%></p>
+        <% else %>
+          <p><%=place["city"]%></p>
         <% end %>
-        <p>
-          <%= @restaurant.cuisine %>
-        </p>
         <p><a href="<%= place["url"] %>" target="_blank">
           <img class="yelp_link" src="<%=place["photo_url"]%>"/>
         </a></p>
-          <%= button_to('Add to List', "create?id=#{@restaurant.id}", :class => 'btn btn-default btn-primary add_button abtn', method: :post) %>
+          <%= button_to('Add to List', "create?id=#{@restaurant.id}", remote: true, :class => 'btn btn-default btn-primary add_button abtn', method: :post) %>
 <!--         <p><img src="<%=place["rating_img_url"]%>"/>
         (<%=place["review_count"]%> reviews)</p> -->
 <!--         <p><img src="http://s3-media1.ak.yelpcdn.com/assets/2/www/img/dc8ff90d5d7d/developers/Powered_By_Yelp_Black.png"></p> -->

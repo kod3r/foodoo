@@ -45,7 +45,6 @@ class UsersController < ApplicationController
       end
     end
 
-    redirect_to :back, notice: "All of "+@user.username+"'s restaurants added to your list!"
   end
 
   # POST /users

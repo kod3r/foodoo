@@ -1,5 +1,6 @@
 json.array!(@restaurants) do |restaurant|
   json.extract! restaurant, :id, :name, :yelp_url, :image
+  json.list_id List.where(user_id: current_user.id, restaurant_id: restaurant.id).take!.id
   json.score solo_score(restaurant, current_user.id)
   json.cuisines restaurant.cuisine.split(', ')
   if restaurant.lists.find_by(user_id: current_user.id).label == "favorite"

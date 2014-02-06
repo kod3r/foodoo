@@ -55,14 +55,6 @@
 </div>
 <p id="error"></p>
 
-<% ordrin_api = Ordrin::APIs.new("hgdPJATkdYDnr7JFSLA0BllmiS4v55h_s46K2hwacQU", :test) %>
-<% args = {"datetime" => "ASAP", "addr" => "160 Pearl Street", "city" => "New York City", "zip" => "10005"}%>
-<% list = ordrin_api.delivery_list(args) %>
-<% d_check = list.find_index{|restaurant| restaurant["na"]==@restaurant.name}%>
-<% if d_check.is_a? Integer %>
-  <% @rid = list[d_check]["id"].to_s %>
-<% end %>
-
 
 <% if @rid %>
   <div id="delivery" class="ordrin-embed" data-rid=<%=@rid%> data-target="web" data-servers="test" data-key="hgdPJATkdYDnr7JFSLA0BllmiS4v55h_s46K2hwacQU"></div>

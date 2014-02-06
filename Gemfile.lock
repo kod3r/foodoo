@@ -54,6 +54,7 @@ GEM
       bundler (~> 1.0)
       rails (>= 3, < 5)
     geocoder (1.1.8)
+    gritter (1.1.0)
     handlebars_assets (0.14.1)
       execjs (>= 1.2.9)
       sprockets (>= 2.0.3)
@@ -161,6 +162,7 @@ DEPENDENCIES
   devise
   figaro
   geocoder
+  gritter (= 1.1.0)
   handlebars_assets
   httparty
   jbuilder (~> 1.2)

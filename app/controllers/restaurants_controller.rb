@@ -29,6 +29,13 @@ class RestaurantsController < ApplicationController
   # GET /restaurants/1.json
   def show
     Choice.create(user_id: current_user.id, restaurant_id: params[:id], action: "yes")
+    ordrin_api = Ordrin::APIs.new("hgdPJATkdYDnr7JFSLA0BllmiS4v55h_s46K2hwacQU", :test)
+    # args = {"datetime" => "ASAP", "addr" => "160 Pearl Street", "city" => "New York City", "zip" => "10005"}
+    # list = ordrin_api.delivery_list(args)
+    # d_check = list.find_index{|restaurant| restaurant["na"]==@restaurant.name}
+    # if d_check.is_a? Integer
+    #   @rid = list[d_check]["id"].to_s
+    # end
   end
 
   # GET /restaurants/new

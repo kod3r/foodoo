@@ -23,6 +23,9 @@ gem 'rails-backbone'
 gem 'handlebars_assets'
 
 gem 'newrelic_rpm'
+
+gem "gritter", "1.1.0"
+
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.0.0'
 

@@ -13,6 +13,7 @@
 //= require jquery
 //= require jquery_ujs
 //= require jquery-ui/ui/minified/jquery-ui.min.js
+//= require gritter
 //= require masonry/masonry.pkgd.min.js
 //= require Isotope/isotope-site/js/jquery.infinitescroll.min.js
 //= require Isotope/isotope-site/js/fake-element.js
@@ -32,4 +33,5 @@
 //= require video.js/video.js
 //= require BigVideo.js/lib/bigvideo.js
 //= require_tree .
+
 

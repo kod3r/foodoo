@@ -32,7 +32,7 @@
   {{#each this}}
   <div class="card text-center item pop {{#each cuisines}}{{this}} {{/each}}{{label}}">
     {{#if label}}
-    <p class="lead name" style="color:orange;">{{name}}</p>
+    <p class="lead name orange">{{name}}</p>
     {{else}}
     <p class="lead name">{{name}}</p>
     {{/if}}
@@ -61,12 +61,8 @@
     </div>
     <span class="button-span" style="display: none;">
       <a class="btn btn-small btn-success go-button" href="/restaurants/{{id}}">Go</a>
-      {{#if label}}
-      <a class="btn btn-small btn-info unfav-button" href="/unfavorite?id={{id}}" data-method="post">Favorite</a>
-      {{else}}
-      <a class="btn btn-small btn-info fav-button" href="/favorite?id={{id}}" data-method="post">Favorite</a>
-      {{/if}}
-      <a class="btn btn-small btn-danger del-button" href="/lists/{{list_id}}" data-confirm="Are you sure?" data-method="delete">Delete</a>
+      <a class="btn btn-small btn-info fav-button" href="/favorite?id={{list_id}}" data-method="post" data-remote="true">Favorite</a>
+      <a class="btn btn-small btn-danger del-button" href="/remove?id={{list_id}}" data-method="post" data-remote="true" data-confirm="Delete {{name}}?">Delete</a>
     </span>
   </div>
   {{/each}}
@@ -172,7 +168,14 @@
       }
       return false;
     });
-
+    $('.fav-button').on('ajax:success', function(event, data, status, xhr){
+      $(this).closest('.card').find('.name').toggleClass('orange', 100);
+    });
+    $('.del-button').on('ajax:success', function(event, data, status, xhr){
+      $card = $(this).closest('.item');
+      $container.isotope('remove', $card);
+      return false;
+    });
     $('.item').hover(function(){
       $(this).find('.button-span').fadeIn();
     });

@@ -47,10 +47,19 @@ class RestaurantsController < ApplicationController
   def edit
   end
 
+  def remove
+    List.find(params[:id]).destroy
+    redirect_to :back
+  end
+
   def favorite
-    @restaurant = Restaurant.find(params[:id])
-    @restaurant.lists.find_by(user_id: current_user.id).update(label: "favorite")
-    redirect_to :back, notice: "Favorited "+@restaurant.name+"!"
+    @fav_toggle = List.find(params[:id])
+    if @fav_toggle.label == "favorite"
+      @fav_toggle.update(label: "listed")
+    else
+      @fav_toggle.update(label: "favorite")
+    end
+    redirect_to :back
   end
 
   def unfavorite

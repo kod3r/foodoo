@@ -25,7 +25,7 @@ V1foodoo::Application.routes.draw do
   get 'lsearch' => 'users#index'
   post 'users/getall' =>  'users#getall'
   post 'favorite' => 'restaurants#favorite'
-  post 'unfavorite' => 'restaurants#unfavorite'
+  post 'remove' => 'restaurants#remove'
   post 'searches/set_user_location' => 'searches#set_user_location'
   get 'searches/group' => 'searches#group'
   post 'users/address_input' => 'users#address_input'

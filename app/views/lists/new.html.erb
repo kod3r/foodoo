@@ -116,7 +116,13 @@
         <p><a href="<%= place["url"] %>" target="_blank">
           <img class="yelp_link" src="<%=place["photo_url"]%>"/>
         </a></p>
-          <%= button_to('Add to List', "create?id=#{@restaurant.id}", remote: true, :class => 'btn btn-default btn-primary add_button abtn', method: :post) %>
+        <div class="add_area">
+          <% if current_user.restaurants.exists?(@restaurant.id) %>
+            <p class="orange">On your List</p>
+          <% else %>
+            <a class="btn btn-default btn-primary add_button" href="/lists/create?id=<%= @restaurant.id %>" data-method="post" data-remote="true">Add to List</a>
+          <% end %>
+        </div>
 <!--         <p><img src="<%=place["rating_img_url"]%>"/>
         (<%=place["review_count"]%> reviews)</p> -->
 <!--         <p><img src="http://s3-media1.ak.yelpcdn.com/assets/2/www/img/dc8ff90d5d7d/developers/Powered_By_Yelp_Black.png"></p> -->
@@ -125,6 +131,12 @@
   <% end %>
 </div>
 <script>
+$(function(){
+    $('.add_button').on('ajax:success', function(event, data, status, xhr){
+      $(this).parent().fadeOut(200, function(){
+        $(this).html("<p class='orange'>On your List</p>").fadeIn(1000);
+      });
+    });
   $('#location').tooltip({
     title: "make sure to include city and state",
     placement: 'right',
@@ -146,5 +158,6 @@
     placement: 'right',
     container: 'body'
   });
+});
 </script>
 

@@ -25,6 +25,24 @@ class ListsController < ApplicationController
     end
   end
 
+  def add_curated
+    if params[:curated] == "thrillist-burger"
+      @curated_list = Restaurant.where(name: ["Minetta Tavern", "Whitman's", "Brindle Room", "Lure Fishbar", "Korzo Haus"])
+    elsif params[:curated] == "zagat-pizza"
+      @curated_list = Restaurant.where(name: ["Lucali", "Luzzo's", "Paulie Gee's", "Di Fara Pizza", "Denino's Pizzeria Tavern", "Roberta's", "Franny's", "Motorino"])
+    elsif params[:curated] == "seriouseats-ramen"
+      @curated_list = Restaurant.where(name: ["Yuji Ramen", "Ramen Yebisu", "Jin Ramen", "Bassanova", "Totto Ramen", "Ippudo Ny", "Hide-Chan Ramen", "Chuko", "Ganso", "Tabata Noodle"])
+    end
+    if @curated_list
+      @curated_list.each do |restaurant|
+        unless current_user.restaurants.exists?(restaurant.id)
+          List.create(user_id: current_user.id, restaurant_id: restaurant.id, label: "listed")
+        end
+      end
+    end
+    redirect_to :back
+  end
+
   # GET /lists/1/edit
   def edit
   end

@@ -10,6 +10,7 @@ json.array!(@restaurants) do |restaurant|
   end
   rating = restaurant.lists.find_by(user_id: current_user.id).rating
   if rating > 0
+    json.rating rating
   else
     json.rating "new"
   end

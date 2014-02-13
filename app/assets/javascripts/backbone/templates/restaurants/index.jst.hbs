@@ -74,7 +74,7 @@
 <script>
   $(function(){
     $('.dial').knob({
-      'change': function(v){
+      'release': function(v){
         var list = this.$.data('list');
         $.ajax({
           url: "/lists/rate",

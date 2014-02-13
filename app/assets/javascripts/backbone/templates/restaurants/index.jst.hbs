@@ -74,7 +74,7 @@
 <script>
   $(function(){
     $('.dial').knob({
-      'release': function(v){
+      'change': function(v){
         var list = this.$.data('list');
         $.ajax({
           url: "/lists/rate",
@@ -208,7 +208,7 @@
     });
 
     $('#score_button').tooltip({
-      title: "based on distance, last visit, favorite",
+      title: "based on distance, last visit, favorite, and rating",
       placement: 'right',
       container: 'body'
     });

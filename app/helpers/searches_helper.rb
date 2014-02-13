@@ -8,22 +8,30 @@ module SearchesHelper
   end
 
   def solo_score(restaurant, user_id)
-    if restaurant.lists.find_by(user_id: user_id)
+    list = restaurant.lists.find_by(user_id: user_id)
+    if list
       #check last visit
       if restaurant.choices.where(user_id: user_id).exists?
         if ((Time.now - restaurant.choices.where(user_id: user_id).last.created_at)/(24*60*60)).to_i > User.find(user_id).restaurants.count/2
-          time_score = 25
+          time_score = 10
         else
           time_score = 0
         end
       else
-        time_score = 25
+        time_score = 10
       end
       #check favorite
-      if restaurant.lists.find_by(user_id: user_id).label=="favorite"
-        fav_score = 25
+      if list.label=="favorite"
+        fav_score = 10
       else
         fav_score = 0
+      end
+      if (list.rating - 70) > 0
+        rating_score = list.rating - 70
+      elsif list.rating == 0
+        rating_score = 10
+      else
+        rating_score = 0
       end
       #distance
       if distance(restaurant) < 5
@@ -39,7 +47,7 @@ module SearchesHelper
       else
         distance_score = 0
       end
-      total_score = time_score+fav_score+distance_score
+      total_score = rating_score+time_score+fav_score+distance_score
       total_score
     else
       return 0

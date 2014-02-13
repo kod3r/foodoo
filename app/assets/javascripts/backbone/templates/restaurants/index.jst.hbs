@@ -1,10 +1,11 @@
 <div class="text-center" id="sort-by">
   <a class="btn btn-large" style="margin-top: 5px;">SORT</a>
   <a class="btn btn-large btn-info" href="#dist" style="margin-top: 5px;">Distance</a>
-  <a class="btn btn-large btn-info" href="#last" style="margin-top: 5px;">Last Visit</a>
+{{!--   <a class="btn btn-large btn-info" href="#last" style="margin-top: 5px;">Last Visit</a> --}}
   <a class="btn btn-large btn-info" href="#name" style="margin-top: 5px;">Name</a>
   <a class="btn btn-large btn-info" href="#hood" style="margin-top: 5px;">Neighborhood</a>
-  <a class="btn btn-large btn-warning" id="score_button" href="#score" style="margin-top: 5px;">Score</a>
+  <a class="btn btn-large btn-info" href="#rating" style="margin-top: 5px;">Rating</a>
+  <a class="btn btn-large btn-warning" id="score_button" href="#score" style="margin-top: 5px;">Special Blend</a>
 </div>
 <br>
 <div class="text-center" id="filters">
@@ -47,9 +48,11 @@
         <a class="text-center" href="{{yelp_url}}" target="_blank"><img class="yelp_link" src="{{image}}"/></a>
       </div>
       <div class="blockery">
-        <p class="score_hover">Score: <strong style="color:orange;" class="score">{{score}}</strong></p>
+        <p class="rating" style="display: none">{{rating_number}}</p>
+        <input type="text" value="{{rating}}" class="dial" data-width="70" data-list="{{list_id}}" data-font="lato" data-height="70" data-fgcolor="orange" data-angleOffset="-125" data-angleArc="250">
+        <p style="display: none;">Score: <strong style="color:orange;" class="score">{{score}}</strong></p>
         <p class="dist">{{distance}} min walk</p>
-        <p class="last_visit">{{last_choice}}</p>
+        <p class="last_visit" style="display:none;">{{last_choice}}</p>
         <p class="last" style="display: none;">{{last_unix}}</p>
       {{#if list_check}}
         <p>On <strong style="color:orange;">{{lists}}</strong> lists</p>
@@ -70,6 +73,27 @@
 
 <script>
   $(function(){
+    $('.dial').knob({
+      'release': function(v){
+        var list = this.$.data('list');
+        $.ajax({
+          url: "/lists/rate",
+          type: "post",
+          data: {rating: v, list: list},
+          //contentType: "application/json; charset=utf-8",
+          dataType: "json",
+          success: function(data){
+            console.log("success");
+          },
+          error: function(jqXHR, textStatus, errorThrown){
+            console.log("fail");
+            console.log(jqXHR);
+            console.log(textStatus);
+            console.log(errorThrown);
+          }
+        });
+      }
+    });
     var $container = $('#container');
     $('#container').isotope({
       // options
@@ -82,8 +106,8 @@
         hood : function ( $elem ) {
           return $elem.find('.hood').text();
         },
-        last : function ( $elem ) {
-          return $elem.find('.last').text();
+        rating : function ( $elem ) {
+          return parseInt($elem.find('.rating').text());
         },
         dist : function ( $elem ) {
           return parseInt($elem.find('.dist').text());
@@ -97,7 +121,7 @@
     $('#sort-by a').click(function(){
       // get href attribute, minus the '#'
       var sortName = $(this).attr('href').slice(1);
-      if(sortName == "score"){
+      if(sortName == "score" || sortName == "rating"){
         $('#container').isotope({ sortBy : sortName, sortAscending: false });
       } else{
         $('#container').isotope({ sortBy : sortName });
@@ -183,7 +207,7 @@
       $(this).find('.button-span').fadeOut();
     });
 
-    $('.score_hover, #score_button').tooltip({
+    $('#score_button').tooltip({
       title: "based on distance, last visit, favorite",
       placement: 'right',
       container: 'body'

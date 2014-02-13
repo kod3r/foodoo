@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131101203820) do
+ActiveRecord::Schema.define(version: 20140212231702) do
 
   create_table "choices", force: true do |t|
     t.integer  "user_id"
@@ -35,6 +35,7 @@ ActiveRecord::Schema.define(version: 20131101203820) do
     t.string   "label"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "rating",        default: 0
   end
 
   create_table "locations", force: true do |t|

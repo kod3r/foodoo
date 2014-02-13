@@ -32,6 +32,7 @@ V1foodoo::Application.routes.draw do
   get 'restaurants' => 'restaurants#index'
   post '/address_input' => 'restaurants#address_input'
   post 'lists/add_curated' => 'lists#add_curated'
+  post 'lists/rate' => 'lists#rate'
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
 

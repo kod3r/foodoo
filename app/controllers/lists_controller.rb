@@ -47,6 +47,13 @@ class ListsController < ApplicationController
   def edit
   end
 
+  def rate
+    if params[:rating] && params[:list]
+      List.find(params[:list]).update(rating: params[:rating])
+    end
+    render json: {}
+  end
+
   # POST /lists
   # POST /lists.json
   def create

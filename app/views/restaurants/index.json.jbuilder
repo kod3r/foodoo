@@ -8,6 +8,13 @@ json.array!(@restaurants) do |restaurant|
   else
     json.label nil
   end
+  rating = restaurant.lists.find_by(user_id: current_user.id).rating
+  if rating > 0
+    json.rating rating
+  else
+    json.rating "new"
+  end
+  json.rating_number rating
   json.ll session[:location_ll]
   json.locations restaurant.locations.last, :hood, :city
   json.lists restaurant.lists.count

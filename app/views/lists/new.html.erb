@@ -196,22 +196,22 @@
 </div>
 <script>
 $(function(){
-    $('.add_button').on('ajax:success', function(event, data, status, xhr){
-      $(this).parent().fadeOut(200, function(){
-        $(this).html("<p class='orange'>On your List</p>").fadeIn(1000);
-      });
+  $('.add_button').on('ajax:success', function(event, data, status, xhr){
+    $(this).parent().fadeOut(200, function(){
+      $(this).html("<p class='orange'>On your List</p>").fadeIn(1000);
     });
-    $('.list-add').on('ajax:success', function(event, data, status, xhr){
-      $(this).closest('.curated-info').fadeOut(200, function(){
-        if($(this).attr('id') == "zagat"){
-          $(this).html("<p class='orange'>9/9 on your list</p><a class='btn btn-warning list-read' href='http://www.zagat.com/l/new-york-city/best-pizza-in-nyc' target='_blank'>Read</a>").fadeIn(1000);
-        }else if($(this).attr('id') == "thrillist"){
-          $(this).html("<p class='orange'>5/5 on your list</p><a class='btn btn-warning list-read' href='http://www.thrillist.com/eat/new-york/the-best-burgers-in-nyc' target='_blank'>Read</a>").fadeIn(1000);
-        }else if($(this).attr('id') == "seriouseats"){
-          $(this).html("<p class='orange'>10/10 on your list</p><a class='btn btn-warning list-read' href='http://newyork.seriouseats.com/2013/09/best-ramen-nyc-ippudo-hide-chan-yuji-yebisu-totto-chuko-bassanova.html' target='_blank'>Read</a>").fadeIn(1000);
-        }
-      });
+  });
+  $('.list-add').on('ajax:success', function(event, data, status, xhr){
+    $(this).closest('.curated-info').fadeOut(200, function(){
+      if($(this).attr('id') == "zagat"){
+        $(this).html("<p class='orange'>9/9 on your list</p><a class='btn btn-warning list-read' href='http://www.zagat.com/l/new-york-city/best-pizza-in-nyc' target='_blank'>Read</a>").fadeIn(1000);
+      }else if($(this).attr('id') == "thrillist"){
+        $(this).html("<p class='orange'>5/5 on your list</p><a class='btn btn-warning list-read' href='http://www.thrillist.com/eat/new-york/the-best-burgers-in-nyc' target='_blank'>Read</a>").fadeIn(1000);
+      }else if($(this).attr('id') == "seriouseats"){
+        $(this).html("<p class='orange'>10/10 on your list</p><a class='btn btn-warning list-read' href='http://newyork.seriouseats.com/2013/09/best-ramen-nyc-ippudo-hide-chan-yuji-yebisu-totto-chuko-bassanova.html' target='_blank'>Read</a>").fadeIn(1000);
+      }
     });
+  });
   $('#location').tooltip({
     title: "make sure to include city and state",
     placement: 'right',

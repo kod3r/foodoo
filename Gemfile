@@ -26,6 +26,8 @@ gem 'newrelic_rpm'
 
 gem 'unicorn'
 
+gem 'rack-timeout'
+
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.0.0'
 

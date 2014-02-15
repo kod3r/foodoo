@@ -46,10 +46,6 @@
     </form>
   </div>
 <script>
-  $(window).load(function(){
-    $('.bubblingG').fadeOut(300);
-    $('.addressor').fadeIn(300);
-  });
   $(function(){
     $('#address_selector').val(<%= session[:location_id] %>);
     $('#address_selector').change(function(){

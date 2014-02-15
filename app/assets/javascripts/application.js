@@ -15,6 +15,7 @@
 //= require jquery-ui/ui/minified/jquery-ui.min.js
 //= require masonry/masonry.pkgd.min.js
 //= require jQuery-Knob/js/jquery.knob.js
+//= require bootbox/bootbox.min.js
 //= require Isotope/isotope-site/js/jquery.infinitescroll.min.js
 //= require Isotope/isotope-site/js/fake-element.js
 //= require Isotope/isotope-site/js/make-big-graph-projects.js

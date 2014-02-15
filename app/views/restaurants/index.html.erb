@@ -1,6 +1,14 @@
 <% if current_user.locations.count > 0 && (current_user.restaurants.count > 0)%>
 <div id="index">
-  <div class="text-center">
+  <div class="bubblingG" style="margin-left:auto; margin-right:auto;">
+    <span id="bubblingG_1">
+    </span>
+    <span id="bubblingG_2">
+    </span>
+    <span id="bubblingG_3">
+    </span>
+  </div>
+  <div class="text-center addressor" style="display: none;">
     <select id="address_selector">
     <% current_user.locations.each do |location| %>
       <option value=<%= location.id %>>
@@ -38,8 +46,11 @@
     </form>
   </div>
 <script>
+  $(window).load(function(){
+    $('.bubblingG').fadeOut(300);
+    $('.addressor').fadeIn(300);
+  });
   $(function(){
-    console.log(<%= session[:location_id] %>)
     $('#address_selector').val(<%= session[:location_id] %>);
     $('#address_selector').change(function(){
       var selected = $('#address_selector').val();

@@ -20,12 +20,15 @@ json.array!(@restaurants) do |restaurant|
   end
   if rating >= 70
     json.rating rating
+    json.hittable false
     rating_score = ((rating-70)*4)/3
   elsif rating == 0
     json.rating "new"
+    json.hittable true
     rating_score = 10
   else
     json.rating rating
+    json.hittable false
     rating_score = 0
   end
   json.rating_number rating

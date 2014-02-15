@@ -4,10 +4,10 @@ json.array!(@restaurants) do |restaurant|
   location = restaurant.locations.last
   miles = location.distance_to(session[:location_ll]) || 2
 
-  cache(restaurant) do
-    json.extract! restaurant, :id, :name, :yelp_url, :image
-    json.cuisines restaurant.cuisine.split(', ')
-  end
+
+  json.extract! restaurant, :id, :name, :yelp_url, :image
+  json.cuisines restaurant.cuisine.split(', ')
+
 
   rating = list.rating
   json.list_id list.id

@@ -3,15 +3,14 @@
   <a class="btn btn-large btn-info" href="#dist" style="margin-top: 5px;">Distance</a>
 {{!--   <a class="btn btn-large btn-info" href="#last" style="margin-top: 5px;">Last Visit</a> --}}
   <a class="btn btn-large btn-info" href="#name" style="margin-top: 5px;">Name</a>
-  <a class="btn btn-large btn-info" href="#hood" style="margin-top: 5px;">Neighborhood</a>
+{{!--   <a class="btn btn-large btn-info" href="#hood" style="margin-top: 5px;">Neighborhood</a> --}}
   <a class="btn btn-large btn-info" href="#rating" style="margin-top: 5px;">Rating</a>
   <a class="btn btn-large btn-warning" id="score_button" href="#score" style="margin-top: 5px;">Special Blend</a>
 </div>
 <br>
 <div class="text-center" id="filters">
   <a class="btn btn-large">FILTER</a>
-  <a class="btn btn-large btn-info filter-click" href="#" data-filter="*">All</a>
-  <a class="btn btn-large btn-info filter-click" href="#" data-filter=".favorite">Favorite</a>
+  <a class="btn btn-large btn-info filter-click" href="#" data-filter=".favorite">Hit List</a>
   <a class="btn btn-large btn-info" href="#" data-filter=".cuisine" id="cuisine-button">
     <div class="cuisine-input" id="cuisine-show">Cuisine</div>
     <div class="cuisine-input input-group" style="display: none" id="cuisine-filter">
@@ -21,6 +20,7 @@
       </span>
     </div>
   </a>
+  <a class="btn btn-large btn-info filter-click" href="#" data-filter="*">Reset</a>
 </div>
 <br>
 <div class="text-center" id="asc-desc">
@@ -49,7 +49,7 @@
       </div>
       <div class="blockery">
         <p class="rating" style="display: none">{{rating_number}}</p>
-        <input type="text" value="{{rating}}" class="dial" data-width="70" data-list="{{list_id}}" data-font="lato" data-height="70" data-fgcolor="orange" data-angleOffset="-125" data-angleArc="250">
+        <input type="text" value="{{rating}}" class="dial" data-width="70" data-list="{{list_id}}" data-prev="{{rating_number}}" data-font="lato" data-height="70" data-fgcolor="orange" data-angleOffset="-125" data-angleArc="250">
         <p style="display: none;">Score: <strong style="color:orange;" class="score">{{score}}</strong></p>
         <p class="dist" style="display:none;">{{miles}}</p>
         {{#if walk}}
@@ -67,7 +67,7 @@
 {{!--         <p><a href="{{yelp_url}}" target="_blank"><img src="http://s3-media1.ak.yelpcdn.com/assets/2/www/img/55e2efe681ed/developers/yelp_logo_50x25.png"></a></p> --}}
       </div>
       <span class="button-span">
-        <a class="btn btn-small btn-info fav-button" href="/favorite?id={{list_id}}" data-method="post" data-remote="true">Favorite</a>
+        <a class="btn btn-small btn-warning fav-button" href="/favorite?id={{list_id}}" data-method="post" data-remote="true">Hit List</a>
         <a class="btn btn-small btn-success go-button" href="/restaurants/{{id}}">Go</a>
         <a class="btn btn-small btn-danger del-button" href="/remove?id={{list_id}}" data-method="post" data-remote="true" data-confirm="Delete {{name}}?">Delete</a>
       </span>
@@ -81,6 +81,10 @@
     $('.dial').knob({
       'change': function(v){
         var list = this.$.data('list');
+        var prev = this.$.data('prev');
+        if(prev == 0){
+          this.$.closest('.card').find('.name').removeClass('orange', 500);
+        }
         $.ajax({
           url: "/lists/rate",
           type: "post",
@@ -212,7 +216,7 @@
     });
 
     $('#score_button').tooltip({
-      title: "based on distance, last visit, favorite, and rating",
+      title: "based on distance, rating, and hitlist",
       placement: 'right',
       container: 'body'
     });
@@ -227,12 +231,7 @@
       container: 'body'
     });
     $('.fav-button').tooltip({
-      title: "click to make this restaurant a favorite",
-      placement: 'bottom',
-      container: 'body'
-    });
-    $('.unfav-button').tooltip({
-      title: "click to undo favorite status",
+      title: "click to add or remove from your hit list",
       placement: 'bottom',
       container: 'body'
     });

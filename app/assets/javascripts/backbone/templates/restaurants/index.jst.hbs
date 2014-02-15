@@ -4,7 +4,7 @@
 {{!--   <a class="btn btn-large btn-info" href="#last" style="margin-top: 5px;">Last Visit</a> --}}
   <a class="btn btn-large btn-info" href="#name" style="margin-top: 5px;">Name</a>
 {{!--   <a class="btn btn-large btn-info" href="#hood" style="margin-top: 5px;">Neighborhood</a> --}}
-  <a class="btn btn-large btn-info" href="#rating" style="margin-top: 5px;">Rating</a>
+  <a class="btn btn-large btn-info" href="#rating" style="margin-top: 5px;" id="start">Rating</a>
   <a class="btn btn-large btn-warning" id="score_button" href="#score" style="margin-top: 5px;">Special Blend</a>
 </div>
 <br>
@@ -202,6 +202,9 @@
       }
       return false;
     });
+
+    setTimeout(function(){$("#start").click()},300);
+
     $('.fav-button').on('ajax:success', function(event, data, status, xhr){
       $(this).closest('.card').find('.name').toggleClass('orange', 100);
     });

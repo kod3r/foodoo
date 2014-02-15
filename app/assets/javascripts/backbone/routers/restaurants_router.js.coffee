@@ -17,9 +17,10 @@ class V1foodoo.Routers.RestaurantsRouter extends Backbone.Router
 
   index: ->
     @view = new V1foodoo.Views.Restaurants.IndexView(collection: @restaurants)
-    $("#restaurants").html(@view.render().el)
     $('.bubblingG').fadeOut(300);
     $('.addressor').fadeIn(300);
+    $("#restaurants").html(@view.render().el)
+
 
   show: (id) ->
     restaurant = @restaurants.get(id)

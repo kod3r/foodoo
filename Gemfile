@@ -28,6 +28,14 @@ gem 'unicorn'
 
 gem 'rack-timeout'
 
+gem 'rack-cache'
+
+gem 'dalli'
+
+gem 'kgio'
+
+gem 'memcachier'
+
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.0.0'
 

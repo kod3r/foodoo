@@ -41,6 +41,7 @@ GEM
       coffee-script-source
       execjs
     coffee-script-source (1.6.3)
+    dalli (2.7.0)
     devise (3.1.1)
       bcrypt-ruby (~> 3.0)
       orm_adapter (~> 0.1)
@@ -75,6 +76,7 @@ GEM
     mail (2.5.4)
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
+    memcachier (0.0.2)
     mime-types (1.25)
     minitest (4.7.5)
     multi_json (1.8.2)
@@ -88,6 +90,8 @@ GEM
     quiet_assets (1.0.2)
       railties (>= 3.1, < 5.0)
     rack (1.5.2)
+    rack-cache (1.2)
+      rack (>= 0.4)
     rack-test (0.6.2)
       rack (>= 1.0)
     rack-timeout (0.0.4)
@@ -165,6 +169,7 @@ DEPENDENCIES
   bootstrap-sass
   bugsnag
   coffee-rails (~> 4.0.0)
+  dalli
   devise
   figaro
   geocoder
@@ -173,10 +178,13 @@ DEPENDENCIES
   jbuilder (~> 1.2)
   jquery-rails
   json
+  kgio
+  memcachier
   newrelic_rpm
   ordrin
   pg
   quiet_assets
+  rack-cache
   rack-timeout
   rails (= 4.0.0)
   rails-backbone

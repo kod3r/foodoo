@@ -1,5 +1,9 @@
 json.array!(@restaurants) do |restaurant|
+
   list = restaurant.lists.find_by(user_id: current_user.id)
+  location = restaurant.locations.last
+  miles = location.distance_to(session[:location_ll]) || 2
+
   json.extract! restaurant, :id, :name, :yelp_url, :image
   json.list_id list.id
   json.cuisines restaurant.cuisine.split(', ')
@@ -23,7 +27,7 @@ json.array!(@restaurants) do |restaurant|
   end
   json.rating_number rating
   json.ll session[:location_ll]
-  json.locations restaurant.locations.last, :hood, :city
+  json.locations location, :hood, :city
   list_count = restaurant.lists.count
   json.lists list_count
   json.list_check true if list_count > 1
@@ -34,7 +38,6 @@ json.array!(@restaurants) do |restaurant|
   #   json.last_choice "New!"
   #   json.last_unix "New!"
   # end
-  miles = restaurant.locations.last.distance_to(session[:location_ll]) || 2
   json.miles miles.round(2)
   if miles < 0.25
     json.walk ((miles+0.1)*25).to_i

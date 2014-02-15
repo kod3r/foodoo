@@ -128,7 +128,7 @@
       if(sortName == "score" || sortName == "rating"){
         $('#container').isotope({ sortBy : sortName, sortAscending: false });
       } else{
-        $('#container').isotope({ sortBy : sortName });
+        $('#container').isotope({ sortBy : sortName, sortAscending: true });
       }
       return false;
     });

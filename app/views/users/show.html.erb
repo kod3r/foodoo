@@ -1,8 +1,9 @@
 <div class="text-center" id="sort-by">
   <a class="btn btn-large" style="margin-top: 5px;">SORT</a>
-  <a class="btn btn-large btn-info" href="#lists" style="margin-top: 5px;" id="start">Lists</a>
+  <a class="btn btn-large btn-info" href="#lists" style="margin-top: 5px;">Lists</a>
   <a class="btn btn-large btn-info" href="#name" style="margin-top: 5px;">Name</a>
   <a class="btn btn-large btn-info" href="#hood" style="margin-top: 5px;">Neighborhood</a>
+  <a class="btn btn-large btn-info" href="#rating" style="margin-top: 5px;" id="start">Rating</a>
 </div>
 <br>
 <div class="text-center" id="filters">
@@ -36,44 +37,55 @@
 <br>
 <div id="container">
 <% @user.restaurants.each do |restaurant| %>
-    <div class="card text-center item pop <%= restaurant.lists.find_by(user_id: @user.id).label %> <%= restaurant.cuisine.split(", ").join(' ') %>">
-        <% if restaurant.lists.find_by(user_id: @user.id).label == "favorite" %>
-          <p class="lead name" style="color:orange;"><%= restaurant.name %></p>
-        <% else  %>
-          <p class="lead name"><%= restaurant.name %></p>
-        <% end %>
-        <p><%=restaurant.cuisine%></p>
-        <% if restaurant.locations.last.hood %>
-          <p class="hood"><%=restaurant.locations.last.hood%>, <%=restaurant.locations.last.city%></p>
-        <% else %>
-          <p><%=restaurant.locations.last.city%></p>
-        <% end %>
-        <div>
-          <div class="blockery">
-            <a class="text-center"><img src=<%=restaurant.image%>/></p>
-          </div>
-          <div class="blockery">
-            <% if restaurant.lists.count == 1  %>
-              <p>On <strong style="color:orange;" class="lists"><%= restaurant.lists.count %></strong> list</p>
-            <% else %>
-              <p>On <strong style="color:orange;" class="lists"><%= restaurant.lists.count %></strong> lists</p>
-            <% end %>
-            <% if current_user.restaurants.exists?(restaurant.id) %>
-              <p class="listed">On your list</p>
-            <% else %>
-              <div class="buttoned">
-              <%= button_to('Add to List', "/lists/create?id=#{restaurant.id}", :remote => true, :class => 'btn btn-primary btn-small add_button') %>
-              </div>
-              <p></p>
-            <% end %>
-            <p><a href="<%=restaurant.yelp_url%>" target="_blank"><img class="yelp_link" src="http://s3-media1.ak.yelpcdn.com/assets/2/www/img/55e2efe681ed/developers/yelp_logo_50x25.png"></a></p>
-          </div>
+    <% @label = restaurant.lists.find_by(user_id: @user.id).label  %>
+    <% @rating = restaurant.lists.find_by(user_id: @user.id).rating %>
+    <% if @rating > 0 %>
+      <% @formatted_rating = @rating %>
+    <% else %>
+      <% @formatted_rating = "new" %>
+    <% end %>
+    <div class="card text-center item pop <%= @label %> <%= restaurant.cuisine.split(", ").join(' ') %>">
+      <% if @label == "favorite" %>
+        <p class="lead name" style="color:orange;"><%= restaurant.name %></p>
+      <% else  %>
+        <p class="lead name"><%= restaurant.name %></p>
+      <% end %>
+      <p><%=restaurant.cuisine%></p>
+      <% if restaurant.locations.last.hood %>
+        <p class="hood"><%=restaurant.locations.last.hood%>, <%=restaurant.locations.last.city%></p>
+      <% else %>
+        <p><%=restaurant.locations.last.city%></p>
+      <% end %>
+      <div>
+        <div class="blockery">
+          <a class="text-center" href="<%=restaurant.yelp_url%>" target="_blank"><img class="yelp_link" src=<%=restaurant.image%>/></a>
         </div>
+        <div class="blockery">
+          <p class="rating" style="display: none"><%= @rating %></p>
+          <input type="text" value="<%= @formatted_rating %>" class="dial" data-width="70" data-font="lato" data-height="70" data-fgcolor="orange" data-angleOffset="-125" data-angleArc="250">
+          <% if restaurant.lists.count == 1  %>
+            <p>On <strong style="color:orange;" class="lists"><%= restaurant.lists.count %></strong> list</p>
+          <% else %>
+            <p>On <strong style="color:orange;" class="lists"><%= restaurant.lists.count %></strong> lists</p>
+          <% end %>
+          <% if current_user.restaurants.exists?(restaurant.id) %>
+            <p class="listed">On your list</p>
+          <% else %>
+            <div class="buttoned">
+            <%= button_to('Add to List', "/lists/create?id=#{restaurant.id}", :remote => true, :class => 'btn btn-primary btn-small add_button') %>
+            </div>
+            <p></p>
+          <% end %>
+        </div>
+      </div>
     </div>
 <% end %>
 </div>
 <script>
   $(function(){
+    $('.dial').knob({
+      'readOnly': true
+    });
     $('#add_all').click(function(){
       $('#add_all').fadeOut(1000, function(){
         $('#all_alert').fadeIn(1000).fadeOut(8000);
@@ -102,6 +114,9 @@
         },
         lists : function ( $elem ) {
           return parseInt($elem.find('.lists').text());
+        },
+        rating : function ( $elem ) {
+          return parseInt($elem.find('.rating').text());
         },
         hood : function ( $elem ) {
           return $elem.find('.hood').text();
@@ -171,7 +186,7 @@
     $('#sort-by a').click(function(){
       // get href attribute, minus the '#'
       var sortName = $(this).attr('href').slice(1);
-      if(sortName == "lists"){
+      if(sortName == "lists" || sortName == "rating"){
         $('#container').isotope({ sortBy : sortName, sortAscending: false });
       } else{
         $('#container').isotope({ sortBy : sortName });
@@ -197,12 +212,16 @@
 
     $('.yelp_link').tooltip({
       title: "click to visit yelp page",
-      placement: 'bottom',
+      placement: 'left',
       container: 'body'
     });
-
     $('.buttoned').tooltip({
       title: "add this restaurant to your list",
+      placement: 'right',
+      container: 'body'
+    });
+    $('.dial').tooltip({
+      title: "<%= @user.username %>'s rating",
       placement: 'right',
       container: 'body'
     });

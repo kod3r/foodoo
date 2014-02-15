@@ -4,9 +4,13 @@ json.array!(@restaurants) do |restaurant|
   location = restaurant.locations.last
   miles = location.distance_to(session[:location_ll]) || 2
 
-  json.extract! restaurant, :id, :name, :yelp_url, :image
+  cache(restaurant) do
+    json.extract! restaurant, :id, :name, :yelp_url, :image
+    json.cuisines restaurant.cuisine.split(', ')
+  end
+
+  rating = list.rating
   json.list_id list.id
-  json.cuisines restaurant.cuisine.split(', ')
   if list.label == "favorite"
     json.label "favorite"
     fav_score = 20
@@ -14,7 +18,6 @@ json.array!(@restaurants) do |restaurant|
     json.label nil
     fav_score = 0
   end
-  rating = list.rating
   if rating >= 70
     json.rating rating
     rating_score = ((rating-70)*4)/3
@@ -26,11 +29,13 @@ json.array!(@restaurants) do |restaurant|
     rating_score = 0
   end
   json.rating_number rating
-  json.ll session[:location_ll]
-  json.locations location, :hood, :city
+
   list_count = restaurant.lists.count
   json.lists list_count
   json.list_check true if list_count > 1
+
+  json.ll session[:location_ll]
+  json.locations location, :hood, :city
   # if restaurant.choices.where(user_id: current_user.id).last
   #   json.last_choice restaurant.choices.where(user_id: current_user.id).last.created_at.to_date.strftime('%d %b %Y')
   #   json.last_unix restaurant.choices.where(user_id: current_user.id).last.created_at

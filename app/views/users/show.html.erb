@@ -8,8 +8,7 @@
 <br>
 <div class="text-center" id="filters">
   <a class="btn btn-large">FILTER</a>
-  <a class="btn btn-large btn-info filter-click" href="#" data-filter="*" id="all">All</a>
-  <a class="btn btn-large btn-info filter-click" href="#" data-filter=".favorite">Favorite</a>
+  <a class="btn btn-large btn-info filter-click" href="#" data-filter=".favorite">Hit List</a>
   <a class="btn btn-large btn-info" href="#" data-filter=".cuisine" id="cuisine-button">
     <div class="cuisine-input" id="cuisine-show">Cuisine</div>
     <div class="cuisine-input input-group" style="display: none" id="cuisine-filter">
@@ -19,6 +18,7 @@
       </span>
     </div>
   </a>
+  <a class="btn btn-large btn-info filter-click" href="#" data-filter="*" id="all">Reset</a>
 </div>
 <br>
 <div class="text-center" id="asc-desc">
@@ -46,7 +46,7 @@
     <% end %>
     <div class="card text-center item pop <%= @label %> <%= restaurant.cuisine.split(", ").join(' ') %>">
       <% if @label == "favorite" %>
-        <p class="lead name" style="color:orange;"><%= restaurant.name %></p>
+        <p class="lead name orange"><%= restaurant.name %></p>
       <% else  %>
         <p class="lead name"><%= restaurant.name %></p>
       <% end %>
@@ -225,7 +225,11 @@
       placement: 'right',
       container: 'body'
     });
-
+    $('.name.orange').tooltip({
+      title: "on <%= @user.username %>'s hit list",
+      placement: 'top',
+      container: 'body'
+    });
   });
 </script>
 

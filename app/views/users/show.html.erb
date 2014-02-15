@@ -1,30 +1,32 @@
-<div class="text-center" id="sort-by">
-  <a class="btn btn-large" style="margin-top: 5px;">SORT</a>
-  <a class="btn btn-large btn-info" href="#lists" style="margin-top: 5px;">Lists</a>
-  <a class="btn btn-large btn-info" href="#name" style="margin-top: 5px;">Name</a>
-  <a class="btn btn-large btn-info" href="#hood" style="margin-top: 5px;">Neighborhood</a>
-  <a class="btn btn-large btn-info" href="#rating" style="margin-top: 5px;" id="start">Rating</a>
-</div>
-<br>
-<div class="text-center" id="filters">
-  <a class="btn btn-large">FILTER</a>
-  <a class="btn btn-large btn-info filter-click" href="#" data-filter=".favorite">Hit List</a>
-  <a class="btn btn-large btn-info" href="#" data-filter=".cuisine" id="cuisine-button">
-    <div class="cuisine-input" id="cuisine-show">Cuisine</div>
-    <div class="cuisine-input input-group" style="display: none" id="cuisine-filter">
-      <input type="text" class="form-control" style="max-width: 100px; text-align: center;" id="cuisine-input">
-      <span class="input-group-btn">
-        <button class="btn btn-default filter-click" type="button" id="cuisine-submit">Select</button>
-      </span>
-    </div>
-  </a>
-  <a class="btn btn-large btn-info filter-click" href="#" data-filter="*" id="all">Reset</a>
-</div>
-<br>
-<div class="text-center" id="asc-desc">
-  <a class="btn btn-large">ORDER</a>
-  <a class="btn btn-large btn-info" href="#asc">Ascending</a>
-  <a class="btn btn-large btn-info" href="#desc">Descending</a>
+<div class="buttonry" style="display:none">
+  <div class="text-center" id="sort-by">
+    <a class="btn btn-large" style="margin-top: 5px;">SORT</a>
+    <a class="btn btn-large btn-info" href="#lists" style="margin-top: 5px;">Lists</a>
+    <a class="btn btn-large btn-info" href="#name" style="margin-top: 5px;">Name</a>
+    <a class="btn btn-large btn-info" href="#hood" style="margin-top: 5px;">Neighborhood</a>
+    <a class="btn btn-large btn-info" href="#rating" style="margin-top: 5px;" id="start">Rating</a>
+  </div>
+  <br>
+  <div class="text-center" id="filters">
+    <a class="btn btn-large">FILTER</a>
+    <a class="btn btn-large btn-info filter-click" href="#" data-filter=".favorite">Hit List</a>
+    <a class="btn btn-large btn-info" href="#" data-filter=".cuisine" id="cuisine-button">
+      <div class="cuisine-input" id="cuisine-show">Cuisine</div>
+      <div class="cuisine-input input-group" style="display: none" id="cuisine-filter">
+        <input type="text" class="form-control" style="max-width: 100px; text-align: center;" id="cuisine-input">
+        <span class="input-group-btn">
+          <button class="btn btn-default filter-click" type="button" id="cuisine-submit">Select</button>
+        </span>
+      </div>
+    </a>
+    <a class="btn btn-large btn-info filter-click" href="#" data-filter="*" id="all">Reset</a>
+  </div>
+  <br>
+  <div class="text-center" id="asc-desc">
+    <a class="btn btn-large">ORDER</a>
+    <a class="btn btn-large btn-info" href="#asc">Ascending</a>
+    <a class="btn btn-large btn-info" href="#desc">Descending</a>
+  </div>
 </div>
 <br>
 <br>
@@ -83,6 +85,7 @@
 </div>
 <script>
   $(function(){
+    $('.buttonry').fadeIn(1000);
     $('.dial').knob({
       'readOnly': true
     });

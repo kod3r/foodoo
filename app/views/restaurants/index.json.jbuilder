@@ -27,7 +27,7 @@ json.array!(@restaurants) do |restaurant|
   #   json.last_choice "New!"
   #   json.last_unix "New!"
   # end
-  miles = restaurant.locations.last.distance_to(session[:location_ll])
+  miles = restaurant.locations.last.distance_to(session[:location_ll]) || 2
   json.miles miles.round(2)
   if miles < 1
     json.walk ((miles+0.1)*25).to_i

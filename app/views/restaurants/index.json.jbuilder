@@ -1,15 +1,16 @@
 json.array!(@restaurants) do |restaurant|
+  list = restaurant.lists.find_by(user_id: current_user.id)
   json.extract! restaurant, :id, :name, :yelp_url, :image
-  json.list_id List.where(user_id: current_user.id, restaurant_id: restaurant.id).take!.id
+  json.list_id list.id
   json.cuisines restaurant.cuisine.split(', ')
-  if restaurant.lists.find_by(user_id: current_user.id).label == "favorite"
+  if list.label == "favorite"
     json.label "favorite"
     fav_score = 20
   else
     json.label nil
     fav_score = 0
   end
-  rating = restaurant.lists.find_by(user_id: current_user.id).rating
+  rating = list.rating
   if rating >= 70
     json.rating rating
     rating_score = ((rating-70)*4)/3

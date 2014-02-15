@@ -115,14 +115,13 @@
           return parseInt($elem.find('.rating').text());
         },
         dist : function ( $elem ) {
-          return parseInt($elem.find('.dist').text());
+          return parseFloat($elem.find('.dist').text());
         },
         score : function ( $elem ) {
           return parseInt($elem.find('.score').text());
         }
       }
     });
-
     $('#sort-by a').click(function(){
       // get href attribute, minus the '#'
       var sortName = $(this).attr('href').slice(1);

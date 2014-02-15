@@ -8,7 +8,7 @@ class RestaurantsController < ApplicationController
   # GET /restaurants
   # GET /restaurants.json
   def index
-    @restaurants = current_user.restaurants
+    @restaurants = current_user.restaurants.includes(:locations, :lists)
     unless current_user.restaurants.count == 0
       if current_user.locations.last.created_at > (Time.now - 10)
         session[:location_id] = current_user.locations.last.id

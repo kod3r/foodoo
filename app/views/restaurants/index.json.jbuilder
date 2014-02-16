@@ -2,6 +2,8 @@ json.array!(@restaurants) do |restaurant|
 
   list = restaurant.lists.find_by(user_id: current_user.id)
   location = restaurant.locations.last
+  hood = location.hood
+  city = location.city
   miles = location.distance_to(session[:location_ll]) || 2
 
 
@@ -38,7 +40,13 @@ json.array!(@restaurants) do |restaurant|
   json.list_check true if list_count > 1
 
   json.ll session[:location_ll]
-  json.locations location, :hood, :city
+  if hood
+    json.location hood+', '+city
+    json.location_raw hood.delete(' ')
+  else
+    json.location city
+    json.location_raw city.delete(' ')
+  end
   # if restaurant.choices.where(user_id: current_user.id).last
   #   json.last_choice restaurant.choices.where(user_id: current_user.id).last.created_at.to_date.strftime('%d %b %Y')
   #   json.last_unix restaurant.choices.where(user_id: current_user.id).last.created_at

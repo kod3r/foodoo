@@ -1,50 +1,14 @@
-<div class="buttonry" style="display:none;">
-  <div class="text-center" id="sort-by">
-    <a class="btn btn-large" style="margin-top: 5px;">SORT</a>
-    <a class="btn btn-large btn-info" href="#dist" style="margin-top: 5px;">Distance</a>
-  {{!--   <a class="btn btn-large btn-info" href="#last" style="margin-top: 5px;">Last Visit</a> --}}
-    <a class="btn btn-large btn-info" href="#name" style="margin-top: 5px;">Name</a>
-  {{!--   <a class="btn btn-large btn-info" href="#hood" style="margin-top: 5px;">Neighborhood</a> --}}
-    <a class="btn btn-large btn-info" href="#rating" style="margin-top: 5px;" id="start">Rating</a>
-    <a class="btn btn-large btn-warning" id="score_button" href="#score" style="margin-top: 5px;">Special Blend</a>
-  </div>
-  <br>
-  <div class="text-center" id="filters">
-    <a class="btn btn-large">FILTER</a>
-    <a class="btn btn-large btn-info filter-click" href="#" data-filter=".favorite">Hit List</a>
-    <a class="btn btn-large btn-info" href="#" data-filter=".cuisine" id="cuisine-button">
-      <div class="cuisine-input" id="cuisine-show">Cuisine</div>
-      <div class="cuisine-input input-group" style="display: none" id="cuisine-filter">
-        <input type="text" class="form-control" style="max-width: 100px; text-align: center;" id="cuisine-input">
-        <span class="input-group-btn">
-          <button class="btn btn-default filter-click" type="button" id="cuisine-submit">Select</button>
-        </span>
-      </div>
-    </a>
-    <a class="btn btn-large btn-info filter-click" href="#" data-filter="*">Reset</a>
-  </div>
-  <br>
-  <div class="text-center" id="asc-desc">
-    <a class="btn btn-large">ORDER</a>
-    <a class="btn btn-large btn-info" href="#asc">Ascending</a>
-    <a class="btn btn-large btn-info" href="#desc">Descending</a>
-  </div>
-</div>
-<br>
+
 <div id="container" class="text-center">
   {{#each this}}
-  <div class="card text-center item pop {{#each cuisines}}{{this}} {{/each}}{{label}}">
+  <div class="card text-center item pop {{#each cuisines}}{{this}} {{/each}}{{label}} {{location_raw}}">
     {{#if label}}
     <p class="lead name orange">{{name}}</p>
     {{else}}
     <p class="lead name">{{name}}</p>
     {{/if}}
     <p>{{#each cuisines}}{{this}}  {{/each}}</p>
-  {{#if locations.hood}}
-    <p class="hood">{{locations.hood}}</p>
-  {{else}}
-    <p class="city">{{locations.city}}</p>
-  {{/if}}
+    <p>{{location}}</p>
     <div class="text-center">
       <div class="blockery">
         <a class="text-center" href="{{yelp_url}}" target="_blank"><img class="yelp_link" src="{{image}}"/></a>
@@ -96,7 +60,7 @@
           //contentType: "application/json; charset=utf-8",
           dataType: "json",
           success: function(data){
-            console.log("success");
+            console.log("currypuff");
           },
           error: function(jqXHR, textStatus, errorThrown){
             console.log("fail");
@@ -116,8 +80,8 @@
         name : function ( $elem ) {
           return $elem.find('.name').text();
         },
-        hood : function ( $elem ) {
-          return $elem.find('.hood').text();
+        location : function ( $elem ) {
+          return $elem.find('.location').text();
         },
         rating : function ( $elem ) {
           return parseInt($elem.find('.rating').text());
@@ -189,6 +153,14 @@
       return false;
     });
 
+    $('.location-filter').click(function(event){
+      event.preventDefault();
+      var selector = $(this).data('location');
+      $container.isotope({ filter: "."+selector });
+      $('.dropdown-toggle').click();
+      return false;
+    });
+
     $('#filters .filter-click').click(function(){
       var selector = $(this).attr('data-filter');
       $container.isotope({ filter: selector });
@@ -250,6 +222,11 @@
     $('.go-button').tooltip({
       title: "click to get directions and check for delivery",
       placement: 'bottom',
+      container: 'body'
+    });
+    $('.reset').tooltip({
+      title: "clear the filter",
+      placement: 'right',
       container: 'body'
     });
     $('.dial').tooltip({

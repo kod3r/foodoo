@@ -18,7 +18,50 @@
       <option value="new">New Address</option>
     </select>
   </div>
-
+  <div class="buttonry text-center" style="display:none;">
+    <a class="lead">SORT</a>
+    <div class="text-center" id="sort-by">
+      <a class="btn btn-medium btn-info" href="#dist" style="margin-top: 5px; margin-bottom: 5px;">Distance</a>
+      <!-- <a class="btn btn-medium btn-info" href="#last">Last Visit</a> -->
+      <a class="btn btn-medium btn-info" href="#name" style="margin-top: 5px; margin-bottom: 5px;">Name</a>
+      <!-- <a class="btn btn-medium btn-info" href="#hood">Neighborhood</a> -->
+      <a class="btn btn-medium btn-info" href="#rating" id="start" style="margin-top: 5px; margin-bottom: 5px;">Rating</a>
+      <a class="btn btn-medium btn-warning" id="score_button" href="#score" style="margin-top: 5px; margin-bottom: 5px;">Special Blend</a>
+    </div>
+    <a class="lead">FILTER</a>
+    <div class="text-center" id="filters">
+      <a class="btn btn-medium btn-info filter-click" href="#" data-filter=".favorite" style="margin-top: 5px; margin-bottom: 5px;">Hit List</a>
+      <a class="btn btn-medium btn-info" href="#" data-filter=".cuisine" id="cuisine-button" style="margin-top: 5px; margin-bottom: 5px;">
+        <div class="cuisine-input" id="cuisine-show">Cuisine</div>
+        <div class="cuisine-input input-group" style="display: none" id="cuisine-filter">
+          <input type="text" class="form-control" style="max-width: 100px; text-align: center;" id="cuisine-input">
+          <span class="input-group-btn">
+            <button class="btn btn-default filter-click" type="button" id="cuisine-submit">Select</button>
+          </span>
+        </div>
+      </a>
+      <div class="btn-group" style="margin-top: 5px; margin-bottom: 5px;">
+        <a class="btn btn-info dropdown-toggle" data-toggle="dropdown" href="#">
+          Location
+          <span class="caret"></span>
+        </a>
+        <ul class="dropdown-menu" style="text-align: left;">
+          <% @hoods.each do |location| %>
+          <li><a class="location-filter" href="#" data-location="<%= location.delete(' ') %>">
+            <%= location %>
+          </a></li>
+          <% end %>
+        </ul>
+      </div>
+      <a class="btn btn-medium btn-info filter-click reset" href="#" data-filter="*" style="margin-top: 5px; margin-bottom: 5px;">Reset</a>
+    </div>
+<!--     <a class="lead">ORDER</a>
+    <div class="text-center" id="asc-desc">
+      <a class="btn btn-medium btn-info" href="#asc" style="margin-top: 5px; margin-bottom: 5px;">Ascending</a>
+      <a class="btn btn-medium btn-info" href="#desc" style="margin-top: 5px; margin-bottom: 5px;">Descending</a>
+    </div> -->
+  </div>
+  <br>
   <div id="restaurants" class="text-center"></div>
 </div>
 <% else %>

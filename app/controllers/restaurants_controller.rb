@@ -9,6 +9,15 @@ class RestaurantsController < ApplicationController
   # GET /restaurants.json
   def index
     @restaurants = current_user.restaurants.includes(:locations, :lists)
+    @hoods = @restaurants.joins(:locations).distinct.pluck(:hood, :city)
+    @hoods.map! do |location|
+      if location[0]
+        location[0]
+      else
+        location[1]
+      end
+    end
+    @hoods.uniq!.sort!
     unless current_user.restaurants.count == 0
       if current_user.locations.last.created_at > (Time.now - 10)
         session[:location_id] = current_user.locations.last.id

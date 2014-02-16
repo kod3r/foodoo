@@ -140,13 +140,11 @@
 <% if @r %>
   <div class="well text-center pop lead" style="width: 360px; margin-left: auto; margin-right: auto;">
     <p style="color: orange;"><%= params[:term].split.map(&:capitalize).join(' ') %><span style="color: white;"> in </span><%= params[:location] %>
-    <% if @r["businesses"].count == 0 %>
+<% if @r["message"]["code"] != 0 %>
       <p>No results!</p>
-    <% elsif @r["message"]["code"] == 209 %>
-      <p>Try adding a city or state.</p>
-    <% end %>
   </div>
-  <% end %>
+<% else %>
+  </div>
   <div id="container">
     <% @r["businesses"].each do |place| %>
     <% unless place["is_closed"] %>
@@ -191,7 +189,9 @@
 <!--         <p><img src="http://s3-media1.ak.yelpcdn.com/assets/2/www/img/dc8ff90d5d7d/developers/Powered_By_Yelp_Black.png"></p> -->
       </div>
     <% end %>
+    <% end %>
   <% end %>
+<% end %>
 <% end %>
 </div>
 <script>

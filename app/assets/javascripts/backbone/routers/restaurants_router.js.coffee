@@ -16,6 +16,7 @@ class V1foodoo.Routers.RestaurantsRouter extends Backbone.Router
     $("#restaurants").html(@view.render().el)
 
   index: ->
+    $('.bubblingG').hide()
     @view = new V1foodoo.Views.Restaurants.IndexView(collection: @restaurants)
     $('.addressor').fadeIn(2000);
     $("#restaurants").html(@view.render().el)

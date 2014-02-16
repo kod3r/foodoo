@@ -13,7 +13,6 @@ window.V1foodoo =
     restaurants = new V1foodoo.Collections.RestaurantsCollection()
     restaurants.fetch
       success: (collection) ->
-        $('.bubblingG').hide();
         V1foodoo.router = new V1foodoo.Routers.RestaurantsRouter(restaurants: collection)
         Backbone.history.start(pushState: true)
 

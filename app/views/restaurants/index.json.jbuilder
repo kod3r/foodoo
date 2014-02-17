@@ -40,6 +40,7 @@ json.array!(@restaurants) do |restaurant|
   json.list_check true if list_count > 1
 
   json.ll session[:location_ll]
+
   if hood
     json.location hood+', '+city
     json.location_raw hood.delete(' ')

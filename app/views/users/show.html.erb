@@ -1,16 +1,15 @@
-<div class="buttonry" style="display:none">
+<div class="buttonry text-center" style="display:none">
+  <a class="lead">SORT</a>
   <div class="text-center" id="sort-by">
-    <a class="btn btn-large" style="margin-top: 5px;">SORT</a>
-    <a class="btn btn-large btn-info" href="#lists" style="margin-top: 5px;">Lists</a>
-    <a class="btn btn-large btn-info" href="#name" style="margin-top: 5px;">Name</a>
-    <a class="btn btn-large btn-info" href="#hood" style="margin-top: 5px;">Neighborhood</a>
-    <a class="btn btn-large btn-info" href="#rating" style="margin-top: 5px;" id="start">Rating</a>
+    <a class="btn btn-medium btn-info" href="#rating" style="margin-top: 5px; margin-bottom: 10px;" id="start">Rating</a>
+    <a class="btn btn-medium btn-info" href="#lists" style="margin-top: 5px; margin-bottom: 10px;">Lists</a>
+    <a class="btn btn-medium btn-info" href="#name" style="margin-top: 5px; margin-bottom: 10px;">Name</a>
+<!--     <a class="btn btn-medium btn-info" href="#hood" style="margin-top: 5px; margin-bottom: 10px;">Neighborhood</a> -->
   </div>
-  <br>
+  <a class="lead">FILTER</a>
   <div class="text-center" id="filters">
-    <a class="btn btn-large">FILTER</a>
-    <a class="btn btn-large btn-info filter-click" href="#" data-filter=".favorite">Hit List</a>
-    <a class="btn btn-large btn-info" href="#" data-filter=".cuisine" id="cuisine-button">
+    <a class="btn btn-medium btn-info filter-click" href="#" data-filter=".favorite" style="margin-top: 5px; margin-bottom: 10px;">Hit List</a>
+    <a class="btn btn-medium btn-info" href="#" data-filter=".cuisine" id="cuisine-button" style="margin-top: 5px; margin-bottom: 10px;">
       <div class="cuisine-input" id="cuisine-show">Cuisine</div>
       <div class="cuisine-input input-group" style="display: none" id="cuisine-filter">
         <input type="text" class="form-control" style="max-width: 100px; text-align: center;" id="cuisine-input">
@@ -19,44 +18,63 @@
         </span>
       </div>
     </a>
-    <a class="btn btn-large btn-info filter-click" href="#" data-filter="*" id="all">Reset</a>
+    <div class="btn-group" style="margin-top: 5px; margin-bottom: 10px;">
+      <a class="btn btn-info dropdown-toggle" data-toggle="dropdown" href="#" id="selected-location">
+        Location
+        <span class="caret"></span>
+      </a>
+      <ul class="dropdown-menu" style="text-align: left;">
+        <% @hoods.each do |location| %>
+        <li><a class="location-filter" href="#" data-location="<%= location.delete(' ') %>">
+          <%= location %>
+        </a></li>
+        <% end %>
+      </ul>
+    </div>
+    <a class="btn btn-medium btn-info filter-click" href="#" data-filter="*" id="all" style="margin-top: 5px; margin-bottom: 10px;">Reset</a>
   </div>
-  <br>
-  <div class="text-center" id="asc-desc">
-    <a class="btn btn-large">ORDER</a>
-    <a class="btn btn-large btn-info" href="#asc">Ascending</a>
-    <a class="btn btn-large btn-info" href="#desc">Descending</a>
-  </div>
+<!--   <div class="text-center" id="asc-desc">
+    <a class="btn btn-medium">ORDER</a>
+    <a class="btn btn-medium btn-info" href="#asc">Ascending</a>
+    <a class="btn btn-medium btn-info" href="#desc">Descending</a>
+  </div> -->
 </div>
+
 <br>
-<br>
-<div class="text-center" id="add_all" >
+<!-- <div class="text-center" id="add_all" >
   <%= button_to("Add all of "+@user.username+"'s restaurants", "getall?id=#{@user.id}", remote: true, :class => 'btn btn-warning medium') %>
 </div>
 <div id="all_alert" class="text-center pop lead" style="display: none;">
   <p style="color: orange;">Added all restaurants!</p>
 </div>
-<br>
+<br> -->
 <div id="container">
-<% @user.restaurants.each do |restaurant| %>
-    <% @label = restaurant.lists.find_by(user_id: @user.id).label  %>
-    <% @rating = restaurant.lists.find_by(user_id: @user.id).rating %>
+<% @restaurants.each do |restaurant| %>
+    <% list = restaurant.lists.find_by(user_id: @user.id) %>
+    <% location = restaurant.locations.last %>
+    <% if location.hood %>
+      <% location_raw = location.hood.delete(' ') %>
+    <% else%>
+      <% location_raw = location.city.delete(' ') %>
+    <% end %>
+    <% @label = list.label  %>
+    <% @rating = list.rating %>
     <% if @rating > 0 %>
       <% @formatted_rating = @rating %>
     <% else %>
       <% @formatted_rating = "new" %>
     <% end %>
-    <div class="card text-center item pop <%= @label %> <%= restaurant.cuisine.split(", ").join(' ') %>">
+    <div class="card text-center item pop <%= @label %> <%= restaurant.cuisine.split(", ").join(' ') %> <%= location_raw %>">
       <% if @label == "favorite" %>
         <p class="lead name orange"><%= restaurant.name %></p>
       <% else  %>
         <p class="lead name"><%= restaurant.name %></p>
       <% end %>
       <p><%=restaurant.cuisine%></p>
-      <% if restaurant.locations.last.hood %>
-        <p class="hood"><%=restaurant.locations.last.hood%>, <%=restaurant.locations.last.city%></p>
+      <% if location.hood %>
+        <p class="hood"><%=location.hood%>, <%=location.city%></p>
       <% else %>
-        <p><%=restaurant.locations.last.city%></p>
+        <p><%= location.city%></p>
       <% end %>
       <div>
         <div class="blockery">
@@ -126,8 +144,28 @@
         }
       }
     });
-
-    setTimeout(function(){$("#start").click()},300);
+    $('#sort-by .btn-info').click(function(){
+      $('#sort-by .btn-warning').removeClass('btn-warning').addClass('btn-info');
+      $(this).removeClass('btn-info').addClass('btn-warning');
+    });
+    $('#filters .btn-info').click(function(){
+      $('#filters .btn-warning').removeClass('btn-warning').addClass('btn-info');
+      if($(this).html() != 'Reset'){
+        $(this).removeClass('btn-info').addClass('btn-warning');
+      }
+    });
+    $('.location-filter').click(function(event){
+      event.preventDefault();
+      var selector = $(this).data('location');
+      $container.isotope({ filter: "."+selector });
+      $('.dropdown-toggle').click();
+      $('#selected-location').html($(this).html());
+      $('#cuisine-show').html('Cuisine');
+      return false;
+    });
+    setTimeout(function(){
+      $("#start").click().removeClass('btn-warning').addClass('btn-info');
+    },300);
     $('#all').click(function(){
       $('#cuisine-show').html("Cuisine");
     });
@@ -175,13 +213,18 @@
         selector = "Deserts";
       }
       $("#cuisine-show").html(selector);
+      $('#selected-location').html('Location');
       $container.isotope({ filter: "."+selector });
       $(".cuisine-input").toggle();
       return false;
     });
 
-    $('#filters filter-click').click(function(){
+    $('#filters .filter-click').click(function(){
       var selector = $(this).attr('data-filter');
+      if(selector == "*"){
+        $('#cuisine-show').html('Cuisine');
+        $('#selected-location').html('Location');
+      }
       $container.isotope({ filter: selector });
       return false;
     });

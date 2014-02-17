@@ -11,6 +11,16 @@ class UsersController < ApplicationController
   # GET /users/1.json
   def show
     @user = User.find(params[:id])
+    @restaurants = @user.restaurants.includes(:locations, :lists)
+    @hoods = @restaurants.joins(:locations).distinct.pluck(:hood, :city)
+    @hoods.map! do |location|
+      if location[0]
+        location[0]
+      else
+        location[1]
+      end
+    end
+    @hoods.uniq!.sort!
   end
 
   def list

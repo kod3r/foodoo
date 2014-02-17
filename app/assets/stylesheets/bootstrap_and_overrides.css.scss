@@ -3,19 +3,44 @@ body { padding-top: 60px; }
 @import "bootstrap-responsive";
 input[type="text"] { margin-bottom: 0px;}
 
+
 body {
-  background: asset-url("noodles.jpg", image) no-repeat center fixed;
+  background: #000 asset-url("noodles.jpg", image) no-repeat center center fixed;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
   background-size: cover;
 }
 
+
 #map, #map-canvas {
   width: 800px;
   height: 600px;
   margin: 25px auto;
   border-radius: 25px;
+}
+
+.dropdown-menu {
+  height: 308px;
+  overflow: auto;
+}
+
+::-webkit-scrollbar {
+    width: 12px;
+}
+
+::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+    background: #C5CEDE;
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5);
 }
 
 select, option {
@@ -159,8 +184,6 @@ form {
   max-width: 907px;
   margin: auto;
 }
-
-.list_card
 
 
 .card-bl{

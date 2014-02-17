@@ -94,6 +94,7 @@
         }
       }
     });
+
     $('#sort-by a').click(function(){
       // get href attribute, minus the '#'
       var sortName = $(this).attr('href').slice(1);
@@ -148,6 +149,7 @@
         selector = "Deserts";
       }
       $("#cuisine-show").html(selector);
+      $('#selected-location').html('Location');
       $container.isotope({ filter: "."+selector });
       $(".cuisine-input").toggle();
       return false;
@@ -158,11 +160,17 @@
       var selector = $(this).data('location');
       $container.isotope({ filter: "."+selector });
       $('.dropdown-toggle').click();
+      $('#selected-location').html($(this).html());
+      $('#cuisine-show').html('Cuisine');
       return false;
     });
 
     $('#filters .filter-click').click(function(){
       var selector = $(this).attr('data-filter');
+      if(selector == "*"){
+        $('#cuisine-show').html('Cuisine');
+        $('#selected-location').html('Location');
+      }
       $container.isotope({ filter: selector });
       return false;
     });
@@ -177,7 +185,9 @@
       return false;
     });
 
-    setTimeout(function(){$("#start").click()},400);
+    setTimeout(function(){
+      $("#start").click().removeClass('btn-warning').addClass('btn-info');
+    },400);
 
     $('.fav-button').on('ajax:success', function(event, data, status, xhr){
       $(this).closest('.card').find('.name').toggleClass('orange', 100);

@@ -1,14 +1,14 @@
+<div class="text-center"><a class="lead">SORT</a></div>
 <div class="text-center" id="sort-by">
-  <a class="btn btn-large" style="margin-top: 5px;">SORT</a>
-  <a class="btn btn-large btn-info" href="#name" style="margin-top: 5px;">Name</a>
-  <a class="btn btn-large btn-info" href="#rest" style="margin-top: 5px;" id="start">Restaurants</a>
+  <a class="btn btn-medium btn-info" href="#name" style="margin-top: 5px;">Name</a>
+  <a class="btn btn-medium btn-info" href="#rest" style="margin-top: 5px;" id="start">Restaurants</a>
 </div>
-<br>
+<!-- <br>
 <div class="text-center" id="asc-desc">
-  <a class="btn btn-large">ORDER</a>
-  <a class="btn btn-large btn-info" href="#asc">Ascending</a>
-  <a class="btn btn-large btn-info" href="#desc">Descending</a>
-</div>
+  <a class="btn btn-medium">ORDER</a>
+  <a class="btn btn-medium btn-info" href="#asc">Ascending</a>
+  <a class="btn btn-medium btn-info" href="#desc">Descending</a>
+</div> -->
 <br>
 <div id="container">
   <% @users.each do |user| %>
@@ -41,6 +41,11 @@
           return parseInt($elem.find('.rest').text());
         }
       }
+    });
+
+    $('#sort-by .btn-info').click(function(){
+      $('#sort-by .btn-warning').removeClass('btn-warning').addClass('btn-info');
+      $(this).removeClass('btn-info').addClass('btn-warning');
     });
 
     setTimeout(function(){$("#start").click()},300);

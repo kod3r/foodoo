@@ -48,7 +48,9 @@
       $(this).removeClass('btn-info').addClass('btn-warning');
     });
 
-    setTimeout(function(){$("#start").click()},300);
+    setTimeout(function(){
+      $("#start").click().removeClass('btn-warning').addClass('btn-info');
+    },300);
 
     $('#sort-by a').click(function(){
       // get href attribute, minus the '#'

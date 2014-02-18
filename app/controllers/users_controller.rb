@@ -12,15 +12,17 @@ class UsersController < ApplicationController
   def show
     @user = User.find(params[:id])
     @restaurants = @user.restaurants.includes(:locations, :lists)
-    @hoods = @restaurants.joins(:locations).distinct.pluck(:hood, :city)
-    @hoods.map! do |location|
-      if location[0]
-        location[0]
-      else
-        location[1]
+    if @restaurants.exists?
+      @hoods = @restaurants.joins(:locations).distinct.pluck(:hood, :city)
+      @hoods.map! do |location|
+        if location[0]
+          location[0]
+        else
+          location[1]
+        end
       end
+      @hoods = @hoods.uniq.sort
     end
-    @hoods.uniq!.sort!
   end
 
   def list

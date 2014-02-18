@@ -9,23 +9,25 @@ class RestaurantsController < ApplicationController
   # GET /restaurants.json
   def index
     @restaurants = current_user.restaurants.includes(:locations, :lists)
-    @hoods = @restaurants.joins(:locations).distinct.pluck(:hood, :city)
-    @hoods.map! do |location|
-      if location[0]
-        location[0]
-      else
-        location[1]
+    if @restaurants.exists?
+      @hoods = @restaurants.joins(:locations).distinct.pluck(:hood, :city)
+      @hoods.map! do |location|
+        if location[0]
+          location[0]
+        else
+          location[1]
+        end
       end
-    end
-    @hoods.uniq!.sort!
-    unless current_user.restaurants.count == 0
-      if current_user.locations.last.created_at > (Time.now - 10)
-        session[:location_id] = current_user.locations.last.id
-      else
-        session[:location_id] = session[:location_id] || current_user.locations.last.id
+      @hoods= @hoods.uniq.sort
+      if current_user.locations.count > 0
+        if current_user.locations.last.created_at > (Time.now - 10)
+          session[:location_id] = current_user.locations.last.id
+        else
+          session[:location_id] = session[:location_id] || current_user.locations.last.id
+        end
+        location = Location.find(session[:location_id])
+        session[:location_ll] = [location.latitude, location.longitude]
       end
-      location = Location.find(session[:location_id])
-      session[:location_ll] = [location.latitude, location.longitude]
     end
   end
 

@@ -7,12 +7,6 @@
   });
 </script>
 
-<% unless params[:term] || current_user.locations.count == 0 || current_user.restaurants.count > 0%>
-  <div class="well text-center">
-    <p class="lead" style="color:orange;">Add some restaurants to your list!</p>
-  </div>
-<% end %>
-
 <% if current_user.locations.count > 0 %>
   <div class="text-center">
     <div class="well pop" style="width: 500px; margin-left: auto; margin-right: auto;">
@@ -103,9 +97,7 @@
         <input type="text" class="form-control text-center" id="state_input" placeholder="State">
       </div>
       <br>
-      <br>
       <button type="submit" class="btn btn-default" id="address_submit">Submit</button>
-      <br>
       <br>
     </form>
   </div>

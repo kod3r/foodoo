@@ -64,7 +64,7 @@
   <br>
   <div id="restaurants" class="text-center"></div>
 </div>
-<% else %>
+<% elsif current_user.restaurants.count == 0 %>
   <h3 class="well text-center"style="color:orange;">Add some restaurants to access this feature</h3>
 <% end %>
   <div class="well text-center pop" style="margin-top: 100px; width: 360px; margin-left: auto; margin-right: auto; display: none;" id="address_form">
@@ -90,6 +90,9 @@
   </div>
 <script>
   $(function(){
+    <% if current_user.locations.count == 0 %>
+      $('#address_form').show();
+    <% end %>
     $('#sort-by .btn-info').click(function(){
       $('#sort-by .btn-warning').removeClass('btn-warning').addClass('btn-info');
       $(this).removeClass('btn-info').addClass('btn-warning');
@@ -102,6 +105,8 @@
     });
     $('#address_selector').val(<%= session[:location_id] %>);
     $('#address_selector').change(function(){
+      $('.buttonry, #restaurants, #address_selector').hide();
+      $('.bubblingG').show();
       var selected = $('#address_selector').val();
       if(selected == "new"){
         $('#index').hide();
@@ -114,6 +119,7 @@
           //contentType: "application/json; charset=utf-8",
           dataType: "json",
           success: function(data){
+
             window.location.reload();
             console.log("success");
           },

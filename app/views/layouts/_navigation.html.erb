@@ -1,9 +1,9 @@
 <a class="brand" id="brand" data-toggle="collapse" data-target=".nav-collapse">Foodoo</a>
 <% if user_signed_in? %>
   <ul class="nav pull-right">
-      <li>
+<!--       <li>
         <%= link_to('Pick', new_search_path, :method=>'get',  :class => 'pick_nav') %>
-      </li>
+      </li> -->
       <li>
         <%= link_to('List', restaurants_path, :method=>'get',  :class => 'list_nav') %>
       </li>

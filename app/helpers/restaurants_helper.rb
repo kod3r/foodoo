@@ -77,8 +77,8 @@ module RestaurantsHelper
     ranked_group_list = restaurant_array.sort_by do |restaurant|
       group_score(user_id_array, restaurant)
     end
-    if ranked_group_list.length > 10
-      return ranked_group_list.reverse[0..9]
+    if ranked_group_list.length > 100
+      return ranked_group_list.reverse[0..99]
     else
       return ranked_group_list.reverse
     end

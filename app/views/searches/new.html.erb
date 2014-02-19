@@ -1,4 +1,5 @@
 <% if current_user.restaurants.count > 0 && current_user.locations.count > 0 %>
+<div id="wrapper">
   <div class="span8 offset2 text-center">
     <div class="text-center">
       <select id="address_selector">
@@ -108,7 +109,7 @@
 <% elsif current_user.restaurants.count == 0 %>
   <h3 class="well text-center"style="color:orange;">Add some restaurants to access this feature</h3>
 <% end %>
-
+</div>
 <div class="well text-center pop" style="margin-top: 100px; width: 360px; margin-left: auto; margin-right: auto; display: none;" id="address_form">
   <form role="form">
     <br>
@@ -140,7 +141,7 @@
     $('#address_selector').change(function(){
       var selected = $('#address_selector').val();
       if(selected == "new"){
-        $('#index').hide();
+        $('#wrapper').hide();
         $('#address_form').fadeIn('slow');
       }else{
         $.ajax({

@@ -31,6 +31,15 @@ class SearchesController < ApplicationController
     if request.post?
       @group_ids = params[:user_ids]
     end
+    if current_user.locations.count > 0
+      if current_user.locations.last.created_at > (Time.now - 10)
+        session[:location_id] = current_user.locations.last.id
+      else
+        session[:location_id] = session[:location_id] || current_user.locations.last.id
+      end
+      location = Location.find(session[:location_id])
+      session[:location_ll] = [location.latitude, location.longitude]
+    end
     @search = Search.new
   end
 

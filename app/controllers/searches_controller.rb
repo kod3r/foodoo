@@ -31,7 +31,7 @@ class SearchesController < ApplicationController
         when 0           then rating_score = 10
         else                  rating_score = 0
       end
-      total_score = rating_score+fav_score
+      rating_score+fav_score
     else
       0
     end
@@ -50,7 +50,7 @@ class SearchesController < ApplicationController
       when 0.75...1    then distance_score = 10*person_count
       else                  distance_score = 0
     end
-    total_score
+    total_score+distance_score
   end
 
   def group_ranker

@@ -54,17 +54,6 @@ module SearchesHelper
     end
   end
 
-  def solo_ranker(user_id)
-    ranked_list = User.find(user_id).restaurants.sort_by do |restaurant|
-      solo_score(restaurant,user_id)
-    end
-    if ranked_list.length > 10
-      return ranked_list.reverse[0..9]
-    else
-      return ranked_list.reverse
-    end
-  end
-
   def group_score(user_id_array, restaurant)
     total_score = 0
     user_id_array.each do |user_id|

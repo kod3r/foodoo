@@ -12,11 +12,63 @@ class SearchesController < ApplicationController
   def show
   end
 
-  def group
+
+  def distance(restaurant)
+    restaurant.locations.last.distance_to(session[:location_ll]) || 2
   end
 
-  def groupsearch
+  def solo_score(restaurant, user_id)
+    list = restaurant.lists.find_by(user_id: user_id)
+    if list
+      #hit list component
+      case list.label
+        when 'favorite'  then fav_score = 20
+        else                  fav_score = 0
+      end
+      #rating component
+      case list.rating
+        when 70..100     then rating_score = ((list.rating-70)*4)/3
+        when 0           then rating_score = 10
+        else                  rating_score = 0
+      end
+      #distance component
+      case distance(restaurant)
+        when 0...0.25    then distance_score = 40
+        when 0.25...0.50 then distance_score = 30
+        when 0.50...0.75 then distance_score = 20
+        when 0.75...1    then distance_score = 10
+        else                  distance_score = 0
+      end
+      total_score = rating_score+fav_score+distance_score
+      total_score
+    else
+      0
+    end
+  end
 
+  def group_score(restaurant, people)
+    total_score = 0
+    people.each do |person|
+      total_score+=solo_score(restaurant, person.id)
+    end
+    total_score
+  end
+
+  def group_ranker
+    restaurant_array = []
+    group_names = session[:buddies] << current_user.username
+    people = User.where(username: group_names)
+    people.each do |person|
+      restaurant_array+=person.restaurants
+    end
+    restaurant_array.uniq!
+    ranked_group_list = restaurant_array.sort_by do |restaurant|
+      group_score(restaurant, people)
+    end
+    case ranked_group_list.length
+      when 0...3 then ranked_group_list.reverse
+      else            ranked_group_list.reverse[0...3]
+    end
   end
 
   def set_user_location
@@ -28,8 +80,15 @@ class SearchesController < ApplicationController
   end
   # GET /searches/new
   def new
+    @buddies = User.where.not(id: current_user.id)
+    @buddies.sort_by! do |buddy|
+      buddy.restaurants.count
+    end
+    @buddies.reverse!
+    session[:buddies] = session[:buddies] || []
+    @picks = group_ranker
     if request.post?
-      @group_ids = params[:user_ids]
+      session[:buddies] = params[:buddies]
     end
     if current_user.locations.count > 0
       if current_user.locations.last.created_at > (Time.now - 10)

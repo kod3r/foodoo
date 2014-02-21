@@ -1,6 +1,7 @@
 <% if current_user.restaurants.count > 0 && current_user.locations.count > 0 %>
-<div id="wrapper">
-  <div class="span8 offset2 text-center">
+<div id="text-center">
+  <div class="text-center">
+  <div class="blockery">
     <div class="text-center">
       <select id="address_selector">
       <% current_user.locations.each do |location| %>
@@ -11,100 +12,55 @@
         <option value="new">New Address</option>
       </select>
     </div>
-    <%= button_to('Group Search', 'group', method: :get,  :class => 'btn btn-primary btn-large group_search') %>
-  </div>
-  <div id="myCarousel" class="carousel span8 offset2 pop" style="margin-top: 25px;">
-    <!-- Carousel items -->
-    <div class="carousel-inner">
-      <% if params[:ppl] %>
-        <% @ranked_list = group_ranker(params[:ppl]) %>
-      <% else %>
-        <% @ranked_list = solo_ranker(current_user.id) %>
-      <% end %>
-      <% @ranked_list.each do |restaurant| %>
-        <% if restaurant == @ranked_list[0] %>
-          <div class="item active text-center well" id="restaurant_<%= restaurant.id %>">
-            <p class="lead"><%=restaurant.name%></p>
-            <p><%=restaurant.cuisine%></p>
-            <p><%=restaurant.locations.last.hood%></p>
-            <p class="testt"></p>
-            <div>
-              <div class="blockery">
-                <% if restaurant.image %>
-                  <p class="text-center"><img src=<%=restaurant.image%>/></p>
-                <% end %>
-              </div>
-              <div class="blockery">
-                <p id="walk_<%= restaurant.id %>">
-                  <% if session[:location_ll] %>
-                    <%= ((restaurant.locations.last.distance_to(session[:location_ll])+0.1)*25).to_i %> min walk
-                  <% elsif request.location %>
-                    <%= distance(restaurant) %> min walk
-                  <% else %>
-                    <p>Enable gps for distance</p>
-                  <% end %>
-                </p>
-                <p id="cab_<%= restaurant.id %>"></p>
-                <% if params[:ppl] %>
-                <p class="group_score">
-                  Score: <strong style="color:orange;"><%=group_score(params[:ppl].split(','), restaurant)%></strong>
-                </p>
-                <% else %>
-                <p class="solo_score">
-                  Score: <strong style="color:orange;"><%=solo_score(restaurant, current_user.id)%></strong>
-                </p>
-                <% end %>
-                <p class="yelp_link"><a href="<%=restaurant.yelp_url%>" target="_blank"><img src="http://s3-media1.ak.yelpcdn.com/assets/2/www/img/55e2efe681ed/developers/yelp_logo_50x25.png"></a></p>
-              </div>
-            </div>
-            <div class="text-center">
-              <%= button_to('Go', restaurant_path(restaurant), :class => 'btn btn-success btn-large go_btn') %>
-            </div>
-          </div>
-
-        <% else %>
-          <div class="item text-center well">
-            <p class="lead"><%=restaurant.name%></p>
-            <p><%=restaurant.cuisine%></p>
-            <p><%=restaurant.locations.last.hood%></p>
-            <div>
-              <div class="blockery">
-                <% if restaurant.image %>
-                  <p class="text-center"><img src=<%=restaurant.image%>/></p>
-                <% end %>
-              </div>
-              <div class="blockery">
-                <% if session[:location_ll] %>
-                  <%= ((restaurant.locations.last.distance_to(session[:location_ll])+0.1)*25).to_i %> min walk
-                <% elsif request.location %>
-                  <%= distance(restaurant) %> min walk
-                <% else %>
-                    <p>Enable gps for distance</p>
-                <% end  %>
-                </p>
-                <% if params[:ppl] %>
-                <p class="group_score">
-                  Score: <strong style="color:orange;"><%=group_score(params[:ppl].split(','), restaurant)%></strong>
-                </p>
-                <% else %>
-                  <p class="solo_score">
-                    Score: <strong style="color:orange;"><%=solo_score(restaurant, current_user.id)%></strong>
-                  </p>
-                <% end %>
-                <p class="yelp_link"><a href="<%=restaurant.yelp_url%>" target="_blank"><img src="http://s3-media1.ak.yelpcdn.com/assets/2/www/img/55e2efe681ed/developers/yelp_logo_50x25.png"></a></p>
-              </div>
-            </div>
-            <div class="text-center">
-              <%= button_to('Go', restaurant_path(restaurant), :class => 'btn btn-success btn-large go_btn') %>
-            </div>
-          </div>
+    <div class="people">
+      <select class="selectpicker" multiple>
+        <% @buddies.each do |buddy|  %>
+        <option data-subtext="<%= buddy.restaurants.count %> restaurants"><%= buddy.username %></option>
         <% end %>
-      <% end %>
+      </select>
     </div>
-    <!-- Carousel nav -->
-    <a class="carousel-control left" href="#myCarousel" data-slide="prev">&lsaquo;</a>
-    <a class="carousel-control right" href="#myCarousel" data-slide="next">&rsaquo;</a>
-
+  </div>
+  <div class="blockery">
+    <a class="btn btn-warning btn-large" id="search_button">Search</a>
+  </div>
+    <div class="bubblingG">
+      <span id="bubblingG_1">
+      </span>
+      <span id="bubblingG_2">
+      </span>
+      <span id="bubblingG_3">
+      </span>
+    </div>
+  </div>
+  <div id="picks">
+  <% @picks.each do |restaurant| %>
+    <div class="pick text-center well pop">
+      <p class="lead name"><%=restaurant.name%></p>
+      <p><%=restaurant.cuisine%></p>
+      <p><%=restaurant.locations.last.hood%></p>
+        <div class="info">
+          <div class="blockery">
+            <% if restaurant.image %>
+              <p class="text-center"><img src=<%=restaurant.image%>/></p>
+            <% end %>
+          </div>
+          <div class="blockery">
+            <p>
+            <% miles = restaurant.locations.last.distance_to(session[:location_ll]) %>
+            <% if miles < 1 %>
+              <%= ((restaurant.locations.last.distance_to(session[:location_ll])+0.1)*25).to_i %> min walk
+            <% else %>
+              <%= miles.round(2) %> miles
+            <% end %>
+            </p>
+            <p class="yelp_link"><a href="<%=restaurant.yelp_url%>" target="_blank"><img src="http://s3-media1.ak.yelpcdn.com/assets/2/www/img/55e2efe681ed/developers/yelp_logo_50x25.png"></a></p>
+          </div>
+          <div class="text-center blockery">
+            <%= button_to('Go', restaurant_path(restaurant), :class => 'btn btn-success btn-large go_btn') %>
+          </div>
+        </div>
+    </div>
+  <% end %>
   </div>
 <% elsif current_user.restaurants.count == 0 %>
   <h3 class="well text-center"style="color:orange;">Add some restaurants to access this feature</h3>
@@ -138,10 +94,46 @@
       $('#address_form').show();
     <% end %>
     $('#address_selector').val(<%= session[:location_id] %>);
+    $('.selectpicker').selectpicker({
+      size: 10,
+      title: "Eating with..."
+    });
+    $('.selectpicker').submit(function(){
+      alert('submit');
+    });
+    var selected_buds = '<%= session[:buddies] %>';
+    selected_buds=selected_buds.replace(/&quot;/g,"'");
+    selected_buds=selected_buds.replace(/\s/g,"");
+    selected_buds=selected_buds.replace(/\'/g,"");
+    selected_buds=selected_buds.replace(/\[/g,"");
+    selected_buds=selected_buds.replace(/\]/g,"");
+    selected_buds=selected_buds.split(',');
+    $('.selectpicker').selectpicker('val', selected_buds);
+    $('.selectpicker').selectpicker('render');
+    $('#search_button').click(function(){
+      $('#picks').hide();
+      $('.bubblingG').show();
+      var buddies = $('.selectpicker').val();
+      console.log(buddies);
+      $.ajax({
+        url: '/searches/new',
+        type: 'post',
+        data: {buddies: buddies},
+        dataType: 'json',
+        success: function(data){
+          console.log("success");
+          window.location.reload();
+        },
+        error: function(a,b,c){
+          console.log('error');
+          window.location.reload();
+        }
+      });
+    });
     $('#address_selector').change(function(){
       var selected = $('#address_selector').val();
       if(selected == "new"){
-        $('#wrapper').hide();
+        $('#picks').hide();
         $('#address_form').fadeIn('slow');
       }else{
         $.ajax({
@@ -184,19 +176,24 @@
       }
     });
     $('#address_selector').tooltip({
-      title: "set your location",
+      title: "where",
+      placement: 'left',
+      container: 'body'
+    });
+    $('#search_button').tooltip({
+      title: "find the top 3 places for your group",
       placement: 'right',
       container: 'body'
     });
-    $('.group_search').tooltip({
-      title: "select who you are eating with, and see what's most likely to please everyone",
-      placement: 'right',
-      container: 'body'
+    $('.pick').mouseenter(function(){
+      $(this).find('.name').addClass('orange');
+      $(this).find('.go_btn').removeClass('btn-success');
+      $(this).find('.go_btn').addClass('btn-warning');
     });
-    $('.solo_score').tooltip({
-      title: "based on distance, last visit, hit list, and rating",
-      placement: 'right',
-      container: 'body'
+    $('.pick').mouseleave(function(){
+      $(this).find('.name').removeClass('orange');
+      $(this).find('.go_btn').removeClass('btn-warning');
+      $(this).find('.go_btn').addClass('btn-success');
     });
     $('.group_score').tooltip({
       title: "total score for the group, based on each person's individual preferences",
@@ -205,7 +202,7 @@
     });
     $('.yelp_link').tooltip({
       title: "click to visit yelp page",
-      placement: 'right',
+      placement: 'top',
       container: 'body'
     });
     $('.go_btn').tooltip({

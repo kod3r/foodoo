@@ -20,9 +20,29 @@ body {
   border-radius: 25px;
 }
 
+.bubblingG {
+  margin: 15% auto;
+  display: none;
+}
+
+.pick{
+  padding: 5px;
+  max-width: 500px;
+  margin: 20px auto;
+
+  .blockery{
+    margin: 0 10px;
+  }
+}
+
 .dropdown-menu {
   max-height: 308px;
   overflow: auto;
+}
+
+.center{
+  margin-left: auto;
+  margin-right: auto;
 }
 
 ::-webkit-scrollbar {

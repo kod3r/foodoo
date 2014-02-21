@@ -20,8 +20,11 @@ body {
   border-radius: 25px;
 }
 
-.bubblingG {
+.bubblingG, .bubblingGS {
   margin: 15% auto;
+}
+
+.bubblingGS {
   display: none;
 }
 

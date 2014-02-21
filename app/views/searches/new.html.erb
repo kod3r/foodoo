@@ -3,7 +3,7 @@
   <div class="text-center">
   <div class="blockery">
     <div class="text-center">
-      <select id="address_selector">
+      <select id="address_selector" style="width:300px;">
       <% current_user.locations.each do |location| %>
         <option value=<%= location.id %>>
           <%= location.address %>, <%= location.city %>
@@ -95,9 +95,10 @@
     <% end %>
     $('#address_selector').val(<%= session[:location_id] %>);
     $('.selectpicker').selectpicker({
-      size: 10,
+      size: 8,
       title: "Eating with...",
-      selectedTextFormat: 'values'
+      selectedTextFormat: 'count>3',
+      width: '300px'
     });
     var selected_buds = '<%= session[:buddies] %>';
     selected_buds=selected_buds.replace(/&quot;/g,"'");

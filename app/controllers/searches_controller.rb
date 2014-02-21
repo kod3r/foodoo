@@ -31,16 +31,7 @@ class SearchesController < ApplicationController
         when 0           then rating_score = 10
         else                  rating_score = 0
       end
-      #distance component
-      case distance(restaurant)
-        when 0...0.25    then distance_score = 40
-        when 0.25...0.50 then distance_score = 30
-        when 0.50...0.75 then distance_score = 20
-        when 0.75...1    then distance_score = 10
-        else                  distance_score = 0
-      end
-      total_score = rating_score+fav_score+distance_score
-      total_score
+      total_score = rating_score+fav_score
     else
       0
     end
@@ -48,8 +39,16 @@ class SearchesController < ApplicationController
 
   def group_score(restaurant, people)
     total_score = 0
+    person_count = people.count
     people.each do |person|
       total_score+=solo_score(restaurant, person.id)
+    end
+    case distance(restaurant)
+      when 0...0.25    then distance_score = 40*person_count
+      when 0.25...0.50 then distance_score = 30*person_count
+      when 0.50...0.75 then distance_score = 20*person_count
+      when 0.75...1    then distance_score = 10*person_count
+      else                  distance_score = 0
     end
     total_score
   end

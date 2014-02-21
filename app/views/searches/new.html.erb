@@ -96,10 +96,8 @@
     $('#address_selector').val(<%= session[:location_id] %>);
     $('.selectpicker').selectpicker({
       size: 10,
-      title: "Eating with..."
-    });
-    $('.selectpicker').submit(function(){
-      alert('submit');
+      title: "Eating with...",
+      selectedTextFormat: 'values'
     });
     var selected_buds = '<%= session[:buddies] %>';
     selected_buds=selected_buds.replace(/&quot;/g,"'");

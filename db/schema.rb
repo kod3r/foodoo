@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140212231702) do
+ActiveRecord::Schema.define(version: 20140224045859) do
 
   create_table "choices", force: true do |t|
     t.integer  "user_id"
@@ -65,6 +65,8 @@ ActiveRecord::Schema.define(version: 20140212231702) do
     t.datetime "updated_at"
     t.string   "image"
     t.string   "yelp_url"
+    t.string   "opentable"
+    t.string   "opentable_mobile"
   end
 
   create_table "searches", force: true do |t|

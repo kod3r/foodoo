@@ -2,6 +2,7 @@
 <div id="container" class="text-center">
   {{#each this}}
   <div class="card text-center item pop {{#each cuisines}}{{this}} {{/each}}{{label}} {{location_raw}}">
+  <div class='center-vert'>
     {{#if label}}
     <p class="lead name orange">{{name}}</p>
     {{else}}
@@ -38,8 +39,12 @@
 {{!--         {{/if}} --}}
         <a class="btn btn-small btn-success go-button" href="/restaurants/{{id}}">Go</a>
         <a class="btn btn-small btn-danger del-button" href="/remove?id={{list_id}}" data-method="post" data-remote="true" data-confirm="Delete {{name}}?">Delete</a>
+        {{#if opentable}}
+{{!--         <a class="btn btn-small btn-primary" href="{{opentable}}" target="_blank">Reservations</a> --}}
+        {{/if}}
       </span>
     </div>
+  </div>
   </div>
   {{/each}}
 </div>

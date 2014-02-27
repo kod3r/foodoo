@@ -81,6 +81,7 @@ select, option {
 
 .button-span a {
   width: 45px;
+  display: inline-block;
 }
 
 .orange{
@@ -93,6 +94,10 @@ select, option {
 
 .nav{
   font-size: 18px;
+}
+
+.center-vert{
+  vertical-align: middle;
 }
 
 .item {

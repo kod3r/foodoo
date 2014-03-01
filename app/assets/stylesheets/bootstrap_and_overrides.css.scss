@@ -74,15 +74,15 @@ select, option {
   margin-left: 0px;
 }
 
-.button-span {
-  display: none;
-  margin-left: 15px;
+i {
+  margin: 8px;
 }
 
-.button-span a {
-  width: 45px;
+.button-span .btn {
+  width: 70px;
   display: inline-block;
 }
+
 
 .orange{
   color:orange;
@@ -195,7 +195,7 @@ form {
 
 .card{
   background-color: rgba(0,0,0,0.77);
-  width: 240px;
+  width: 255px;
   padding: 15px;
   margin: 15px;
   border: 1px solid #e3e3e3;
@@ -209,7 +209,7 @@ form {
 }
 
 #container {
-  max-width: 907px;
+  max-width: 952px;
   margin: auto;
 }
 

@@ -33,16 +33,16 @@
       {{/if}}
 {{!--         <p><a href="{{yelp_url}}" target="_blank"><img src="http://s3-media1.ak.yelpcdn.com/assets/2/www/img/55e2efe681ed/developers/yelp_logo_50x25.png"></a></p> --}}
       </div>
-      <span class="button-span">
+      <div class="actions">
 {{!--         {{#if hittable}} --}}
-        <a class="btn btn-small btn-warning fav-button" href="/favorite?id={{list_id}}" data-method="post" data-remote="true" data-list="{{list_id}}">Hit List</a>
+        <a class=" fav-button" href="/favorite?id={{list_id}}" data-method="post" data-remote="true" data-list="{{list_id}}"><i class="icon-star icon-white"></i></a>
 {{!--         {{/if}} --}}
-        <a class="btn btn-small btn-success go-button" href="/restaurants/{{id}}">Go</a>
-        <a class="btn btn-small btn-danger del-button" href="/remove?id={{list_id}}" data-method="post" data-remote="true" data-confirm="Delete {{name}}?">Delete</a>
+        <a class="btn btn-small btn-success go-button" href="/restaurants/{{id}}">Directions</a>
         {{#if opentable}}
-{{!--         <a class="btn btn-small btn-primary" href="{{opentable}}" target="_blank">Reservations</a> --}}
+        <a class="btn btn-small btn-primary" href="{{opentable}}" target="_blank">Reservations</a>
         {{/if}}
-      </span>
+        <a class="del-button" href="/remove?id={{list_id}}" data-method="post" data-remote="true" data-confirm="Delete {{name}}?"><i class="icon-trash icon-white"></i></a>
+      </div>
     </div>
   </div>
   </div>
@@ -203,10 +203,10 @@
       return false;
     });
     $('.item').hover(function(){
-      $(this).find('.button-span').fadeIn();
+      $(this).find('.actions').fadeIn();
     });
     $('.item').mouseleave(function(){
-      $(this).find('.button-span').fadeOut();
+      $(this).find('.actions').fadeOut();
     });
 
     $('#score_button').tooltip({

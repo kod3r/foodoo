@@ -39,7 +39,7 @@
 {{!--         {{/if}} --}}
         <a class="btn btn-small btn-success go-button" href="/restaurants/{{id}}">Directions</a>
         {{#if opentable}}
-        <a class="btn btn-small btn-primary" href="{{opentable}}" target="_blank">Reservations</a>
+        <a class="btn btn-small btn-primary reservations" href="{{opentable}}" target="_blank">Reservations</a>
         {{/if}}
         <a class="del-button" href="/remove?id={{list_id}}" data-method="post" data-remote="true" data-confirm="Delete {{name}}?"><i class="icon-trash icon-white"></i></a>
       </div>
@@ -235,7 +235,12 @@
       container: 'body'
     });
     $('.go-button').tooltip({
-      title: "click to get directions and check for delivery",
+      title: "get directions using google maps",
+      placement: 'bottom',
+      container: 'body'
+    });
+    $('.reservations').tooltip({
+      title: "get reservations using opentable",
       placement: 'bottom',
       container: 'body'
     });

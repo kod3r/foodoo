@@ -78,10 +78,15 @@ i {
   margin: 8px;
 }
 
-.actions .btn {
+.actions .btn-medium {
+  width: 80px;
+}
+
+.actions .btn-small {
   width: 70px;
   display: inline-block;
 }
+
 
 .actions{
   display: none;

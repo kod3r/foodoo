@@ -55,14 +55,14 @@
             </p>
             <p class="yelp_link"><a href="<%=restaurant.yelp_url%>" target="_blank"><img src="http://s3-media1.ak.yelpcdn.com/assets/2/www/img/55e2efe681ed/developers/yelp_logo_50x25.png"></a></p>
           </div>
-          <div class="text-center blockery">
+          <div class="text-center blockery actions">
             <p>
-            <a class="btn btn-success go_btn" href="/restaurants/<%= restaurant.id %>">Directions</a>
+            <a class="btn btn-medium btn-success go_btn" href="/restaurants/<%= restaurant.id %>">Directions</a>
             </p>
             <% opentable = restaurant.opentable %>
             <% if opentable && opentable != 'na' %>
             <p>
-            <a class="btn btn-primary reservations" href="<%= restaurant.opentable %>" target="_blank">Reservations</a>
+            <a class="btn btn-medium btn-primary reservations" href="<%= restaurant.opentable %>" target="_blank">Reservations</a>
             </p>
             <% end %>
           </div>

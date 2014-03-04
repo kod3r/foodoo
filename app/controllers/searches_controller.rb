@@ -57,10 +57,13 @@ class SearchesController < ApplicationController
     restaurant_array = []
     group_names = session[:buddies] << current_user.username
     people = User.where(username: group_names)
+    # nearby_restaurants = Location.where(locator_type: "Restaurant").near(session[:location_ll], 1)
     people.each do |person|
+      # restaurant_array+=person.restaurants.joins(:locations).merge(nearby_restaurants)
       restaurant_array+=person.restaurants
     end
     restaurant_array.uniq!
+
     ranked_group_list = restaurant_array.sort_by do |restaurant|
       group_score(restaurant, people)
     end
@@ -84,11 +87,14 @@ class SearchesController < ApplicationController
       buddy.restaurants.count
     end
     @buddies.reverse!
+
     session[:buddies] = session[:buddies] || []
-    @picks = group_ranker
     if request.post?
       session[:buddies] = params[:buddies]
     end
+
+    @picks = group_ranker
+
     if current_user.locations.count > 0
       if current_user.locations.last.created_at > (Time.now - 10)
         session[:location_id] = current_user.locations.last.id

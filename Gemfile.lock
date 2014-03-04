@@ -60,6 +60,7 @@ GEM
       sprockets (>= 2.0.3)
       tilt
     hike (1.2.3)
+    hirb (0.7.1)
     httparty (0.11.0)
       multi_json (~> 1.0)
       multi_xml (>= 0.5.2)
@@ -174,6 +175,7 @@ DEPENDENCIES
   figaro
   geocoder
   handlebars_assets
+  hirb
   httparty
   jbuilder (~> 1.2)
   jquery-rails

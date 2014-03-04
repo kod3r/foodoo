@@ -1,7 +1,12 @@
 @import url(http://fonts.googleapis.com/css?family=Raleway);
 @import url(http://fonts.googleapis.com/css?family=Lato);
 body {
-  background-color: #fff;
+  padding-top: 60px;
+  background: #000 asset-url("noodles.jpg", image) no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
   color: #333;
   font-family: 'Lato', sans-serif;
   font-size: 13px;
@@ -17,8 +22,6 @@ pre {
   background-color: #eee;
   padding: 10px;
 }
-
-
 .nav, .lead, #brand, input, button, h1{
   font-family: 'Raleway', sans-serif;
 }
@@ -80,137 +83,29 @@ td:first-child {
   padding-left: 15px;
 }
 
-input[type="checkbox"] {
-  margin-top: 0px;
+select, option {
+  text-align: center;
 }
 
-.bubblingG {
-  text-align: center;
-  width:240px;
-  height:150px;
+i {
+  margin: 8px;
 }
 
-.bubblingG span {
-  text-align: center;
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+input[type="text"] {
+  font-family: verdana, arial, helvetica, sans-serif;
+  margin-bottom: 0px;
+}
+
+strong {
+  font-size:18px;
+}
+
+form {
   display: inline-block;
-  vertical-align: middle;
-  width: 30px;
-  height: 30px;
-  margin: 75px auto;
-  background: #E6BD17;
-  -moz-border-radius: 150px;
-  -moz-animation: bubblingG 1.3s infinite alternate;
-  -webkit-border-radius: 150px;
-  -webkit-animation: bubblingG 1.3s infinite alternate;
-  -ms-border-radius: 150px;
-  -ms-animation: bubblingG 1.3s infinite alternate;
-  -o-border-radius: 150px;
-  -o-animation: bubblingG 1.3s infinite alternate;
-  border-radius: 150px;
-  animation: bubblingG 1.3s infinite alternate;
-}
-
-#bubblingG_1 {
-  -moz-animation-delay: 0s;
-  -webkit-animation-delay: 0s;
-  -ms-animation-delay: 0s;
-  -o-animation-delay: 0s;
-  animation-delay: 0s;
-}
-
-#bubblingG_2 {
-  -moz-animation-delay: 0.39s;
-  -webkit-animation-delay: 0.39s;
-  -ms-animation-delay: 0.39s;
-  -o-animation-delay: 0.39s;
-  animation-delay: 0.39s;
-}
-
-#bubblingG_3 {
-  -moz-animation-delay: 0.78s;
-  -webkit-animation-delay: 0.78s;
-  -ms-animation-delay: 0.78s;
-  -o-animation-delay: 0.78s;
-  animation-delay: 0.78s;
-}
-
-@-moz-keyframes bubblingG {
-  0% {
-  width: 30px;
-  height: 30px;
-  background-color:#E6BD17;
-  -moz-transform: translateY(0);
-  }
-
-  100% {
-  width: 72px;
-  height: 72px;
-  background-color:#FFFFFF;
-  -moz-transform: translateY(-63px);
-  }
-
-}
-
-@-webkit-keyframes bubblingG {
-  0% {
-  width: 30px;
-  height: 30px;
-  background-color:#E6BD17;
-  -webkit-transform: translateY(0);
-  }
-
-  100% {
-  width: 72px;
-  height: 72px;
-  background-color:#FFFFFF;
-  -webkit-transform: translateY(-63px);
-  }
-
-}
-
-@-ms-keyframes bubblingG {
-  0% {
-  width: 30px;
-  height: 30px;
-  background-color:#E6BD17;
-  -ms-transform: translateY(0);
-  }
-
-  100% {
-  width: 72px;
-  height: 72px;
-  background-color:#FFFFFF;
-  -ms-transform: translateY(-63px);
-  }
-
-}
-
-@-o-keyframes bubblingG {
-  0% {
-  width: 30px;
-  height: 30px;
-  background-color:#E6BD17;
-  -o-transform: translateY(0);
-  }
-  100% {
-  width: 72px;
-  height: 72px;
-  background-color:#FFFFFF;
-  -o-transform: translateY(-63px);
-  }
-}
-
-@keyframes bubblingG {
-  0% {
-  width: 30px;
-  height: 30px;
-  background-color:#E6BD17;
-  transform: translateY(0);
-  }
-  100% {
-  width: 72px;
-  height: 72px;
-  background-color:#FFFFFF;
-  transform: translateY(-63px);
-  }
+  margin: 3px;
 }

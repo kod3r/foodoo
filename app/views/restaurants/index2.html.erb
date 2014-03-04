@@ -1,6 +1,0 @@
-<!-- app/views/tasks/index.html.erb -->
-<%= content_for :javascript do -%>
-  <%= javascript_tag do %>
-    V1foodoo.initialize({ restaurants: <%== @restaurants.to_json %> });
-  <% end %>
-<% end -%>

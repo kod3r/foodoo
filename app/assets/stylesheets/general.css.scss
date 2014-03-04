@@ -1,0 +1,60 @@
+// action buttons, address input
+.actions, .addressor {
+  display: none;
+}
+
+// google map
+#map, #map-canvas {
+  width: 800px;
+  height: 600px;
+  margin: 25px auto;
+  border-radius: 25px;
+}
+
+// google map controls
+.gmap img{
+  max-width: none;
+}
+
+// search card on the add page
+.add-search {
+  width: 500px;
+  margin: auto;
+}
+
+// search result div on the pick page
+.pick{
+  padding: 5px;
+  max-width: 500px;
+  margin: 20px auto;
+
+  .blockery{
+    margin: 0 10px;
+  }
+}
+
+// location dropdown on list page
+.dropdown-menu {
+  max-height: 308px;
+  overflow: auto;
+}
+
+// restaurant card action buttons
+.actions .btn-medium {
+  width: 80px;
+}
+.actions .btn-small {
+  width: 70px;
+  display: inline-block;
+}
+
+// bigvideo setup
+#big-video-wrap {
+  position: absolute;
+  height: auto;
+  z-index: 0;
+}
+.vidwrap {
+  z-index: 999;
+  position: relative;
+}

@@ -1,0 +1,29 @@
+.orange{
+  color:orange;
+}
+.center-vert{
+  vertical-align: middle;
+}
+.blockery {
+  display: inline-block;
+  vertical-align: middle;
+  margin: 10px;
+}
+.card {
+  background-color: rgba(0,0,0,0.77);
+  width: 255px;
+  padding: 15px;
+  margin: 15px;
+  border: 1px solid #e3e3e3;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  border-radius: 4px;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);
+  -moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);
+  float: left;
+}
+#container {
+  max-width: 952px;
+  margin: auto;
+}

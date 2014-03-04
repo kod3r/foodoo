@@ -1,0 +1,34 @@
+@import "bootstrap";
+@import "bootstrap-responsive";
+.lead{
+  font-size: 21px;
+  margin-bottom: 10px;
+}
+.nav{
+  font-size: 18px;
+}
+.span12 {
+  margin-left: 0px;
+}
+.pop {
+  color: white;
+}
+.well {
+  background-color: rgba(0,0,0,0.77);
+}
+.table tbody tr:hover td, .table tbody tr:hover th {
+  background-color: #0F0F17;
+}
+#brand {
+  color: orange;
+  margin-bottom: 0px;
+  font-size: 24px;
+}
+.container-fixed {
+  margin: 0 auto;
+  max-width: 360px;
+}
+
+
+
+

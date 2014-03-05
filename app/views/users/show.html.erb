@@ -121,13 +121,22 @@
         });
       });
     });
-    $('form.button_to[data-remote]').on('ajax:success', function(event, data, status, xhr){
+    // add button fade out on click
+    $('.add_button').on('click', function(event, data, status, xhr){
       if($(this).parent() != $('#add_all')){
         $(this).closest('.buttoned').fadeOut(500, function(){
           $(this).text("On your list").fadeIn(1000);
         });
       }
     });
+    // add button fade out on ajax success
+    // $('form.button_to[data-remote]').on('ajax:success', function(event, data, status, xhr){
+    //   if($(this).parent() != $('#add_all')){
+    //     $(this).closest('.buttoned').fadeOut(500, function(){
+    //       $(this).text("On your list").fadeIn(1000);
+    //     });
+    //   }
+    // });
     var $container = $('#container');
     $('#container').isotope({
       // options

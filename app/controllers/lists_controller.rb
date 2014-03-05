@@ -17,6 +17,15 @@ class ListsController < ApplicationController
 
   # GET /lists/new
   def new
+    # check how many curated restaurants are on user's list
+    @thrillist_count = current_user.restaurants.where(name: ["Minetta Tavern", "Whitman's", "Brindle Room", "Lure Fishbar", "Korzo Haus"]).count
+    @thrillist_total = 5
+    @zagat_count = current_user.restaurants.where(name: ["Lucali", "Luzzo's", "Paulie Gee's", "Di Fara Pizza", "Denino's Pizzeria Tavern", "Roberta's", "Franny's", "Motorino"]).count
+    @zagat_total = 9
+    @seriouseats_count = current_user.restaurants.where(name: ["Yuji Ramen", "Ramen Yebisu", "Jin Ramen", "Bassanova", "Totto Ramen", "Ippudo Ny", "Hide-Chan Ramen", "Chuko", "Ganso", "Tabata Noodle"]).count
+    @seriouseats_total = 10
+
+    #assign location to look for restaurants
     session[:search_location] = params[:location] if params[:location]
     unless current_user.locations.count == 0 || session[:search_location]
       session[:location_id] = session[:location_id] || current_user.locations.last.id

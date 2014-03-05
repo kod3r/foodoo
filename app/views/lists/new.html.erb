@@ -22,11 +22,8 @@
     </div>
   <% unless params[:term] %>
     <div class="well pop" style="width: 500px; margin-left: auto; margin-right: auto; margin-top: 50px;">
-<!--       <p class="lead orange">List of the week</p> -->
       <p class="lead">Thrillist's Best Burgers in NYC</p>
       <br>
-      <% @thrillist_count = current_user.restaurants.where(name: ["Minetta Tavern", "Whitman's", "Brindle Room", "Lure Fishbar", "Korzo Haus"]).count %>
-      <% @thrillist_total = 5 %>
       <% if @thrillist_count < @thrillist_total%>
         <div class="curated-info" id="thrillist">
           <p><%= @thrillist_count %>/<%= @thrillist_total %> on your list</p>
@@ -41,11 +38,8 @@
       <% end %>
     </div>
     <div class="well pop" style="width: 500px; margin-left: auto; margin-right: auto; margin-top: 50px;">
-<!--       <p class="lead orange">List of the week</p> -->
       <p class="lead">Zagat's Best Pizza in NYC</p>
       <br>
-      <% @zagat_count = current_user.restaurants.where(name: ["Lucali", "Luzzo's", "Paulie Gee's", "Di Fara Pizza", "Denino's Pizzeria Tavern", "Roberta's", "Franny's", "Motorino"]).count %>
-      <% @zagat_total = 9 %>
       <% if @zagat_count < @zagat_total%>
         <div class="curated-info" id="zagat">
           <p><%= @zagat_count %>/<%= @zagat_total %> on your list</p>
@@ -60,11 +54,8 @@
       <% end %>
     </div>
     <div class="well pop" style="width: 500px; margin-left: auto; margin-right: auto; margin-top: 50px;">
-<!--       <p class="lead orange">List of the week</p> -->
       <p class="lead">Seriouseats' Best Ramen in NYC</p>
       <br>
-      <% @seriouseats_count = current_user.restaurants.where(name: ["Yuji Ramen", "Ramen Yebisu", "Jin Ramen", "Bassanova", "Totto Ramen", "Ippudo Ny", "Hide-Chan Ramen", "Chuko", "Ganso", "Tabata Noodle"]).count %>
-      <% @seriouseats_total = 10 %>
       <% if @seriouseats_count < @seriouseats_total%>
         <div class="curated-info" id="seriouseats">
           <p><%= @seriouseats_count %>/<%= @seriouseats_total %> on your list</p>

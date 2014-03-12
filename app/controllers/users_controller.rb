@@ -4,7 +4,9 @@ class UsersController < ApplicationController
   # GET /users
   # GET /users.json
   def index
-    @users = User.all
+    @users_raw = User.all
+    ids_to_exclude = [36, 39]
+    @users = @users_raw.where.not(id: ids_to_exclude)
   end
 
   # GET /users/1

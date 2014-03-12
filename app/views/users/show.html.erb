@@ -83,7 +83,7 @@
         </div>
         <div class="blockery">
           <p class="rating" style="display: none"><%= @rating %></p>
-          <input type="text" value="<%= @formatted_rating %>" class="dial" data-width="70" data-font="lato" data-height="70" data-fgcolor="orange" data-angleOffset="-125" data-angleArc="250">
+          <input type="text" value="<%= @formatted_rating %>" class="dial" data-width="70" data-font="lato" data-height="70" data-fgcolor="orange" data-angleOffset="-125" data-angleArc="250" style="display:none;">
           <% if restaurant.lists.count == 1  %>
             <p>On <strong style="color:orange;" class="lists"><%= restaurant.lists.count %></strong> list</p>
           <% else %>
@@ -107,6 +107,7 @@
 </div>
 <script>
   $(function(){
+    $('.dial').show();
     $('.buttonry').fadeIn(1000);
     $('.dial').knob({
       'readOnly': true

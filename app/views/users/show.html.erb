@@ -65,7 +65,7 @@
     <% else %>
       <% @formatted_rating = "new" %>
     <% end %>
-    <div class="card text-center item pop <%= @label %> <%= restaurant.cuisine.split(", ").join(' ') %> <%= location_raw %>">
+    <div class="card text-center item pop <%= @label %> <%= restaurant.cuisine.split(", ").join(' ') %> <%= location_raw %>" style="height: 265px;">
       <% if @label == "favorite" %>
         <p class="lead name orange"><%= restaurant.name %></p>
       <% else  %>
@@ -77,7 +77,7 @@
       <% else %>
         <p><%= location.city%></p>
       <% end %>
-      <div>
+      <div class="block-container">
         <div class="blockery">
           <a class="text-center" href="<%=restaurant.yelp_url%>" target="_blank"><img class="yelp_link" src=<%=restaurant.image%>/></a>
         </div>

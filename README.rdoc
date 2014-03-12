@@ -1,6 +1,6 @@
 == Foodoo
 
-A webapp for keeping track of the restaurants you like.
+A webapp for keeping track of the restaurants you like and figuring out where to eat next.
 
 
 Features:

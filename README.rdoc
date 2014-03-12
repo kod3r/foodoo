@@ -19,4 +19,3 @@ Features:
 
 * Track your choices, so you can follow the crumbs
 
-<tt>rake doc:app</tt>.

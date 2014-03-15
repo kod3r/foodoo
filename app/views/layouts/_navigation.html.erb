@@ -1,65 +1,27 @@
+<!-- logo -->
 <a class="brand" id="brand">Foodoo</a>
+
 <% if user_signed_in? %>
-  <ul class="nav pull-right">
-      <li>
-        <%= link_to('Pick', new_search_path, :method=>'get',  :class => 'pick_nav') %>
-      </li>
-      <li>
-        <%= link_to('List', restaurants_path, :method=>'get',  :class => 'list_nav') %>
-      </li>
-      <li>
-        <%= link_to('Add', new_list_path,  :class => 'add_nav') %>
-      </li>
-      <li>
-        <%= link_to('Tastebuddies', '/lsearch',  :class => 'friend_nav') %>
-      </li>
-  </ul>
-  <div class="nav">
-    <ul class="nav nav-settings" style="display: none;">
-      <li>
-        <%= link_to('Edit account', edit_user_registration_path) %>
-      </li>
-      <li>
-        <%= link_to('Logout', destroy_user_session_path, :method=>'delete') %>
-      </li>
-    </ul>
-  </div>
+<!-- pages -->
+<ul class="nav pull-right">
+    <li><%= link_to('Pick', new_search_path, :method=>'get', :class => 'pick_nav') %></li>
+    <li><%= link_to('List', restaurants_path, :method=>'get', :class => 'list_nav') %></li>
+    <li><%= link_to('Add', new_list_path, :class => 'add_nav') %></li>
+    <li><%= link_to('Tastebuddies', '/lsearch', :class => 'friend_nav') %></li>
+</ul>
+<!-- user settings -->
+<ul class="nav settings">
+  <li><%= link_to('Edit account', edit_user_registration_path) %></li>
+  <li><%= link_to('Logout', destroy_user_session_path, :method=>'delete') %></li>
+</ul>
+
+<!-- user not signed in -->
 <% else %>
-  <ul class='nav pull-right'>
-    <li>
-      <%= link_to('Login', new_user_session_path)  %>
-    </li>
-    <li>
-      <%= link_to('Sign up', new_user_registration_path)  %>
-    </li>
-  </ul>
+<!-- user setup -->
+<ul class='nav pull-right'>
+  <li><%= link_to('Login', new_user_session_path) %></li>
+  <li><%= link_to('Sign up', new_user_registration_path) %></li>
+</ul>
+
 <% end %>
-<script>
-  $("#brand").click(function(){
-    if($(".nav-settings").is(":visible")){
-      $(".nav-settings").fadeOut();
-    }else{
-      $(".nav-settings").fadeIn();
-    }
-  })
-  $('.pick_nav').tooltip({
-    title: "top 3 recommendations",
-    placement: 'bottom',
-    container: 'body'
-  });
-  $('.list_nav').tooltip({
-    title: "see your restaurants",
-    placement: 'bottom',
-    container: 'body'
-  });
-  $('.add_nav').tooltip({
-    title: "add new places",
-    placement: 'bottom',
-    container: 'body'
-  });
-  $('.friend_nav').tooltip({
-    title: "see what everyone else likes",
-    placement: 'bottom',
-    container: 'body'
-  });
-</script>
+

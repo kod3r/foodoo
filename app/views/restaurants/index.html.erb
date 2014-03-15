@@ -6,6 +6,7 @@
     <span id="bubblingG_2"></span>
     <span id="bubblingG_3"></span>
   </div>
+  <!-- select/add location -->
   <div class="text-center addressor">`
     <select id="address_selector">
     <% current_user.locations.each do |location| %>
@@ -16,7 +17,8 @@
       <option value="new">New Address</option>
     </select>
   </div>
-  <div class="buttonry text-center" style="display:none;">
+  <!-- sort/filter buttons -->
+  <div class="buttonry text-center">
     <a class="lead">SORT</a>
     <div class="text-center" id="sort-by">
       <a class="btn btn-medium btn-info" href="#dist" style="margin-top: 5px; margin-bottom: 10px;">Distance</a>

@@ -33,10 +33,32 @@
   }
 }
 
+// sort & filter buttons
+.buttonry.btn {
+  margin-top: 5px;
+  margin-bottom: 10px;
+}
+
+// cuisine input
+#cuisine-input {
+  max-width: 100px;
+  text-align: center;
+}
+
 // location dropdown on list page
 .dropdown-menu {
   max-height: 308px;
   overflow: auto;
+}
+
+// address form
+#address-form {
+  margin-top: 100px;
+  width: 360px;
+  margin: auto;
+  display: none;
+  input {margin: 5px}
+  button {margin: 20px 20px 5px 20px}
 }
 
 // restaurant card action buttons

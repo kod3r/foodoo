@@ -9,11 +9,9 @@
   <!-- select/add location -->
   <div class="text-center addressor">`
     <select id="address_selector">
-    <% current_user.locations.each do |location| %>
-      <option value=<%= location.id %>>
-        <%= location.address %>, <%= location.city %>
-      </option>
-    <% end %>
+      <% current_user.locations.each do |location| %>
+      <option value=<%= location.id %>> <%= location.address %>, <%= location.city %> </option>
+      <% end %>
       <option value="new">New Address</option>
     </select>
   </div>
@@ -21,26 +19,24 @@
   <div class="buttonry text-center">
     <a class="lead">SORT</a>
     <div class="text-center" id="sort-by">
-      <a class="btn btn-medium btn-info" href="#dist" style="margin-top: 5px; margin-bottom: 10px;">Distance</a>
-      <!-- <a class="btn btn-medium btn-info" href="#last">Last Visit</a> -->
-      <a class="btn btn-medium btn-info" href="#name" style="margin-top: 5px; margin-bottom: 10px;">Name</a>
-      <!-- <a class="btn btn-medium btn-info" href="#hood">Neighborhood</a> -->
-      <a class="btn btn-medium btn-info" href="#rating" id="start" style="margin-top: 5px; margin-bottom: 10px;">Rating</a>
-      <a class="btn btn-medium btn-info" id="score_button" href="#score" style="margin-top: 5px; margin-bottom: 10px;">Special Blend</a>
+      <a class="btn btn-medium btn-info" href="#dist">Distance</a>
+      <a class="btn btn-medium btn-info" href="#name">Name</a>
+      <a class="btn btn-medium btn-info" href="#rating" id="start">Rating</a>
+      <a class="btn btn-medium btn-info" id="score_button" href="#score">Special Blend</a>
     </div>
     <a class="lead">FILTER</a>
     <div class="text-center" id="filters">
-      <a class="btn btn-medium btn-info filter-click" href="#" data-filter=".favorite" style="margin-top: 5px; margin-bottom: 10px;">Hit List</a>
-      <a class="btn btn-medium btn-info" href="#" data-filter=".cuisine" id="cuisine-button" style="margin-top: 5px; margin-bottom: 10px;">
+      <a class="btn btn-medium btn-info filter-click" href="#" data-filter=".favorite">Hit List</a>
+      <a class="btn btn-medium btn-info" href="#" data-filter=".cuisine" id="cuisine-button">
         <div class="cuisine-input" id="cuisine-show">Cuisine</div>
         <div class="cuisine-input input-group" style="display: none" id="cuisine-filter">
-          <input type="text" class="form-control" style="max-width: 100px; text-align: center;" id="cuisine-input">
-          <span class="input-group-btn">
-            <button class="btn btn-default filter-click" type="button" id="cuisine-submit">Select</button>
-          </span>
+          <input type="text" class="form-control" id="cuisine-input">
+            <span class="input-group-btn">
+              <button class="btn btn-default filter-click" type="button" id="cuisine-submit">Select</button>
+            </span>
         </div>
       </a>
-      <div class="btn-group" style="margin-top: 5px; margin-bottom: 10px;">
+      <div class="btn-group">
         <a class="btn btn-info dropdown-toggle" data-toggle="dropdown" href="#" id="selected-location">
           Location
           <span class="caret"></span>
@@ -53,46 +49,39 @@
           <% end %>
         </ul>
       </div>
-      <a class="btn btn-medium btn-info filter-click reset" href="#" data-filter="*" style="margin-top: 5px; margin-bottom: 10px;">Reset</a>
+      <a class="btn btn-medium btn-info filter-click reset" href="#" data-filter="*">Reset</a>
     </div>
-<!--     <a class="lead">ORDER</a>
+<!--
+    <a class="lead">ORDER</a>
     <div class="text-center" id="asc-desc">
-      <a class="btn btn-medium btn-info" href="#asc" style="margin-top: 5px; margin-bottom: 10px;">Ascending</a>
-      <a class="btn btn-medium btn-info" href="#desc" style="margin-top: 5px; margin-bottom: 10px;">Descending</a>
-    </div> -->
+      <a class="btn btn-medium btn-info" href="#asc">Ascending</a>
+      <a class="btn btn-medium btn-info" href="#desc">Descending</a>
+    </div>
+-->
   </div>
   <br>
-  <!-- backbone template contaier -->
+  <!-- backbone template container -->
   <div id="restaurants" class="text-center"></div>
 </div>
+
 <% elsif current_user.restaurants.count == 0 %>
-  <h3 class="well text-center"style="color:orange;">Add some restaurants to access this feature</h3>
+<h3 class="well text-center orange">Add some restaurants to access this feature</h3>
 <% end %>
-  <div class="well text-center pop" style="margin-top: 100px; width: 360px; margin-left: auto; margin-right: auto; display: none;" id="address_form">
-    <form role="form">
-      <br>
-      <div class="form-group">
-        <input type="text" class="form-control text-center" id="address_input" placeholder="Street Address">
-      </div>
-      <br>
-      <div class="form-group">
-        <input type="text" class="form-control text-center" id="city_input" placeholder="City">
-      </div>
-      <br>
-      <div class="form-group">
-        <input type="text" class="form-control text-center" id="state_input" placeholder="State">
-      </div>
-      <br>
-      <br>
-      <button type="submit" class="btn btn-default" id="address_submit">Submit</button>
-      <br>
-      <br>
-    </form>
-  </div>
+
+<!-- address form for new address (default hidden) -->
+<div class="well text-center pop" id="address-form">
+  <form role="form">
+    <input type="text" class="text-center" id="address_input" placeholder="Street Address">
+    <input type="text" class="text-center" id="city_input" placeholder="City">
+    <input type="text" class="text-center" id="state_input" placeholder="State"><br>
+    <button type="submit" class="btn btn-default" id="address_submit">Submit</button>
+  </form>
+</div>
+
 <script>
   $(function(){
     <% if current_user.locations.count == 0 %>
-      $('#address_form').show();
+      $('#address-form').show();
     <% end %>
     $('#sort-by .btn-info').click(function(){
       $('#sort-by .btn-warning').removeClass('btn-warning').addClass('btn-info');
@@ -111,7 +100,7 @@
       var selected = $('#address_selector').val();
       if(selected == "new"){
         $('#index').hide();
-        $('#address_form').fadeIn('slow');
+        $('#address-form').fadeIn('slow');
       }else{
         $.ajax({
           url: "/address_input",

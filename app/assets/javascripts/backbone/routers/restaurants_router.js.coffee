@@ -18,7 +18,7 @@ class V1foodoo.Routers.RestaurantsRouter extends Backbone.Router
   index: ->
     @view = new V1foodoo.Views.Restaurants.IndexView(collection: @restaurants)
 
-    # loader bubbles replaced with content
+    # loader bubbles replaced with content on load
     $('.bubblingG').fadeOut()
     $('.addressor, .buttonry').fadeIn(2000)
     $("#restaurants").html(@view.render().el)

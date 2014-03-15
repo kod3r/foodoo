@@ -1,11 +1,11 @@
 == Foodoo
 
-A webapp for keeping track of the restaurants you like.
+A webapp for keeping track of the restaurants you like and figuring out where to eat next.
 
 
 Features:
 
-* Automatic upload of key data such as location, cuisine, and neighborhood for each restaurant you add
+* Automatic upload of key data such as location, cuisine, and pictures for each restaurant you add
 
 * Powerful tools for sorting and filtering through your personal restaurant database
 
@@ -15,8 +15,7 @@ Features:
 
 * Navigate with directions and walking time estimates
 
-* Order delivery directly through the site
+* Make reservations or order delivery directly through the site
 
 * Track your choices, so you can follow the crumbs
 
-<tt>rake doc:app</tt>.

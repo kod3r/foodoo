@@ -1,4 +1,4 @@
-<% if current_user.locations.count > 0 && (current_user.restaurants.count > 0)%>
+<% if @locations.count > 0 && (@restaurants.count > 0)%>
 <div id="index">
   <!-- loading bubbles -->
   <div class="bubblingG">
@@ -9,7 +9,7 @@
   <!-- select/add location -->
   <div class="text-center addressor">`
     <select id="address_selector">
-      <% current_user.locations.each do |location| %>
+      <% @locations.each do |location| %>
       <option value=<%= location.id %>> <%= location.address %>, <%= location.city %> </option>
       <% end %>
       <option value="new">New Address</option>
@@ -64,7 +64,7 @@
   <div id="restaurants" class="text-center"></div>
 </div>
 
-<% elsif current_user.restaurants.count == 0 %>
+<% elsif @restaurants.count == 0 %>
 <h3 class="well text-center orange">Add some restaurants to access this feature</h3>
 <% end %>
 
@@ -78,74 +78,3 @@
   </form>
 </div>
 
-<script>
-  $(function(){
-    <% if current_user.locations.count == 0 %>
-      $('#address-form').show();
-    <% end %>
-    $('#sort-by .btn-info').click(function(){
-      $('#sort-by .btn-warning').removeClass('btn-warning').addClass('btn-info');
-      $(this).removeClass('btn-info').addClass('btn-warning');
-    });
-    $('#filters .btn-info').click(function(){
-      $('#filters .btn-warning').removeClass('btn-warning').addClass('btn-info');
-      if($(this).html() != 'Reset'){
-        $(this).removeClass('btn-info').addClass('btn-warning');
-      }
-    });
-    $('#address_selector').val(<%= session[:location_id] %>);
-    $('#address_selector').change(function(){
-      $('.buttonry, #restaurants, #address_selector').hide();
-      $('.bubblingG').show();
-      var selected = $('#address_selector').val();
-      if(selected == "new"){
-        $('#index').hide();
-        $('#address-form').fadeIn('slow');
-      }else{
-        $.ajax({
-          url: "/address_input",
-          type: "post",
-          data: {location_id: selected},
-          //contentType: "application/json; charset=utf-8",
-          dataType: "json",
-          success: function(data){
-
-            window.location.reload();
-            console.log("success");
-          },
-          error: function(jqXHR, textStatus, errorThrown){
-            console.log("fail");
-            console.log(jqXHR);
-            console.log(textStatus);
-            console.log(errorThrown);
-          }
-        });
-      }
-    });
-    $('#address_submit').click(function(){
-      if($('#address_input').val() && $('#city_input').val() && $('#state_input').val()){
-        $.ajax({
-          url: "/users/address_input",
-          type: "post",
-          data: {address: $('#address_input').val(), city: $('#city_input').val(), state: $('#state_input').val()},
-          //contentType: "application/json; charset=utf-8",
-          dataType: "json",
-          success: function(data){
-            console.log("success");
-          },
-          error: function(jqXHR, textStatus, errorThrown){
-            console.log("fail");
-            console.log(jqXHR);
-            console.log(textStatus);
-            console.log(errorThrown);
-          }
-        });
-      }
-    });
-    $('#address_selector').tooltip({
-      title: "set your location",
-      placement: 'right',
-      container: 'body'
-    });
-  });
-</script>

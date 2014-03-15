@@ -55,6 +55,9 @@ GEM
       bundler (~> 1.0)
       rails (>= 3, < 5)
     geocoder (1.1.8)
+    gon (5.0.4)
+      actionpack (>= 2.3.0)
+      json
     handlebars_assets (0.14.1)
       execjs (>= 1.2.9)
       sprockets (>= 2.0.3)
@@ -174,6 +177,7 @@ DEPENDENCIES
   devise
   figaro
   geocoder
+  gon
   handlebars_assets
   hirb
   httparty

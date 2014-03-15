@@ -9,6 +9,11 @@ class RestaurantsController < ApplicationController
   # GET /restaurants.json
   def index
     @restaurants = current_user.restaurants.includes(:locations, :lists)
+    @locations = current_user.locations
+
+    # get js access to location count
+    gon.locationCount = @locations.count
+
     if @restaurants.exists?
       @hoods = @restaurants.joins(:locations).distinct.pluck(:hood, :city)
       @hoods.map! do |location|
@@ -29,6 +34,8 @@ class RestaurantsController < ApplicationController
         session[:location_ll] = [location.latitude, location.longitude]
       end
     end
+    # get js access to location id
+    gon.locationId = session[:location_id]
   end
 
   def address_input

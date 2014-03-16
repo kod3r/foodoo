@@ -1,7 +1,6 @@
 <div id="container" class="text-center">
   {{#each this}}
   <div class="card text-center item pop {{#each cuisines}}{{this}} {{/each}}{{label}} {{location_raw}}">
-  <div class='center-vert'>
     {{#if label}}
     <p class="lead name orange">{{name}}</p>
     {{else}}
@@ -21,17 +20,19 @@
           <p class="last_visit">{{last_choice}}</p>
           <p class="last">{{last_unix}}</p>
         </div>
-        <input type="text" value="{{rating}}" class="dial" data-list="{{list_id}}" data-prev="{{rating_number}}">
-        {{#if walk}}
-        <p>{{walk}} min walk!</p>
-        {{else}}
-        <p>{{miles}} miles</p>g
-        {{/if}}
-        {{#if list_check}}
-        <p>On <strong class='orange'>{{lists}}</strong> lists</p>
-        {{else}}
-        <p>On <strong class='orange'>{{lists}}</strong> list</p>
-        {{/if}}
+        <div class='info-section'>
+          <input type="text" value="{{rating}}" class="dial" data-list="{{list_id}}" data-prev="{{rating_number}}">
+          {{#if walk}}
+          <p>{{walk}} min walk!</p>
+          {{else}}
+          <p>{{miles}} miles</p>
+          {{/if}}
+          {{#if list_check}}
+          <p>On <strong class='orange'>{{lists}}</strong> lists</p>
+          {{else}}
+          <p>On <strong class='orange'>{{lists}}</strong> list</p>
+          {{/if}}
+        </div>
       </div>
       <div class="actions">
         <a class="fav-button" href="/favorite?id={{list_id}}" data-method="post" data-remote="true" data-list="{{list_id}}">
@@ -46,7 +47,6 @@
         </a>
       </div>
     </div>
-  </div>
   </div>
   {{/each}}
 </div>

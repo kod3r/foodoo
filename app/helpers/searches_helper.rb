@@ -1,4 +1,8 @@
 module SearchesHelper
+  def miles_or_min(restaurant)
+    miles = restaurant.locations.last.distance_to(session[:location_ll])
+    miles < 1 ? ((miles+0.1)*25).to_i.to_s+' min walk!' : miles.round(2).to_s+' miles'
+  end
   def distance(restaurant)
     if restaurant.locations.last.distance_to(session[:location_ll])
       ((restaurant.locations.last.distance_to(session[:location_ll])+0.1)*25).to_i

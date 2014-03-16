@@ -79,21 +79,17 @@ json.array!(@restaurants) do |restaurant|
   #   json.last_unix "New!"
   # end
   json.miles miles.round(2)
-  if miles < 0.25
-    json.walk ((miles+0.1)*25).to_i
+  json.walk miles_or_min(restaurant)
+  if miles >= 1.00
+    distance_score = 0
+  elsif miles < 0.25
     distance_score = 40
   elsif miles < 0.50
-    json.walk ((miles+0.1)*25).to_i
     distance_score = 30
   elsif miles < 0.75
-    json.walk ((miles+0.1)*25).to_i
     distance_score = 20
   elsif miles < 1.00
-    json.walk ((miles+0.1)*25).to_i
     distance_score = 10
-  else
-    json.walk nil
-    distance_score = 0
   end
   total_score = distance_score + rating_score + fav_score
   json.score total_score

@@ -26,11 +26,7 @@
         {{!-- side info --}}
         <div class='info-section'>
           <input type="text" value="{{rating}}" class="dial" data-list="{{list_id}}" data-prev="{{rating_number}}">
-          {{#if walk}}
-          <p>{{walk}} min walk!</p>
-          {{else}}
-          <p>{{miles}} miles</p>
-          {{/if}}
+          <p>{{walk}}</p>
           {{#if list_check}}
           <p>On <strong class='orange'>{{lists}}</strong> lists</p>
           {{else}}

@@ -5,9 +5,9 @@
     layoutMode : 'fitColumns'
   });
 </script>
-
 <% if current_user.locations.count > 0 %>
 <div class="text-center">
+  <!-- restaurant lookup -->
   <div class="well pop add-search">
     <p class="lead orange">Add some restaurants to your list!</p>
     <form accept-charset="UTF-8" action="/lists/new" method="get" role="form" id='add-form'>
@@ -16,7 +16,8 @@
       <input name="commit" class="btn btn-primary" type="submit" value="Search"/>
     </form>
   </div>
-  <% unless params[:term] %>
+<!-- curated lists -->
+<% unless params[:term] %>
   <div class="well pop curated-list">
     <p class="lead">Thrillist's Best Burgers in NYC</p>
     <br>
@@ -65,9 +66,45 @@
       <a class="btn btn-warning list-read" href="http://newyork.seriouseats.com/2013/09/best-ramen-nyc-ippudo-hide-chan-yuji-yebisu-totto-chuko-bassanova.html" target="_blank">Read</a>
     <% end %>
   </div>
-  <% end %>
 </div>
+<% else %>
+  <!-- search results -->
+  <% if @yelp %>
+    <div class="well text-center pop lead" id='search-results'>
+      <p style="color: orange;"><%= params[:term].split.map(&:capitalize).join(' ') %><span style="color: white;"> in </span><%= params[:location] %>
+  <% if @yelp["message"]["code"] != 0 %>
+        <p>No results!</p>
+    </div>
+  <% else %>
+    </div>
+    <div id="container">
+    <% @results.each do |place| %>
+      <div class="card text-center item pop" style="margin-bottom: 20px; height: 255px;">
+        <p class="lead"><%= place.name %></p>
+        <p><%= place.cuisine %></p>
+        <% if place.locations.take.hood %>
+          <p><%= place.locations.take.hood %>, <%= place.locations.take.city %></p>
+        <% else %>
+          <p><%= place.locations.take.ciy %></p>
+        <% end %>
+        <p><a href="<%= place.yelp_url %>" target="_blank">
+          <img class="yelp_link" src="<%= place.image %>"/>
+        </a></p>
+        <div class="add_area">
+          <% if current_user.restaurants.exists?(place.id) %>
+            <p class="orange">On your List</p>
+          <% else %>
+            <a class="btn btn-default btn-primary add_button" href="/lists/create?id=<%= place.id %>" data-method="post" data-remote="true">Add to List</a>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
+    </div>
+    <% end %>
+  <% end %>
 <% end %>
+<% end %>
+<!-- address form (default hidden) -->
 <div class="well text-center pop" id="address-form">
   <form role="form">
     <input type="text" class="text-center" id="address_input" placeholder="Street Address">
@@ -76,135 +113,3 @@
     <button type="submit" class="btn btn-default" id="address_submit">Submit</button>
   </form>
 </div>
-</br>
-<% if params[:term] %>
-  <% response = HTTParty.get("http://api.yelp.com/business_review_search?term=#{params[:term].split(' ').join('+')}&location=#{params[:location].split(' ').join('+')}&category=restaurants&radius=20&limit=6&ywsid=Q5mQ5eJFseNNaJx9xuXhjQ") %>
-  <% @r = response %>
-
-<% if @r %>
-  <div class="well text-center pop lead" style="width: 360px; margin-left: auto; margin-right: auto;">
-    <p style="color: orange;"><%= params[:term].split.map(&:capitalize).join(' ') %><span style="color: white;"> in </span><%= params[:location] %>
-<% if @r["message"]["code"] != 0 %>
-      <p>No results!</p>
-  </div>
-<% else %>
-  </div>
-  <div id="container">
-    <% @r["businesses"].each do |place| %>
-    <% unless place["is_closed"] %>
-      <% refactored_address = place["address1"]+" "+place["zip"] %>
-      <% @address = place["address1"] %>
-      <% @db_restaurant = Restaurant.where(name: place["name"]).joins(:locations).where('locations.address' => refactored_address).first || Restaurant.where(name: place["name"]).joins(:locations).where('locations.address' => @address).first %>
-      <div class="card text-center item pop" style="margin-bottom: 20px; height: 255px;">
-        <% if @db_restaurant %>
-          <% @restaurant = @db_restaurant %>
-        <% else %>
-          <% @categories = [] %>
-          <% place["categories"].each do |category| %>
-            <% @categories << category["name"] %>
-          <% end %>
-          <% @categories = @categories.join(', ') %>
-          <% @restaurant = Restaurant.create(name: place["name"], image: place["photo_url"], yelp_url: place["url"], cuisine: @categories) %>
-          <% if place["neighborhoods"][0] %>
-            <% Location.create(locator_id: @restaurant.id, locator_type: "Restaurant", city: place["city"], state: place["state"], country: place["country"], phone: place["phone"], address: @address, hood: place["neighborhoods"][0]["name"]) %>
-          <% else %>
-            <% Location.create(locator_id: @restaurant.id, locator_type: "Restaurant", address: @address, city: place["city"], state: place["state"], country: place["country"], phone: place["phone"]) %>
-          <% end %>
-        <% end %>
-        <p class="lead"><%= place["name"] %></p>
-        <p><%= @restaurant.cuisine %></p>
-        <% if place["neighborhoods"][0] %>
-          <p><%=place["neighborhoods"][0]["name"]%>, <%=place["city"]%></p>
-        <% else %>
-          <p><%=place["city"]%></p>
-        <% end %>
-        <p><a href="<%= place["url"] %>" target="_blank">
-          <img class="yelp_link" src="<%=place["photo_url"]%>"/>
-        </a></p>
-        <div class="add_area">
-          <% if current_user.restaurants.exists?(@restaurant.id) %>
-            <p class="orange">On your List</p>
-          <% else %>
-            <a class="btn btn-default btn-primary add_button" href="/lists/create?id=<%= @restaurant.id %>" data-method="post" data-remote="true">Add to List</a>
-          <% end %>
-        </div>
-<!--         <p><img src="<%=place["rating_img_url"]%>"/>
-        (<%=place["review_count"]%> reviews)</p> -->
-<!--         <p><img src="http://s3-media1.ak.yelpcdn.com/assets/2/www/img/dc8ff90d5d7d/developers/Powered_By_Yelp_Black.png"></p> -->
-      </div>
-    <% end %>
-    <% end %>
-  <% end %>
-<% end %>
-<% end %>
-</div>
-<script>
-
-$(function(){
-  if(gon.noLocations) {$('#address-form').show()}
-   $('#address_submit').click(function(){
-    if($('#address_input').val() && $('#city_input').val() && $('#state_input').val()){
-      $.ajax({
-        url: "/users/address_input",
-        type: "post",
-        data: {address: $('#address_input').val(), city: $('#city_input').val(), state: $('#state_input').val()},
-        //contentType: "application/json; charset=utf-8",
-        dataType: "json",
-        success: function(data){
-          window.location.reload();
-          console.log("success");
-        },
-        error: function(jqXHR, textStatus, errorThrown){
-          console.log("fail");
-          console.log(jqXHR);
-          console.log(textStatus);
-          console.log(errorThrown);
-        }
-      });
-    }
-  });
-  $('.add_button').on('ajax:success', function(event, data, status, xhr){
-    $(this).parent().fadeOut(200, function(){
-      $(this).html("<p class='orange'>On your List</p>").fadeIn(1000);
-    });
-  });
-  $('.list-add').click(function(){
-    $(this).closest('.curated-info').fadeOut(200, function(){
-      if($(this).attr('id') == "zagat"){
-        $(this).html("<p class='orange'>9/9 on your list</p><a class='btn btn-warning list-read' href='http://www.zagat.com/l/new-york-city/best-pizza-in-nyc' target='_blank'>Read</a>").fadeIn(1000);
-      }else if($(this).attr('id') == "thrillist"){
-        $(this).html("<p class='orange'>5/5 on your list</p><a class='btn btn-warning list-read' href='http://www.thrillist.com/eat/new-york/the-best-burgers-in-nyc' target='_blank'>Read</a>").fadeIn(1000);
-      }else if($(this).attr('id') == "seriouseats"){
-        $(this).html("<p class='orange'>10/10 on your list</p><a class='btn btn-warning list-read' href='http://newyork.seriouseats.com/2013/09/best-ramen-nyc-ippudo-hide-chan-yuji-yebisu-totto-chuko-bassanova.html' target='_blank'>Read</a>").fadeIn(1000);
-      }
-    });
-  });
-  $('#location').tooltip({
-    title: "make sure to include city and state",
-    placement: 'right',
-    container: 'body'
-  });
-  $('.add_button').tooltip({
-    title: "add this restaurant to your list",
-    placement: 'right',
-    container: 'body'
-  });
-
-  $('.yelp_link').tooltip({
-    title: "click to visit yelp page",
-    placement: 'right',
-    container: 'body'
-  });
-  $('.list-read').tooltip({
-    title: "read the article",
-    placement: 'left',
-    container: 'body'
-  });
-  $('.list-add').tooltip({
-    title: "add all the restaurants to your list",
-    placement: 'right',
-    container: 'body'
-  });
-});
-</script>
-

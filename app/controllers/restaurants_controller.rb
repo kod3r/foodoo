@@ -11,19 +11,14 @@ class RestaurantsController < ApplicationController
     @restaurants = current_user.restaurants.includes(:locations, :lists)
     @locations = current_user.locations
 
-    # get js access to location count
-    gon.locationCount = @locations.count
-
     if @restaurants.exists?
+      # restaurant location filter
       @hoods = @restaurants.joins(:locations).distinct.pluck(:hood, :city)
       @hoods.map! do |location|
-        if location[0]
-          location[0]
-        else
-          location[1]
-        end
+        location[0] ? location[0] : location[1]
       end
       @hoods= @hoods.uniq.sort
+      # user location selection
       if current_user.locations.count > 0
         if current_user.locations.last.created_at > (Time.now - 10)
           session[:location_id] = current_user.locations.last.id

@@ -1,6 +1,5 @@
 <% if current_user.restaurants.count > 0 && current_user.locations.count > 0 %>
-<div id="text-center">
-  <div class="text-center">
+<div class="text-center" id="results">
   <div class="blockery">
     <div class="text-center">
       <select id="address_selector" style="width:300px;">
@@ -23,47 +22,29 @@
   <div class="blockery">
     <a class="btn btn-warning btn-large" id="search_button">Search</a>
   </div>
-    <div class="bubblingG bubblingGS">
-      <span id="bubblingG_1">
-      </span>
-      <span id="bubblingG_2">
-      </span>
-      <span id="bubblingG_3">
-      </span>
-    </div>
-  </div>
   <div id="picks">
   <% @picks.each do |restaurant| %>
     <div class="pick text-center well pop">
-      <p class="lead name"><%=restaurant.name%></p>
-      <p><%=restaurant.cuisine%></p>
-      <p><%=restaurant.locations.last.hood%></p>
+      <p class="lead name"><%= restaurant.name %></p>
+      <p><%= restaurant.cuisine %></p>
+      <p><%= restaurant.locations.last.hood %></p>
         <div class="info">
           <div class="blockery">
             <% if restaurant.image %>
-              <p class="text-center"><img src=<%=restaurant.image%>/></p>
+              <p class="text-center"><img src=<%= restaurant.image %>/></p>
             <% end %>
           </div>
           <div class="blockery">
-            <p>
-            <% miles = restaurant.locations.last.distance_to(session[:location_ll]) %>
-            <% if miles < 1 %>
-              <%= ((restaurant.locations.last.distance_to(session[:location_ll])+0.1)*25).to_i %> min walk
-            <% else %>
-              <%= miles.round(2) %> miles
-            <% end %>
-            </p>
-            <p class="yelp_link"><a href="<%=restaurant.yelp_url%>" target="_blank"><img src="http://s3-media1.ak.yelpcdn.com/assets/2/www/img/55e2efe681ed/developers/yelp_logo_50x25.png"></a></p>
+            <p><%= miles_or_min(restaurant) %></p>
+            <p class="yelp_link"><a href="<%=restaurant.yelp_url%>" target="_blank">
+              <img src="http://s3-media1.ak.yelpcdn.com/assets/2/www/img/55e2efe681ed/developers/yelp_logo_50x25.png">
+            </a></p>
           </div>
           <div class="text-center blockery actions">
-            <p>
-            <a class="btn btn-medium btn-success go_btn" href="/restaurants/<%= restaurant.id %>">Directions</a>
-            </p>
+            <p><a class="btn btn-medium btn-success go_btn" href="/restaurants/<%= restaurant.id %>">Directions</a></p>
             <% opentable = restaurant.opentable %>
             <% if opentable && opentable != 'na' %>
-            <p>
-            <a class="btn btn-medium btn-primary reservations" href="<%= restaurant.opentable %>" target="_blank">Reservations</a>
-            </p>
+            <p><a class="btn btn-medium btn-primary reservations" href="<%= restaurant.opentable %>" target="_blank">Reservations</a></p>
             <% end %>
           </div>
         </div>
@@ -71,8 +52,13 @@
   <% end %>
   </div>
 <% elsif current_user.restaurants.count == 0 %>
-  <h3 class="well text-center"style="color:orange;">Add some restaurants to access this feature</h3>
+  <h3 class="well text-center orange">Add some restaurants to access this feature</h3>
 <% end %>
+</div>
+<div class="bubblingG bubblingGS">
+  <span id="bubblingG_1"></span>
+  <span id="bubblingG_2"></span>
+  <span id="bubblingG_3"></span>
 </div>
 <div class="well text-center pop" id="address-form">
   <form role="form">
@@ -82,131 +68,3 @@
     <button type="submit" class="btn btn-default" id="address_submit">Submit</button>
   </form>
 </div>
-
-<script>
-  $(function(){
-    if(gon.noLocations) {$('#address-form').show()}
-    $('#address_selector').val(<%= session[:location_id] %>);
-    $('.selectpicker').selectpicker({
-      size: 8,
-      title: "Eating with...",
-      selectedTextFormat: 'count>3',
-      width: '300px'
-    });
-    var selected_buds = '<%= session[:buddies] %>';
-    selected_buds=selected_buds.replace(/&quot;/g,"'");
-    selected_buds=selected_buds.replace(/\s/g,"");
-    selected_buds=selected_buds.replace(/\'/g,"");
-    selected_buds=selected_buds.replace(/\[/g,"");
-    selected_buds=selected_buds.replace(/\]/g,"");
-    selected_buds=selected_buds.split(',');
-    $('.selectpicker').selectpicker('val', selected_buds);
-    $('.selectpicker').selectpicker('render');
-    $('#search_button').click(function(){
-      $('#picks').hide();
-      $('.bubblingG').show();
-      var buddies = $('.selectpicker').val();
-      console.log(buddies);
-      $.ajax({
-        url: '/searches/new',
-        type: 'post',
-        data: {buddies: buddies},
-        dataType: 'json',
-        success: function(data){
-          console.log("success");
-          window.location.reload();
-        },
-        error: function(a,b,c){
-          console.log('error');
-          window.location.reload();
-        }
-      });
-    });
-    $('#address_selector').change(function(){
-      var selected = $('#address_selector').val();
-      if(selected == "new"){
-        $('#picks').hide();
-        $('#address_form').fadeIn('slow');
-      }else{
-        $.ajax({
-          url: "/address_input",
-          type: "post",
-          data: {location_id: selected},
-          //contentType: "application/json; charset=utf-8",
-          dataType: "json",
-          success: function(data){
-            window.location.reload();
-            console.log("success");
-          },
-          error: function(jqXHR, textStatus, errorThrown){
-            console.log("fail");
-            console.log(jqXHR);
-            console.log(textStatus);
-            console.log(errorThrown);
-          }
-        });
-      }
-    });
-    $('#address_submit').click(function(){
-      if($('#address_input').val() && $('#city_input').val() && $('#state_input').val()){
-        $.ajax({
-          url: "/users/address_input",
-          type: "post",
-          data: {address: $('#address_input').val(), city: $('#city_input').val(), state: $('#state_input').val()},
-          //contentType: "application/json; charset=utf-8",
-          dataType: "json",
-          success: function(data){
-            console.log("success");
-          },
-          error: function(jqXHR, textStatus, errorThrown){
-            console.log("fail");
-            console.log(jqXHR);
-            console.log(textStatus);
-            console.log(errorThrown);
-          }
-        });
-      }
-    });
-    $('#address_selector').tooltip({
-      title: "where",
-      placement: 'left',
-      container: 'body'
-    });
-    $('#search_button').tooltip({
-      title: "find the top 3 places for your group",
-      placement: 'right',
-      container: 'body'
-    });
-    $('.pick').mouseenter(function(){
-      $(this).find('.name').addClass('orange');
-      // $(this).find('.go_btn').removeClass('btn-success');
-      // $(this).find('.go_btn').addClass('btn-warning');
-    });
-    $('.pick').mouseleave(function(){
-      $(this).find('.name').removeClass('orange');
-      // $(this).find('.go_btn').removeClass('btn-warning');
-      // $(this).find('.go_btn').addClass('btn-success');
-    });
-    $('.group_score').tooltip({
-      title: "total score for the group, based on each person's individual preferences",
-      placement: 'right',
-      container: 'body'
-    });
-    $('.yelp_link').tooltip({
-      title: "click to visit yelp page",
-      placement: 'top',
-      container: 'body'
-    });
-    $('.go_btn').tooltip({
-      title: "get directions using google maps",
-      placement: 'right',
-      container: 'body'
-    });
-    $('.reservations').tooltip({
-      title: "get reservations using opentable",
-      placement: 'right',
-      container: 'body'
-    });
-
-  });
-</script>

@@ -104,6 +104,8 @@ class SearchesController < ApplicationController
       location = Location.find(session[:location_id])
       session[:location_ll] = [location.latitude, location.longitude]
     end
+    gon.locationId = session[:location_id]
+    gon.buddies = session[:buddies]
     @search = Search.new
   end
 

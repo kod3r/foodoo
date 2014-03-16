@@ -7,4 +7,5 @@ class Restaurant < ActiveRecord::Base
   def as_json(options={})
     super(options.merge(:include => [:locations, :choices, :lists]))
   end
+
 end

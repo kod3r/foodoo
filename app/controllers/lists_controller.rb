@@ -17,6 +17,44 @@ class ListsController < ApplicationController
 
   # GET /lists/new
   def new
+    # yelp API query
+    if params[:term]
+      @yelp = HTTParty.get("http://api.yelp.com/business_review_search?"\
+                        "term=#{params[:term].split(' ').join('+')}"\
+                        "&location=#{params[:location].split(' ').join('+')}"\
+                        "&category=restaurants"\
+                        "&radius=20"\
+                        "&limit=6"\
+                        "&ywsid=Q5mQ5eJFseNNaJx9xuXhjQ")
+      # collect results and populate db
+      @results = []
+      @yelp["businesses"].each do |place|
+        unless place["is_closed"]
+          refactored_address = place["address1"]+" "+place["zip"]
+          address = place["address1"]
+          restaurant_locations = Restaurant.where(name: place["name"]).joins(:locations)
+          db_restaurant = restaurant_locations.where('locations.address' => refactored_address).first ||
+                           restaurant_locations.where('locations.address' => address).first
+          if db_restaurant
+            restaurant = db_restaurant
+          else
+            categories = []
+            place["categories"].each do |category|
+              categories << category["name"]
+            end
+            categories = categories.join(', ')
+            restaurant = Restaurant.create(name: place["name"], image: place["photo_url"], yelp_url: place["url"], cuisine: categories)
+            if place["neighborhoods"][0]
+              Location.create(locator_id: restaurant.id, locator_type: "Restaurant", city: place["city"], state: place["state"], country: place["country"], phone: place["phone"], address: address, hood: place["neighborhoods"][0]["name"])
+            else
+              Location.create(locator_id: restaurant.id, locator_type: "Restaurant", address: address, city: place["city"], state: place["state"], country: place["country"], phone: place["phone"])
+            end
+          end
+          @results << restaurant
+         end
+      end
+    end
+
     # check how many curated restaurants are on user's list
     @thrillist_count = current_user.restaurants.where(name: ["Minetta Tavern", "Whitman's", "Brindle Room", "Lure Fishbar", "Korzo Haus"]).count
     @thrillist_total = 5

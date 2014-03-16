@@ -45,6 +45,13 @@
   text-align: center;
 }
 
+// search results on list add
+#search-results {
+  width: 360px;
+  margin: 15px auto 0 auto;
+  p{margin-bottom: 0}
+}
+
 // location dropdown on list page
 .dropdown-menu {
   max-height: 308px;

@@ -61,6 +61,18 @@
   button {margin: 20px 20px 5px 20px}
 }
 
+// add restaurant form
+#add-form input{
+  text-align: center;
+  margin: 5px;
+}
+
+// curared list card
+.curated-list{
+  width: 500px;
+  margin: 50px auto;
+}
+
 // restaurant card action buttons
 .actions .btn-medium {
   width: 80px;

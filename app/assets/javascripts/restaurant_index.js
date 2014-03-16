@@ -10,7 +10,7 @@ $(function(){
     }
   });
   // address selection
-  if(gon.locationCount == 0) {$('#address-form').show()}
+  if(gon.noLocations) {$('#address-form').show()}
   $('#address_selector').val(gon.locationId);
   $('#address_selector').change(function(){
     $('.buttonry, #restaurants, #address_selector').hide();

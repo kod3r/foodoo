@@ -1,121 +1,81 @@
 <script>
   var $container = $('#container');
   $('#container').isotope({
-    // options
     itemSelector : '.item',
     layoutMode : 'fitColumns'
   });
 </script>
 
 <% if current_user.locations.count > 0 %>
-  <div class="text-center">
-    <div class="well pop add-search">
-      <p class="lead" style="color:orange;">Add some restaurants to your list!</p>
-      <form accept-charset="UTF-8" action="/lists/new" method="get" role="form">
-        <label for="location"></label>
-        <input id="location" class="form-control" name="location" type="text" value="<%= session[:search_location] %>" style="text-align: center;"/>
-        <label for="term"></label>
-        <input id="term" class="form-control centered text-center" name="term" type="text" placeholder="restaurant name" style="margin: 10px 0px;"/>
-        <label for="search"></label>
-        <input name="commit" class="form-control btn btn-primary" type="submit" value="Search"/>
-      </form>
-    </div>
-  <% unless params[:term] %>
-    <div class="well pop" style="width: 500px; margin-left: auto; margin-right: auto; margin-top: 50px;">
-      <p class="lead">Thrillist's Best Burgers in NYC</p>
-      <br>
-      <% if @thrillist_count < @thrillist_total%>
-        <div class="curated-info" id="thrillist">
-          <p><%= @thrillist_count %>/<%= @thrillist_total %> on your list</p>
-          <span class="curated-buttons">
-            <a class="btn btn-warning list-read" href="http://www.thrillist.com/eat/new-york/the-best-burgers-in-nyc" target="_blank">Read</a>
-            <a class="btn btn-warning list-add" href="/lists/add_curated?curated=thrillist-burger" data-method="post" data-remote="true">Add</a>
-          </span>
-        </div>
-      <% else %>
-        <p class="orange"><%= @thrillist_count %>/<%= @thrillist_total %> on your list</p>
-        <a class="btn btn-warning list-read" href="http://www.thrillist.com/eat/new-york/the-best-burgers-in-nyc" target="_blank">Read</a>
-      <% end %>
-    </div>
-    <div class="well pop" style="width: 500px; margin-left: auto; margin-right: auto; margin-top: 50px;">
-      <p class="lead">Zagat's Best Pizza in NYC</p>
-      <br>
-      <% if @zagat_count < @zagat_total%>
-        <div class="curated-info" id="zagat">
-          <p><%= @zagat_count %>/<%= @zagat_total %> on your list</p>
-          <span class="curated-buttons">
-            <a class="btn btn-warning list-read" href="http://www.zagat.com/l/new-york-city/best-pizza-in-nyc" target="_blank">Read</a>
-            <a class="btn btn-warning list-add" href="/lists/add_curated?curated=zagat-pizza" data-method="post" data-remote="true">Add</a>
-          </span>
-        </div>
-      <% else %>
-        <p class="orange"><%= @zagat_count %>/<%= @zagat_total %> on your list</p>
-        <a class="btn btn-warning list-read" href="http://www.zagat.com/l/new-york-city/best-pizza-in-nyc" target="_blank">Read</a>
-      <% end %>
-    </div>
-    <div class="well pop" style="width: 500px; margin-left: auto; margin-right: auto; margin-top: 50px;">
-      <p class="lead">Seriouseats' Best Ramen in NYC</p>
-      <br>
-      <% if @seriouseats_count < @seriouseats_total%>
-        <div class="curated-info" id="seriouseats">
-          <p><%= @seriouseats_count %>/<%= @seriouseats_total %> on your list</p>
-          <span class="curated-buttons">
-            <a class="btn btn-warning list-read" href="http://newyork.seriouseats.com/2013/09/best-ramen-nyc-ippudo-hide-chan-yuji-yebisu-totto-chuko-bassanova.html" target="_blank">Read</a>
-            <a class="btn btn-warning list-add" href="/lists/add_curated?curated=seriouseats-ramen" data-method="post" data-remote="true">Add</a>
-          </span>
-        </div>
-      <% else %>
-        <p class="orange"><%= @seriouseats_count %>/<%= @seriouseats_total %> on your list</p>
-        <a class="btn btn-warning list-read" href="http://newyork.seriouseats.com/2013/09/best-ramen-nyc-ippudo-hide-chan-yuji-yebisu-totto-chuko-bassanova.html" target="_blank">Read</a>
-      <% end %>
-    </div>
-  <% end %>
-  </div>
-<% else %>
-  <div class="well text-center pop" style="margin-top: 100px; width: 360px; margin-left: auto; margin-right: auto;">
-    <form role="form">
-      <br>
-      <div class="form-group">
-        <input type="text" class="form-control text-center" id="address_input" placeholder="Street Address">
-      </div>
-      <br>
-      <div class="form-group">
-        <input type="text" class="form-control text-center" id="city_input" placeholder="City">
-      </div>
-      <br>
-      <div class="form-group">
-        <input type="text" class="form-control text-center" id="state_input" placeholder="State">
-      </div>
-      <br>
-      <br>
-      <button type="submit" class="btn btn-default" id="address_submit">Submit</button>
-      <br>
+<div class="text-center">
+  <div class="well pop add-search">
+    <p class="lead orange">Add some restaurants to your list!</p>
+    <form accept-charset="UTF-8" action="/lists/new" method="get" role="form" id='add-form'>
+      <input id="location" name="location" type="text" value="<%= session[:search_location] %>"/><br>
+      <input id="term" name="term" type="text" placeholder="restaurant name"/><br>
+      <input name="commit" class="btn btn-primary" type="submit" value="Search"/>
     </form>
   </div>
-  <script>
-    $('#address_submit').click(function(){
-      if($('#address_input').val() && $('#city_input').val() && $('#state_input').val()){
-        $.ajax({
-          url: "/users/address_input",
-          type: "post",
-          data: {address: $('#address_input').val(), city: $('#city_input').val(), state: $('#state_input').val()},
-          //contentType: "application/json; charset=utf-8",
-          dataType: "json",
-          success: function(data){
-            window.location.reload();
-            console.log("success");
-          },
-          error: function(jqXHR, textStatus, errorThrown){
-            console.log("fail");
-            console.log(jqXHR);
-            console.log(textStatus);
-            console.log(errorThrown);
-          }
-        });
-      }
-    });
-  </script>
+  <% unless params[:term] %>
+  <div class="well pop curated-list">
+    <p class="lead">Thrillist's Best Burgers in NYC</p>
+    <br>
+    <% if @thrillist_count < @thrillist_total%>
+      <div class="curated-info" id="thrillist">
+        <p><%= @thrillist_count %>/<%= @thrillist_total %> on your list</p>
+        <span class="curated-buttons">
+          <a class="btn btn-warning list-read" href="http://www.thrillist.com/eat/new-york/the-best-burgers-in-nyc" target="_blank">Read</a>
+          <a class="btn btn-warning list-add" id='thrillist' href="/lists/add_curated?curated=thrillist-burger" data-method="post" data-remote="true">Add</a>
+        </span>
+      </div>
+    <% else %>
+      <p class="orange"><%= @thrillist_count %>/<%= @thrillist_total %> on your list</p>
+      <a class="btn btn-warning list-read" href="http://www.thrillist.com/eat/new-york/the-best-burgers-in-nyc" target="_blank">Read</a>
+    <% end %>
+  </div>
+  <div class="well pop curated-list">
+    <p class="lead">Zagat's Best Pizza in NYC</p>
+    <br>
+    <% if @zagat_count < @zagat_total%>
+      <div class="curated-info" id="zagat">
+        <p><%= @zagat_count %>/<%= @zagat_total %> on your list</p>
+        <span class="curated-buttons">
+          <a class="btn btn-warning list-read" href="http://www.zagat.com/l/new-york-city/best-pizza-in-nyc" target="_blank">Read</a>
+          <a class="btn btn-warning list-add" id='zagat' href="/lists/add_curated?curated=zagat-pizza" data-method="post" data-remote="true">Add</a>
+        </span>
+      </div>
+    <% else %>
+      <p class="orange"><%= @zagat_count %>/<%= @zagat_total %> on your list</p>
+      <a class="btn btn-warning list-read" href="http://www.zagat.com/l/new-york-city/best-pizza-in-nyc" target="_blank">Read</a>
+    <% end %>
+  </div>
+  <div class="well pop curated-list">
+    <p class="lead">Seriouseats' Best Ramen in NYC</p>
+    <br>
+    <% if @seriouseats_count < @seriouseats_total%>
+      <div class="curated-info" id="seriouseats">
+        <p><%= @seriouseats_count %>/<%= @seriouseats_total %> on your list</p>
+        <span class="curated-buttons">
+          <a class="btn btn-warning list-read" href="http://newyork.seriouseats.com/2013/09/best-ramen-nyc-ippudo-hide-chan-yuji-yebisu-totto-chuko-bassanova.html" target="_blank">Read</a>
+          <a class="btn btn-warning list-add" id='seriouseats' href="/lists/add_curated?curated=seriouseats-ramen" data-method="post" data-remote="true">Add</a>
+        </span>
+      </div>
+    <% else %>
+      <p class="orange"><%= @seriouseats_count %>/<%= @seriouseats_total %> on your list</p>
+      <a class="btn btn-warning list-read" href="http://newyork.seriouseats.com/2013/09/best-ramen-nyc-ippudo-hide-chan-yuji-yebisu-totto-chuko-bassanova.html" target="_blank">Read</a>
+    <% end %>
+  </div>
+  <% end %>
+</div>
 <% end %>
+<div class="well text-center pop" id="address-form">
+  <form role="form">
+    <input type="text" class="text-center" id="address_input" placeholder="Street Address">
+    <input type="text" class="text-center" id="city_input" placeholder="City">
+    <input type="text" class="text-center" id="state_input" placeholder="State"><br>
+    <button type="submit" class="btn btn-default" id="address_submit">Submit</button>
+  </form>
+</div>
 </br>
 <% if params[:term] %>
   <% response = HTTParty.get("http://api.yelp.com/business_review_search?term=#{params[:term].split(' ').join('+')}&location=#{params[:location].split(' ').join('+')}&category=restaurants&radius=20&limit=6&ywsid=Q5mQ5eJFseNNaJx9xuXhjQ") %>
@@ -179,13 +139,36 @@
 <% end %>
 </div>
 <script>
+
 $(function(){
+  if(gon.noLocations) {$('#address-form').show()}
+   $('#address_submit').click(function(){
+    if($('#address_input').val() && $('#city_input').val() && $('#state_input').val()){
+      $.ajax({
+        url: "/users/address_input",
+        type: "post",
+        data: {address: $('#address_input').val(), city: $('#city_input').val(), state: $('#state_input').val()},
+        //contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        success: function(data){
+          window.location.reload();
+          console.log("success");
+        },
+        error: function(jqXHR, textStatus, errorThrown){
+          console.log("fail");
+          console.log(jqXHR);
+          console.log(textStatus);
+          console.log(errorThrown);
+        }
+      });
+    }
+  });
   $('.add_button').on('ajax:success', function(event, data, status, xhr){
     $(this).parent().fadeOut(200, function(){
       $(this).html("<p class='orange'>On your List</p>").fadeIn(1000);
     });
   });
-  $('.list-add').on('ajax:success', function(event, data, status, xhr){
+  $('.list-add').click(function(){
     $(this).closest('.curated-info').fadeOut(200, function(){
       if($(this).attr('id') == "zagat"){
         $(this).html("<p class='orange'>9/9 on your list</p><a class='btn btn-warning list-read' href='http://www.zagat.com/l/new-york-city/best-pizza-in-nyc' target='_blank'>Read</a>").fadeIn(1000);
@@ -201,11 +184,6 @@ $(function(){
     placement: 'right',
     container: 'body'
   });
-  // $('#term').tooltip({
-  //   title: "look up restaurant by name",
-  //   placement: 'right',
-  //   container: 'body'
-  // });
   $('.add_button').tooltip({
     title: "add this restaurant to your list",
     placement: 'right',

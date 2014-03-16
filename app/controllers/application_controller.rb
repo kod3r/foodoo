@@ -5,6 +5,17 @@ class ApplicationController < ActionController::Base
 
   before_filter :configure_permitted_parameters, if: :devise_controller?
   before_action :authenticate_user!
+  before_action :no_locations?
+
+  def no_locations?
+    if current_user
+      if current_user.locations.count == 0
+        gon.noLocations = true
+      else
+        gon.noLocations = false
+      end
+    end
+  end
 
   protected
 

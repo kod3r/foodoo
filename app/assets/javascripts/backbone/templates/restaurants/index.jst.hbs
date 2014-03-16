@@ -2,6 +2,7 @@
   {{#each this}}
   <div class="card text-center item pop {{#each cuisines}}{{this}} {{/each}}{{label}} {{location_raw}}">
     {{#if label}}
+    {{!-- top info --}}
     <p class="lead name orange">{{name}}</p>
     {{else}}
     <p class="lead name">{{name}}</p>
@@ -9,9 +10,11 @@
     <p>{{#each cuisines}}{{this}}  {{/each}}</p>
     <p>{{location}}</p>
     <div class="text-center">
+      {{!-- image and yelp link --}}
       <div class="blockery">
         <a class="text-center" href="{{yelp_url}}" target="_blank"><img class="yelp_link" src="{{image}}"/></a>
       </div>
+      {{!-- hidden data for sort/filter --}}
       <div class="blockery">
         <div class='hidden'>
           <p>Score: <strong class="score">{{score}}</strong></p>
@@ -20,6 +23,7 @@
           <p class="last_visit">{{last_choice}}</p>
           <p class="last">{{last_unix}}</p>
         </div>
+        {{!-- side info --}}
         <div class='info-section'>
           <input type="text" value="{{rating}}" class="dial" data-list="{{list_id}}" data-prev="{{rating_number}}">
           {{#if walk}}
@@ -34,6 +38,7 @@
           {{/if}}
         </div>
       </div>
+      {{!-- action buttons --}}
       <div class="actions">
         <a class="fav-button" href="/favorite?id={{list_id}}" data-method="post" data-remote="true" data-list="{{list_id}}">
           <i class="icon-star icon-white"></i>

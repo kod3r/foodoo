@@ -2,6 +2,7 @@
 <div class="text-center" id="results">
   <div class="blockery">
     <div class="text-center">
+      <!-- user location select -->
       <select id="address_selector" style="width:300px;">
       <% current_user.locations.each do |location| %>
         <option value=<%= location.id %>>
@@ -11,6 +12,7 @@
         <option value="new">New Address</option>
       </select>
     </div>
+    <!-- buddy select -->
     <div class="people">
       <select class="selectpicker" multiple>
         <% @buddies.each do |buddy|  %>
@@ -22,6 +24,7 @@
   <div class="blockery">
     <a class="btn btn-warning btn-large" id="search_button">Search</a>
   </div>
+  <!-- search results -->
   <div id="picks">
   <% @picks.each do |restaurant| %>
     <div class="pick text-center well pop">
@@ -54,12 +57,14 @@
 <% elsif current_user.restaurants.count == 0 %>
   <h3 class="well text-center orange">Add some restaurants to access this feature</h3>
 <% end %>
+  <!-- loading bubbles -->
+  <div class="bubblingG bubblingGS">
+    <span id="bubblingG_1"></span>
+    <span id="bubblingG_2"></span>
+    <span id="bubblingG_3"></span>
+  </div>
 </div>
-<div class="bubblingG bubblingGS">
-  <span id="bubblingG_1"></span>
-  <span id="bubblingG_2"></span>
-  <span id="bubblingG_3"></span>
-</div>
+<!-- new address form -->
 <div class="well text-center pop" id="address-form">
   <form role="form">
     <input type="text" class="text-center" id="address_input" placeholder="Street Address">

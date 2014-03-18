@@ -1,3 +1,4 @@
+<!-- sort buttons -->
 <div class="text-center"><a class="lead">SORT</a></div>
 <div class="text-center" id="sort-by">
   <a class="btn btn-medium btn-info" href="#name" style="margin-top: 5px;">Name</a>
@@ -10,16 +11,16 @@
   <a class="btn btn-medium btn-info" href="#desc">Descending</a>
 </div> -->
 <br>
+
+<!-- users index -->
 <div id="container">
   <% @users.each do |user| %>
     <div class="item pop card text-center">
-      <p class="lead name"><%= user.username %></p>
-      <br>
+      <p class="lead name"><%= user.username %></p><br>
       <span>
-        <strong style="color:orange;" class="rest"><%= user.restaurants.count %></strong>
+        <strong class="rest orange"><%= user.restaurants.count %></strong>
         <p>   Restaurants</p>
-      </span>
-      <br>
+      </span><br>
       <p><%= link_to "#{user.username}'s List", user, :class => "btn btn-medium btn-primary"%></p>
     </div>
   <% end %>
@@ -29,7 +30,6 @@
   $(function(){
     var $container = $('#container');
     $('#container').isotope({
-      // options
       itemSelector : '.item',
       sortBy : 'name',
       layoutMode : 'fitRows',

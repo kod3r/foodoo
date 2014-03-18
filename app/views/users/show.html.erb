@@ -1,4 +1,5 @@
 <% if @restaurants.exists? %>
+<!-- sort/filter buttons -->
 <div class="buttonry text-center" style="display:none">
   <a class="lead">SORT</a>
   <div class="text-center" id="sort-by">
@@ -34,6 +35,7 @@
     </div>
     <a class="btn btn-medium btn-info filter-click" href="#" data-filter="*" id="all" style="margin-top: 5px; margin-bottom: 10px;">Reset</a>
   </div>
+<!-- order buttons -->
 <!--   <div class="text-center" id="asc-desc">
     <a class="btn btn-medium">ORDER</a>
     <a class="btn btn-medium btn-info" href="#asc">Ascending</a>
@@ -42,6 +44,7 @@
 </div>
 
 <br>
+<!-- add all button -->
 <!-- <div class="text-center" id="add_all" >
   <%= button_to("Add all of "+@user.username+"'s restaurants", "getall?id=#{@user.id}", remote: true, :class => 'btn btn-warning medium') %>
 </div>

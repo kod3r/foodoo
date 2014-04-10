@@ -10,7 +10,7 @@ $(function(){
         dataType: "json",
         success: function(data){
           gon.noLocations = false;
-          window.location.reload();
+          window.location.reload(true);
           console.log("success");
         },
         error: function(jqXHR, textStatus, errorThrown){

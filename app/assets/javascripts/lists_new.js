@@ -9,6 +9,7 @@ $(function(){
         data: {address: $('#address_input').val(), city: $('#city_input').val(), state: $('#state_input').val()},
         dataType: "json",
         success: function(data){
+          gon.noLocations = false;
           window.location.reload();
           console.log("success");
         },

@@ -1,17 +1,17 @@
 <% if @restaurants.exists? %>
 <!-- sort/filter buttons -->
-<div class="buttonry text-center" style="display:none">
+<div class="buttonry text-center">
   <a class="lead">SORT</a>
   <div class="text-center" id="sort-by">
-    <a class="btn btn-medium btn-info" href="#rating" style="margin-top: 5px; margin-bottom: 10px;" id="start">Rating</a>
-    <a class="btn btn-medium btn-info" href="#lists" style="margin-top: 5px; margin-bottom: 10px;">Lists</a>
-    <a class="btn btn-medium btn-info" href="#name" style="margin-top: 5px; margin-bottom: 10px;">Name</a>
+    <a class="btn btn-medium btn-info" href="#rating" id="start">Rating</a>
+    <a class="btn btn-medium btn-info" href="#lists">Lists</a>
+    <a class="btn btn-medium btn-info" href="#name">Name</a>
 <!--     <a class="btn btn-medium btn-info" href="#hood" style="margin-top: 5px; margin-bottom: 10px;">Neighborhood</a> -->
   </div>
   <a class="lead">FILTER</a>
   <div class="text-center" id="filters">
-    <a class="btn btn-medium btn-info filter-click" href="#" data-filter=".favorite" style="margin-top: 5px; margin-bottom: 10px;">Hit List</a>
-    <a class="btn btn-medium btn-info" href="#" data-filter=".cuisine" id="cuisine-button" style="margin-top: 5px; margin-bottom: 10px;">
+    <a class="btn btn-medium btn-info filter-click" href="#" data-filter=".favorite">Hit List</a>
+    <a class="btn btn-medium btn-info" href="#" data-filter=".cuisine" id="cuisine-button">
       <div class="cuisine-input" id="cuisine-show">Cuisine</div>
       <div class="cuisine-input input-group" style="display: none" id="cuisine-filter">
         <input type="text" class="form-control" style="max-width: 100px; text-align: center;" id="cuisine-input">
@@ -20,7 +20,7 @@
         </span>
       </div>
     </a>
-    <div class="btn-group" style="margin-top: 5px; margin-bottom: 10px;">
+    <div class="btn-group">
       <a class="btn btn-info dropdown-toggle" data-toggle="dropdown" href="#" id="selected-location">
         Location
         <span class="caret"></span>
@@ -33,7 +33,7 @@
         <% end %>
       </ul>
     </div>
-    <a class="btn btn-medium btn-info filter-click" href="#" data-filter="*" id="all" style="margin-top: 5px; margin-bottom: 10px;">Reset</a>
+    <a class="btn btn-medium btn-info filter-click" href="#" data-filter="*" id="all">Reset</a>
   </div>
 <!-- order buttons -->
 <!--   <div class="text-center" id="asc-desc">
@@ -52,6 +52,7 @@
   <p style="color: orange;">Added all restaurants!</p>
 </div>
 <br> -->
+<!-- user restaurant index -->
 <div id="container">
 <% @restaurants.each do |restaurant| %>
     <% list = restaurant.lists.find_by(user_id: @user.id) %>
@@ -88,9 +89,9 @@
           <p class="rating" style="display: none"><%= @rating %></p>
           <input type="text" value="<%= @formatted_rating %>" class="dial" data-width="70" data-font="lato" data-height="70" data-fgcolor="orange" data-angleOffset="-125" data-angleArc="250" style="display:none;">
           <% if restaurant.lists.count == 1  %>
-            <p>On <strong style="color:orange;" class="lists"><%= restaurant.lists.count %></strong> list</p>
+            <p>On <strong class="lists orange"><%= restaurant.lists.count %></strong> list</p>
           <% else %>
-            <p>On <strong style="color:orange;" class="lists"><%= restaurant.lists.count %></strong> lists</p>
+            <p>On <strong class="lists orange"><%= restaurant.lists.count %></strong> lists</p>
           <% end %>
           <% if current_user.restaurants.exists?(restaurant.id) %>
             <p class="listed">On your list</p>
@@ -109,191 +110,180 @@
 <% end %>
 </div>
 <script>
-  $(function(){
-    $('.dial').show();
-    $('.buttonry').fadeIn(1000);
-    $('.dial').knob({
-      'readOnly': true
+$(function(){
+  $('.dial').show();
+  $('.buttonry').fadeIn(1000);
+  $('.dial').knob({
+    'readOnly': true
+  });
+  $('#add_all').click(function(){
+    $('#add_all').fadeOut(1000, function(){
+      $('#all_alert').fadeIn(1000).fadeOut(8000);
     });
-    $('#add_all').click(function(){
-      $('#add_all').fadeOut(1000, function(){
-        $('#all_alert').fadeIn(1000).fadeOut(8000);
+    $('.buttoned').each(function(){
+      $(this).fadeOut(500, function(){
+        $(this).text("On your list").fadeIn(2000);
       });
-      $('.buttoned').each(function(){
-        $(this).fadeOut(500, function(){
-          $(this).text("On your list").fadeIn(2000);
-        });
-      });
-    });
-    // add button fade out on click
-    $('.add_button').on('click', function(event, data, status, xhr){
-      if($(this).parent() != $('#add_all')){
-        $(this).closest('.buttoned').fadeOut(500, function(){
-          $(this).text("On your list").fadeIn(1000);
-        });
-      }
-    });
-    // add button fade out on ajax success
-    // $('form.button_to[data-remote]').on('ajax:success', function(event, data, status, xhr){
-    //   if($(this).parent() != $('#add_all')){
-    //     $(this).closest('.buttoned').fadeOut(500, function(){
-    //       $(this).text("On your list").fadeIn(1000);
-    //     });
-    //   }
-    // });
-    var $container = $('#container');
-    $('#container').isotope({
-      // options
-      itemSelector : '.item',
-      layoutMode : 'fitRows',
-      getSortData : {
-        name : function ( $elem ) {
-          return $elem.find('.name').text();
-        },
-        lists : function ( $elem ) {
-          return parseInt($elem.find('.lists').text());
-        },
-        rating : function ( $elem ) {
-          return parseInt($elem.find('.rating').text());
-        },
-        hood : function ( $elem ) {
-          return $elem.find('.hood').text();
-        }
-      }
-    });
-    $('#sort-by .btn-info').click(function(){
-      $('#sort-by .btn-warning').removeClass('btn-warning').addClass('btn-info');
-      $(this).removeClass('btn-info').addClass('btn-warning');
-    });
-    $('#filters .btn-info').click(function(){
-      $('#filters .btn-warning').removeClass('btn-warning').addClass('btn-info');
-      if($(this).html() != 'Reset'){
-        $(this).removeClass('btn-info').addClass('btn-warning');
-      }
-    });
-    $('.location-filter').click(function(event){
-      event.preventDefault();
-      var selector = $(this).data('location');
-      $container.isotope({ filter: "."+selector });
-      $('.dropdown-toggle').click();
-      $('#selected-location').html($(this).html());
-      $('#cuisine-show').html('Cuisine');
-      return false;
-    });
-    setTimeout(function(){
-      $("#start").click().removeClass('btn-warning').addClass('btn-info');
-    },300);
-    $('#all').click(function(){
-      $('#cuisine-show').html("Cuisine");
-    });
-
-    $('#filters #cuisine-button').click(function(){
-      if($("#cuisine-show").is(":visible")){
-        $(".cuisine-input").toggle();
-        $("#cuisine-input").focus();
-      }else{
-        $(".cuisine-input").toggle();
-      }
-      return false;
-    });
-
-    $('#cuisine-filter input').keypress(function(e) {
-      if(e.which == 13) {
-        jQuery(this).blur();
-        jQuery('#cuisine-submit').focus().click();
-        return false;
-      }
-    });
-
-    // $('#cuisine-filter input').autocomplete({
-
-    // });
-
-    $('#cuisine-submit').click(function(){
-      $('#cuisine-filter input').submit();
-      return false;
-    });
-
-    $('#cuisine-filter input').submit(function(event){
-      event.preventDefault();
-      var selector = $("#cuisine-input").val();
-      selector = selector.charAt(0).toUpperCase() + selector.slice(1);
-      if(selector == "Burger"){
-        selector = "Burgers";
-      }else if(selector == "Sandwich"){
-        selector = "Sandwiches";
-      }else if(selector == "Steakhouse"){
-        selector = "Steakhouses";
-      }else if(selector == "Hotdog"){
-        selector = "Dogs";
-      }else if(selector == "Desert"){
-        selector = "Deserts";
-      }
-      $("#cuisine-show").html(selector);
-      $('#selected-location').html('Location');
-      $container.isotope({ filter: "."+selector });
-      $(".cuisine-input").toggle();
-      return false;
-    });
-
-    $('#filters .filter-click').click(function(){
-      var selector = $(this).attr('data-filter');
-      if(selector == "*"){
-        $('#cuisine-show').html('Cuisine');
-        $('#selected-location').html('Location');
-      }
-      $container.isotope({ filter: selector });
-      return false;
-    });
-
-    $('#sort-by a').click(function(){
-      // get href attribute, minus the '#'
-      var sortName = $(this).attr('href').slice(1);
-      if(sortName == "lists" || sortName == "rating"){
-        $('#container').isotope({ sortBy : sortName, sortAscending: false });
-      } else{
-        $('#container').isotope({ sortBy : sortName });
-      }
-      return false;
-    });
-
-    $('#filters .filter-click').click(function(){
-      var selector = $(this).attr('data-filter');
-      $container.isotope({ filter: selector });
-      return false;
-    });
-
-    $('#asc-desc a').click(function(){
-      var order = $(this).attr('href').slice(1);
-      if(order == "asc"){
-        $('#container').isotope({ sortAscending: true });
-      }else if(order == "desc"){
-        $('#container').isotope({ sortAscending: false });
-      }
-      return false;
-    });
-
-    $('.yelp_link').tooltip({
-      title: "click to visit yelp page",
-      placement: 'left',
-      container: 'body'
-    });
-    $('.buttoned').tooltip({
-      title: "add this restaurant to your list",
-      placement: 'right',
-      container: 'body'
-    });
-    $('.dial').tooltip({
-      title: "<%= @user.username %>'s rating",
-      placement: 'right',
-      container: 'body'
-    });
-    $('.name.orange').tooltip({
-      title: "on <%= @user.username %>'s hit list",
-      placement: 'top',
-      container: 'body'
     });
   });
+  // add button fade out on click
+  $('.add_button').on('click', function(event, data, status, xhr){
+    if($(this).parent() != $('#add_all')){
+      $(this).closest('.buttoned').fadeOut(500, function(){
+        $(this).text("On your list").fadeIn(1000);
+      });
+    }
+  });
+
+  var $container = $('#container');
+  $('#container').isotope({
+    // options
+    itemSelector : '.item',
+    layoutMode : 'fitRows',
+    getSortData : {
+      name : function ( $elem ) {
+        return $elem.find('.name').text();
+      },
+      lists : function ( $elem ) {
+        return parseInt($elem.find('.lists').text());
+      },
+      rating : function ( $elem ) {
+        return parseInt($elem.find('.rating').text());
+      },
+      hood : function ( $elem ) {
+        return $elem.find('.hood').text();
+      }
+    }
+  });
+  $('#sort-by .btn-info').click(function(){
+    $('#sort-by .btn-warning').removeClass('btn-warning').addClass('btn-info');
+    $(this).removeClass('btn-info').addClass('btn-warning');
+  });
+  $('#filters .btn-info').click(function(){
+    $('#filters .btn-warning').removeClass('btn-warning').addClass('btn-info');
+    if($(this).html() != 'Reset'){
+      $(this).removeClass('btn-info').addClass('btn-warning');
+    }
+  });
+  $('.location-filter').click(function(event){
+    event.preventDefault();
+    var selector = $(this).data('location');
+    $container.isotope({ filter: "."+selector });
+    $('.dropdown-toggle').click();
+    $('#selected-location').html($(this).html());
+    $('#cuisine-show').html('Cuisine');
+    return false;
+  });
+  setTimeout(function(){
+    $("#start").click().removeClass('btn-warning').addClass('btn-info');
+  },300);
+  $('#all').click(function(){
+    $('#cuisine-show').html("Cuisine");
+  });
+
+  $('#filters #cuisine-button').click(function(){
+    if($("#cuisine-show").is(":visible")){
+      $(".cuisine-input").toggle();
+      $("#cuisine-input").focus();
+    }else{
+      $(".cuisine-input").toggle();
+    }
+    return false;
+  });
+
+  $('#cuisine-filter input').keypress(function(e) {
+    if(e.which == 13) {
+      jQuery(this).blur();
+      jQuery('#cuisine-submit').focus().click();
+      return false;
+    }
+  });
+
+  $('#cuisine-submit').click(function(){
+    $('#cuisine-filter input').submit();
+    return false;
+  });
+
+  $('#cuisine-filter input').submit(function(event){
+    event.preventDefault();
+    var selector = $("#cuisine-input").val();
+    selector = selector.charAt(0).toUpperCase() + selector.slice(1);
+    if(selector == "Burger"){
+      selector = "Burgers";
+    }else if(selector == "Sandwich"){
+      selector = "Sandwiches";
+    }else if(selector == "Steakhouse"){
+      selector = "Steakhouses";
+    }else if(selector == "Hotdog"){
+      selector = "Dogs";
+    }else if(selector == "Desert"){
+      selector = "Deserts";
+    }
+    $("#cuisine-show").html(selector);
+    $('#selected-location').html('Location');
+    $container.isotope({ filter: "."+selector });
+    $(".cuisine-input").toggle();
+    return false;
+  });
+
+  $('#filters .filter-click').click(function(){
+    var selector = $(this).attr('data-filter');
+    if(selector == "*"){
+      $('#cuisine-show').html('Cuisine');
+      $('#selected-location').html('Location');
+    }
+    $container.isotope({ filter: selector });
+    return false;
+  });
+
+  $('#sort-by a').click(function(){
+    // get href attribute, minus the '#'
+    var sortName = $(this).attr('href').slice(1);
+    if(sortName == "lists" || sortName == "rating"){
+      $('#container').isotope({ sortBy : sortName, sortAscending: false });
+    } else{
+      $('#container').isotope({ sortBy : sortName });
+    }
+    return false;
+  });
+
+  $('#filters .filter-click').click(function(){
+    var selector = $(this).attr('data-filter');
+    $container.isotope({ filter: selector });
+    return false;
+  });
+
+  $('#asc-desc a').click(function(){
+    var order = $(this).attr('href').slice(1);
+    if(order == "asc"){
+      $('#container').isotope({ sortAscending: true });
+    }else if(order == "desc"){
+      $('#container').isotope({ sortAscending: false });
+    }
+    return false;
+  });
+
+  $('.yelp_link').tooltip({
+    title: "click to visit yelp page",
+    placement: 'left',
+    container: 'body'
+  });
+  $('.buttoned').tooltip({
+    title: "add this restaurant to your list",
+    placement: 'right',
+    container: 'body'
+  });
+  $('.dial').tooltip({
+    title: "<%= @user.username %>'s rating",
+    placement: 'right',
+    container: 'body'
+  });
+  $('.name.orange').tooltip({
+    title: "on <%= @user.username %>'s hit list",
+    placement: 'top',
+    container: 'body'
+  });
+});
 </script>
 
 

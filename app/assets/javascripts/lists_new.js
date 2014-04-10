@@ -10,7 +10,7 @@ $(function(){
         dataType: "json",
         success: function(data){
           gon.noLocations = false;
-          location.reload(true);
+          setTimeout(location.reload(true), 300);
           console.log("success");
         },
         error: function(jqXHR, textStatus, errorThrown){

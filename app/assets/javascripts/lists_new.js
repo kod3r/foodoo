@@ -10,7 +10,7 @@ $(function(){
         dataType: "json",
         success: function(data){
           gon.noLocations = false;
-          setTimeout(location.reload(true), 3000);
+          window.location.assign('http://www.foodoo.io');
           console.log("success");
         },
         error: function(jqXHR, textStatus, errorThrown){
